@@ -1,4 +1,4 @@
 Teclat-PROP
 ===========
 
-Revolucinarem el món dels teclats.
+Revolucionarem el món dels teclats.
