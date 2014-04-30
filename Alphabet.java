@@ -6,7 +6,7 @@ public class Alphabet{
 
 	/*Atributs*/
 	private String name;
-	private ConjCharacters c;
+	private CharactersSet c;
 	
 	/*Inicialitzadora */
 	public Alphabet() {}
@@ -25,7 +25,7 @@ public class Alphabet{
         
         /* Pre: - */
         /* Post: Retorna tots els caràcters */
-        public Vector getCharacters() {
+        public Character[] getCharacters() {
             return c.getAllCharacters();
         }
 }
