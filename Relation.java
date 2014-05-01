@@ -1,22 +1,36 @@
 public class Relation {
-    private float[][] relations;
+    private Float[] relations;
 
-    public Relation() {
-        for (int i = 0; i < relations.length(); ++i) {
-            for (int j = 0; j < relations.length(); ++j) {
-                relations[i][j] = 0;
-            }
-        }
+    public Relation(int n) {
+        relations = new Float[(n*n-n)/2];
+        for (int i = 0; i < relations.length; ++i)
+                relations[i] = 0f;
+        
     }
 
-    public float[][] getRelations() {
+    public Float[] getRelations() {
         return relations;
     }
 
+    /*
+    Pre: a != b
+    Post: Retorna la posicio al vector
+    */
+    private int getArrayPosition(int a, int b) {
+        if (a == b) {} // exception To Do 
+        if (a > b) {
+            int aux = a;
+            a = b;
+            b = aux;
+        }
+        return (relations.length - 1) * a + b - 1;
+    }
+
     public float getRelation(int a, int b) {
-        return relations[a][b];
+        return relations[getArrayPosition(a, b)];
     }
 
     public void setRelation(int a, int b, float value) {
-        relations[a][b] = value;
+        relations[getArrayPosition(a, b)] = value;
     }
+}
