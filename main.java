@@ -106,12 +106,21 @@ public class main {
 			{
 				print(c[i].getCharacter());
 			}
-			/*
-			CharactersSet cs = new CharactersSet(alphabet.getCharacters());
-			cs.calculateText();
-			qap = new QAP(alphabet.getAllFrequencies() ,positionsSet.getAllDistances());
-			qap.solve();
-			*/
+
+			int num_texts = Integer.parseInt(readNextLine());
+			for (int i = 0; i < num_texts; ++i) {
+				String text;
+				String line = readNextLine();
+				while (!line.equals("\end")) {
+					text += line;
+					line = readNextLine();
+				}
+				cs.calculateText(text);
+			}
+			 
+
+			qap = new QAP(cs.getAllAffinities() ,positionsSet.getAllDistances());
+			int[] sol =  qap.solve();
 
 			// Calcula
 
