@@ -1,4 +1,5 @@
 import classes.*;
+import classes.enumerations.*;
 import sharedClasses.*;
 
 import java.util.*;
