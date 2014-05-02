@@ -1,3 +1,5 @@
+package classes;
+
 import java.util.Scanner;
 import java.lang.StringBuilder;
 
@@ -43,6 +45,8 @@ public class CharactersSetDriver {
 		//String text = scanner.nextLine();
 		String text = "aspdqwe"; // ONLY FOR THIS TEST
 		charactersSet.calculateText(text);
+
+        System.out.print("LALALAL");
 
 		for (int i = 0; i < n; ++i) {
 			for ( int j = i + 1; j < n; ++j) {
