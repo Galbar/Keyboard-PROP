@@ -1,15 +1,15 @@
 package classes;
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class Alphabet{
 
 	/*Atributs*/
 	private String name;
-	private CharactersSet c;
+	private ArrayList<Character> c;
 	
 	/*Inicialitzadora */
 	public Alphabet() {
-        c = new CharactersSet();
+        c = new ArrayList<Character>();
 	}
 	
 	/* Pre: - */
@@ -27,16 +27,17 @@ public class Alphabet{
     /* Pre: - */
     /* Post: Retorna tots els caràcters */
     public classes.Character[] getCharacters() {
-        return c.getAllCharacters();
+        classes.Character ret[] = new classes.Character[c.size()];
+        for (int i = 0; i < this.c.size(); ++i)
+        {
+            ret[i] = this.c.get(i).clone();
+        }
+        return ret;
     }
 
     public void addCharacter(String c)
     {
     	classes.Character ch = new classes.Character(c);
-    	this.c.addCharacter(ch);
-    }
-
-    public float[][] getAllFrequencies() {
-        return c.getAllAffinities();
+    	this.c.add(ch);
     }
 }

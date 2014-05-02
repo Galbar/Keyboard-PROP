@@ -29,10 +29,12 @@ public class CharactersSet {
     private ArrayList<classes.Character> characters;
     private Relation r;
 
-    public CharactersSet() {
-        characters = new ArrayList<classes.Character>();
-        r = null;
+    public CharactersSet(classes.Character[] cs) {
+        characters = new ArrayList<classes.Character>(Arrays.asList(cs));
+        Collections.sort(characters, new ComparatorCharacter());
+        r = new Relation(cs.length);
     }
+    
     public void calculateFrequency(String text) {
         // TO DO !!!
     }

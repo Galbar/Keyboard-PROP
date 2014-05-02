@@ -100,12 +100,18 @@ public class main {
 			// Introdueix Textos
 
 			print("done");
+			CharactersSet cs = new CharactersSet(alphabet.getCharacters());
+			classes.Character[] c = cs.getAllCharacters();
+			for(int i = 0; i < c.length; ++i)
+			{
+				print(c[i].getCharacter());
+			}
 			/*
 			CharactersSet cs = new CharactersSet(alphabet.getCharacters());
 			cs.calculateText();
-			*/
 			qap = new QAP(alphabet.getAllFrequencies() ,positionsSet.getAllDistances());
 			qap.solve();
+			*/
 
 			// Calcula
 
