@@ -64,8 +64,13 @@ public class PositionsSet {
         r.setRelation(x,y,k);
     }
     
-    public Vector getAllPositions() {
-        return p;
+    public Position[] getAllPositions() {
+        Position ret[] = new Position[p.size()];
+        for (int i = 0; i < p.size(); ++i)
+        {
+            ret[i] = p.get(i).clone();
+        }
+        return ret;
     }
 
     public float[][] getAllDistances() {

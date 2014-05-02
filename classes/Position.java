@@ -10,8 +10,13 @@ public class Position {
 	Post: Es crea una nova instància.
         */
 	public Position(Float x, Float y) {
-            this.x = x;
-            this.y = y;
-        }
+        this.x = x;
+        this.y = y;
+    }
+
+    public Position clone()
+    {
+    	return new Position(this.x, this.y);
+    }
 }
 

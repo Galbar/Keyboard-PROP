@@ -122,6 +122,7 @@ public class main {
 			int[] sol =  qap.solve();
 
 			// Calcula
+			Keyboard<classes.Character, Position>keyboard = new Keyboard<classes.Character, Position>(name,topology_type, usage_mode, 1, 1, cs.getAllCharacters(), positionsSet.getAllPositions(), sol);
 
 			// Mostra els resultats
 

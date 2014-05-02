@@ -23,8 +23,8 @@ Post: Es crea una nova instància.
 */
 public C(String id, c1[ ] elements, c2[ ] posicions, int[ ] rel){
    this.id=id;
-   this.elements= new ArrayList<>(Arrays.asList(elements));
-   this.posicions= new ArrayList<>(Arrays.asList(posicions));
+   this.elements= new ArrayList<c1>(Arrays.asList(elements));
+   this.posicions= new ArrayList<c2>(Arrays.asList(posicions));
    this.rel = new Integer[rel.length];
    for (int i = 0; i < rel.length; ++i) this.rel[i] = rel[i];   
 }
@@ -34,8 +34,8 @@ Pre: -
 Post: Es crea una nova instancia amb id = id
 */
 public C(String id){
-    this.elements = new ArrayList<>();
-    this.posicions = new ArrayList<>();
+    this.elements = new ArrayList<c1>();
+    this.posicions = new ArrayList<c2>();
     this.rel = new Integer[0];
     this.id=id;
 }
@@ -45,8 +45,8 @@ Pre: -
 Post: es crea una nova instancia buida.
 */
 public C() {
-    this.elements = new ArrayList<>();
-    this.posicions = new ArrayList<>();
+    this.elements = new ArrayList<c1>();
+    this.posicions = new ArrayList<c2>();
     this.rel = new Integer[0];
 }
 
