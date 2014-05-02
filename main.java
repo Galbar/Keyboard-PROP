@@ -10,6 +10,17 @@ public class main {
 		System.out.println(s);
 	}
 
+	private static String readNextLine()
+	{
+		Scanner sc = new Scanner();
+		String s = "";
+		do
+		{
+			s = sc.nextLine();
+		} while (s.length() == 0 && s.charAt(0) == "#");
+		return s;
+	}
+
 	private static void usage()
 	{
 		print("Usage: java main [OPTION]");
