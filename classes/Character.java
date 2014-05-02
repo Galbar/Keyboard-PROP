@@ -16,4 +16,9 @@ public class Character {
     public String getCharacter() {
         return character;
     }
+
+    public Character clone()
+    {
+        return new Character(this.character);
+    }
 }

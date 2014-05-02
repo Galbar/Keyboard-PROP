@@ -1,34 +1,55 @@
 package classes;
 
-import java.util.Vector;
+import java.util.Comparator;
+import java.util.*;
 
 public class CharactersSet {
-    private Character[] characters;
-    private Relation r;
-    private String texts;
 
-    public CharactersSet(int n) {
-        characters = new Character[n];
-        r = new Relation(n);
-        texts = "";
+    private class ComparatorCharacter implements Comparator {
+
+        public int compare(Object arg0, Object arg1) {
+            classes.Character char0 = (classes.Character) arg0;
+            classes.Character char1 = (classes.Character) arg1;
+
+            int flag;
+            if (char0.getCharacter().length() == char1.getCharacter().length())
+                flag = 0;
+            else if (char0.getCharacter().length() < char1.getCharacter().length())
+                flag = 1;
+            else
+                flag = -1;
+            if (flag == 0) {
+                return char0.getCharacter().compareTo(char1.getCharacter());
+            } else {
+                return flag;
+            }
+        }
+    }
+
+    private ArrayList<classes.Character> characters;
+    private Relation r;
+
+    public CharactersSet() {
+        characters = new ArrayList<classes.Character>();
+        r = null;
     }
     public void calculateFrequency(String text) {
         // TO DO !!!
-        int a = 3;
     }
 
     public void calculateText(String text) {
-        Vector <Character> v = new Vector <Character>();
-
+        Vector <classes.Character> v = new Vector <classes.Character>();
+        if ( r == null || r.getRelations().length != v.size() )
+            r = new Relation(v.size());
         // Divideix el text en caracters
         int increment = 0;
         for (int i = 0; i < text.length(); i += increment) {
             //System.out.print("For");
             boolean found = false;
             int j = 0;
-            while ((!found) && (j < characters.length)) {
+            while ((!found) && (j < characters.size())) {
                 //System.out.print("While");
-                String s = characters[j].getCharacter();
+                String s = characters.get(j).getCharacter();
                 System.out.print(s);
                 System.out.print(" - ");
                 //System.out.print(text.substring(i, i + s.length()));
@@ -43,7 +64,7 @@ public class CharactersSet {
                         // S'ha trobat el caracter
                         found = true;
                         increment = s.length();
-                        v.add(characters[j]);
+                        v.add(characters.get(j));
                     }
                     else {
                        System.out.print("No son iguals\n");
@@ -73,7 +94,7 @@ public class CharactersSet {
         return r.getRelation(a, b);
     }
 
-    public int getId(Character c) {
+    public int getId(classes.Character c) {
         String s = c.getCharacter();
         return getId(s);
     }
@@ -82,30 +103,27 @@ public class CharactersSet {
         boolean found = false;
         int i = 0;
         while (!found) {
-            if (characters[i].getCharacter() == s) found = true;
+            if (characters.get(i).getCharacter() == s) found = true;
             else ++i;
         }
         return i;
     }
 
     public String getCharacterContent(int id) {
-        return characters[id].getCharacter();
+        return characters.get(id).getCharacter();
     }
 
-    public Character[] getAllCharacters() {
-        return characters;
+    public classes.Character[] getAllCharacters() {
+        classes.Character ret[] = new classes.Character[characters.size()];
+        for (int i = 0; i < characters.size(); ++i)
+        {
+            ret[i] = characters.get(i).clone();
+        }
+        return ret;
     }
 
-    public void addCharacter(Character c, int pos) {
-        characters[pos] = c;
-    }
-
-    /*
-    Pre: path es un text que es vol afegir // NO ESTIC SEGUR DE QUE FOS AIXÍ, PERO COM ENCARA NO ESTÀ EL CONTROLADOR DE HDD HO DEIXO AIXÍ DE MOMENT
-    Post: Es concatena el nou text amb els textos que ja s'havien introduit. ¿Els dos textos es separen amb un caràcter reservat?
-    */
-    public void addText(String path) {
-        texts.concat("SOMETHING");
-        texts.concat(path);
+    public void addCharacter(classes.Character c) {
+        characters.add(c);
+        Collections.sort(characters, new ComparatorCharacter());
     }
 }

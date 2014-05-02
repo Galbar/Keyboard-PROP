@@ -49,14 +49,6 @@ public class Relation {
     Post:
     */
     public void addToRelation(int a, int b, float value) {
-        /*
-        System.out.print("\na = ");
-        System.out.print(Integer.toString(a));
-        System.out.print("\nb = ");
-        System.out.print(Integer.toString(b));
-        System.out.print("\n"); */
-        System.out.print("\n" + getArrayPosition(a, b));
-        System.out.print(" // ADD = " + value +"\n"); 
         relations[getArrayPosition(a, b)] += value;
         totalSum += value;
     }
