@@ -16,14 +16,12 @@ public class Relation {
     */
     private int getArrayPosition(int a, int b) {
         if (a == b) {} // exception To Do 
-        /*
-        if (a > b) {
             int aux = a;
             a = b;
             b = aux;
         }
-        */
-        return a + b;
+        for (int i = 0; i < a; 
+        return a + b - 1;
     }
 
     public float getRelation(int a, int b) {
@@ -35,17 +33,23 @@ public class Relation {
         relations[getArrayPosition(a, b)] = value;
     }
 
+    public float[] getRelations() {
+        return relations;
+    }
+
     /*
     Pre: a != b
     Post:
     */
     public void addToRelation(int a, int b, float value) {
+        /*
         System.out.print("\na = ");
         System.out.print(Integer.toString(a));
         System.out.print("\nb = ");
         System.out.print(Integer.toString(b));
-        System.out.print("\n");
-        System.out.print(getArrayPosition(a, b));
+        System.out.print("\n"); */
+        System.out.print("\n" + getArrayPosition(a, b));
+        System.out.print(" // ADD = " + value +"\n"); 
         relations[getArrayPosition(a, b)] += value;
         totalSum += value;
     }
