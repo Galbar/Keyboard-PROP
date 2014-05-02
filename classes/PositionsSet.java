@@ -55,6 +55,22 @@ public class PositionsSet {
         Calculate();
     }
     
+   
+    public float getDistance(int x, int y) {
+        return r.getRelation(x,y);
+    }
+    
+    public void setDistance(int x, int y, float k) {
+        r.setRelation(x,y,k);
+    }
+    
+    public Vector getAllPositions() {
+        return p;
+    }
+
+    public Vector getAllDistances() {
+        return r.getRelations();
+    }
     
    
     
