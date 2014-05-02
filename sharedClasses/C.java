@@ -113,7 +113,7 @@ Post: Es retorna una parella amb l’element en qüestió (elements[id]) i la po
 */
 public Pair<c1,c2> getAllocation(int id){
    //Pair(L first, R second) {};
-    Pair<c1,c2> res= new Pair<>(elements.get(id),posicions.get(rel[id]));
+    Pair<c1,c2> res = new Pair<c1, c2>(elements.get(id),posicions.get(rel[id]));
     return res;
 }
 
