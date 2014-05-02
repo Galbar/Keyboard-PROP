@@ -16,7 +16,7 @@ public class PositionsSet {
     private void Calculate() {
         float lastRow = size%10;
         float totalRow = size - lastRow;
-        Vector<Pair<Float, Float>> v = new Vector<>();
+        Vector<Pair<Float, Float>> v = new Vector<Pair<Float, Float>>();
         r = new Relation((int)size);
         
         for (int i = 0; i < totalRow; ++i) {
@@ -50,7 +50,7 @@ public class PositionsSet {
     public PositionsSet(TopologyType T, int n) {
         this.T = T;
         size = n;
-        Vector<Position> p = new Vector<>();
+        Vector<Position> p = new Vector<Position>();
         this.p = p;
         Calculate();
     }
