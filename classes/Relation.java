@@ -1,14 +1,14 @@
 public class Relation {
-    private Float[] relations;
+    private float[] relations;
 
     public Relation(int n) {
-        relations = new Float[(n*n-n)/2];
+        relations = new float[(n*n-n)/2];
         for (int i = 0; i < relations.length; ++i)
                 relations[i] = 0f;
         
     }
 
-    public Float[] getRelations() {
+    public float[] getRelations() {
         return relations;
     }
 
