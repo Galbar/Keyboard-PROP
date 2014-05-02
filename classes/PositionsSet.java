@@ -16,8 +16,8 @@ public class PositionsSet {
     private void Calculate() {
         float lastRow = size%10;
         float totalRow = size - lastRow;
-        r = new Relation(p.size());
         Vector<Pair<Float, Float>> v = new Vector<>();
+        r = new Relation((int)size);
         
         for (int i = 0; i < totalRow; ++i) {
             int aux = (int) (i/MAX_ROW);

@@ -5,6 +5,7 @@ import sharedClasses.*;
 import java.util.*;
 
 public class main {
+	private final static Scanner sc = new Scanner(System.in);
 	private static void print(String s)
 	{
 		System.out.println(s);
@@ -12,7 +13,6 @@ public class main {
 
 	private static String readNextLine()
 	{
-		Scanner sc = new Scanner(System.in);
 		String s = "";
 		do
 		{
@@ -96,11 +96,13 @@ public class main {
 
 			// PositionSet
 			positionsSet = new PositionsSet(topology_type, num_keys);
-			qap = new QAP(alphabet.getAllFrequencies() ,positionsSet.getAllDistances());
-			qap.solve();
-
 
 			// Introdueix Textos
+
+			print("done");
+
+			qap = new QAP(alphabet.getAllFrequencies() ,positionsSet.getAllDistances());
+			qap.solve();
 
 			// Calcula
 

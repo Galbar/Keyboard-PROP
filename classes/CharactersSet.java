@@ -39,8 +39,6 @@ public class CharactersSet {
 
     public void calculateText(String text) {
         Vector <classes.Character> v = new Vector <classes.Character>();
-        if ( r == null || r.getRelations().length != v.size() )
-            r = new Relation(v.size());
         // Divideix el text en caracters
         int increment = 0;
         for (int i = 0; i < text.length(); i += increment) {
@@ -129,5 +127,6 @@ public class CharactersSet {
     public void addCharacter(classes.Character c) {
         characters.add(c);
         Collections.sort(characters, new ComparatorCharacter());
+        r = new Relation(characters.size());
     }
 }
