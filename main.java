@@ -17,7 +17,7 @@ public class main {
 		do
 		{
 			s = sc.nextLine();
-		} while (s.length() == 0 && s.charAt(0) == '#');
+		} while (s.length() == 0 || s.charAt(0) == '#');
 		return s;
 	}
 
@@ -99,7 +99,6 @@ public class main {
 
 			// Introdueix Textos
 
-			print("done");
 			CharactersSet cs = new CharactersSet(alphabet.getCharacters());
 			classes.Character[] c = cs.getAllCharacters();
 			for(int i = 0; i < c.length; ++i)
@@ -109,9 +108,9 @@ public class main {
 
 			int num_texts = Integer.parseInt(readNextLine());
 			for (int i = 0; i < num_texts; ++i) {
-				String text;
+				String text = "";
 				String line = readNextLine();
-				while (!line.equals("\end")) {
+				while (!line.equals("\\end")) {
 					text += line;
 					line = readNextLine();
 				}

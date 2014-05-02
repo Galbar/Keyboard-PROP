@@ -1,0 +1,21 @@
+# Això és un comentari an input
+
+# Nom del Alfabet
+Alessio-Marc
+# Topologia: Squared o Circular
+Squared
+# Mode d'ús: Right, Left o Both
+Left
+# Nombre de caracters
+4
+# Els caracters
+asp
+q
+we
+d
+# Nombre de texts
+1
+# Text
+aspdqwe
+# final del text
+\end
