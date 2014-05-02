@@ -100,7 +100,10 @@ public class main {
 			// Introdueix Textos
 
 			print("done");
-
+			/*
+			CharactersSet cs = new CharactersSet(alphabet.getCharacters());
+			cs.calculateText();
+			*/
 			qap = new QAP(alphabet.getAllFrequencies() ,positionsSet.getAllDistances());
 			qap.solve();
 
