@@ -11,6 +11,7 @@ public class CharactersSet {
         texts = "";
     }
     public void calculateFrequency(String text) {
+        // TO DO !!!
         int a = 3;
     }
 
@@ -20,23 +21,44 @@ public class CharactersSet {
         // Divideix el text en caracters
         int increment = 0;
         for (int i = 0; i < text.length(); i += increment) {
+            //System.out.print("For");
             boolean found = false;
             int j = 0;
             while ((!found) && (j < characters.length)) {
+                //System.out.print("While");
                 String s = characters[j].getCharacter();
-                if (text.substring(i, s.length()) == s) {
-                    // S'ha trobat el caracter
-                    found = true;
-                    increment = s.length();
-                    v.add(characters[j]);
+                System.out.print(s);
+                System.out.print(" - ");
+                //System.out.print(text.substring(i, i + s.length()));
+                System.out.print(" = ");
+
+                if (i + s.length() <= text.length()) {
+                    System.out.print("Suficient llargada\n");
+                    if (text.substring(i, i + s.length()).equals(s)) {
+                        System.out.print("Son iguals\n");
+
+                        //System.out.print(s);
+                        // S'ha trobat el caracter
+                        found = true;
+                        increment = s.length();
+                        v.add(characters[j]);
+                    }
+                    else {
+                       System.out.print("No son iguals\n");
+                        ++j;
+                    }
                 }
-                else ++j;
+                else {
+                    System.out.print("Massa Llarg - S'acaba el text\n");
+                    ++j;
+                }
             }
             if (!found) increment = 1;
         }
 
         // Recorre el text ja dividit en caracters i calcula les freqüències
         for (int i = 0; i < v.size(); ++i) {
+            System.out.print("Next For");
             r.setRelation(getId(v.elementAt(i)), getId(v.elementAt(i + 1)), r.getRelation(getId(v.elementAt(i)), getId(v.elementAt(i + 1))) + 1f);
             r.setRelation(getId(v.elementAt(i)), getId(v.elementAt(i + 2)), r.getRelation(getId(v.elementAt(i)), getId(v.elementAt(i + 2))) + 0.5f);
         }
@@ -44,6 +66,10 @@ public class CharactersSet {
 
     public float getAffinity(int a, int b) {
         return r.getRelation(a, b);
+    }
+
+    public float[] getAffinities() {
+        return r.getRelations();
     }
 
 
@@ -62,8 +88,16 @@ public class CharactersSet {
         return i;
     }
 
+    public String getCharacterContent(int id) {
+        return characters[id].getCharacter();
+    }
+
     public Character[] getAllCharacters() {
         return characters;
+    }
+
+    public void addCharacter(Character c, int pos) {
+        characters[pos] = c;
     }
 
     /*
