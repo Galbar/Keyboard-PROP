@@ -4,9 +4,10 @@
         - References: ??
 */
 package classes;
+import sharedClasses.*;
 import enumerations.*;
 
-public class Keyboard {
+public class Keyboard extends C {
     private String name;
     private TopologyType topology;
     private UsageMode usage_mode;

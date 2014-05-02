@@ -1,9 +1,9 @@
 package sharedClasses;
 import java.util.*;
 
-public class HungarianAlgorithm{
-
-	public int[][] computeAssignments(Float[][] matrix)
+public class HungarianAlgorithm
+{
+	static public int[][] computeAssignments(Float[][] matrix)
 	{
 		reduceMatrix(matrix);
 		int[] starsByRow = new int[matrix.length]; Arrays.fill(starsByRow,-1);
@@ -46,14 +46,14 @@ public class HungarianAlgorithm{
 		return ret;
 	}
 
-	private boolean allAreCovered(int[] coveredCols)
+	static private boolean allAreCovered(int[] coveredCols)
 	{
 		for (int covered : coveredCols)
 			if (0 == covered) return false;
 		return true;
 	}
 
-	private void reduceMatrix(Float[][] matrix)
+	static private void reduceMatrix(Float[][] matrix)
 	{
 		for (int i = 0; i < matrix.length; i++)
 		{
@@ -78,7 +78,7 @@ public class HungarianAlgorithm{
 		}
 	}
 
-	private void initStars(Float costMatrix[][], int[] starsByRow, int[] starsByCol)
+	static private void initStars(Float costMatrix[][], int[] starsByRow, int[] starsByCol)
 	{
 		int [] rowHasStarredZero = new int[costMatrix.length];
 		int [] colHasStarredZero = new int[costMatrix[0].length];
@@ -95,13 +95,13 @@ public class HungarianAlgorithm{
 				}
 	}
 
-	private void coverColumnsOfStarredZeroes(int[] starsByCol, int[] coveredCols)
+	static private void coverColumnsOfStarredZeroes(int[] starsByCol, int[] coveredCols)
 	{
 		for (int i = 0; i < starsByCol.length; i++)
 			coveredCols[i] = -1 == starsByCol[i] ? 0 : 1;
 	}
 
-	private int[] primeSomeUncoveredZero(Float matrix[][], int[] primesByRow, int[] coveredRows, int[] coveredCols)
+	static private int[] primeSomeUncoveredZero(Float matrix[][], int[] primesByRow, int[] coveredRows, int[] coveredCols)
 	{
 		for (int i = 0; i < matrix.length; i++)
 		{
@@ -116,7 +116,7 @@ public class HungarianAlgorithm{
 		return null;
 	}
 
-	private void incrementSetOfStarredZeroes(int[] unpairedZeroPrime, int[] starsByRow, int[] starsByCol, int[] primesByRow)
+	static private void incrementSetOfStarredZeroes(int[] unpairedZeroPrime, int[] starsByRow, int[] starsByCol, int[] primesByRow)
 	{
 		int i, j = unpairedZeroPrime[1];
 
@@ -151,7 +151,7 @@ public class HungarianAlgorithm{
 		}
 	}
 
-	private void makeMoreZeroes(Float[][] matrix, int[] coveredRows, int[] coveredCols)
+	static private void makeMoreZeroes(Float[][] matrix, int[] coveredRows, int[] coveredCols)
 	{
 		Float minUncoveredValue = Float.MAX_VALUE;
 		for (int i = 0; i < matrix.length; i++)
