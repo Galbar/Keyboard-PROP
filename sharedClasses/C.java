@@ -1,7 +1,6 @@
 package sharedClasses;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Vector;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,8 +14,8 @@ import java.util.Vector;
 public class C <c1, c2> {
 protected float qualificacio;
 protected String id;
-protected Vector<c1> elements;
-protected Vector<c2> posicions;
+protected ArrayList<c1> elements;
+protected ArrayList<c2> posicions;
 protected Integer[ ] rel;
 
 /*Pre: -
@@ -24,8 +23,8 @@ Post: Es crea una nova instància.
 */
 public C(String id, c1[ ] elements, c2[ ] posicions, int[ ] rel){
    this.id=id;
-   this.elements= new Vector<>(Arrays.asList(elements));
-   this.posicions= new Vector<>(Arrays.asList(posicions));
+   this.elements= new ArrayList<>(Arrays.asList(elements));
+   this.posicions= new ArrayList<>(Arrays.asList(posicions));
    this.rel = new Integer[rel.length];
    for (int i = 0; i < rel.length; ++i) this.rel[i] = rel[i];   
 }
@@ -35,8 +34,8 @@ Pre: -
 Post: Es crea una nova instancia amb id = id
 */
 public C(String id){
-    this.elements = new Vector<>();
-    this.posicions = new Vector<>();
+    this.elements = new ArrayList<>();
+    this.posicions = new ArrayList<>();
     this.rel = new Integer[0];
     this.id=id;
 }
@@ -46,8 +45,8 @@ Pre: -
 Post: es crea una nova instancia buida.
 */
 public C() {
-    this.elements = new Vector<>();
-    this.posicions = new Vector<>();
+    this.elements = new ArrayList<>();
+    this.posicions = new ArrayList<>();
     this.rel = new Integer[0];
 }
 
@@ -84,7 +83,7 @@ public String getID() {
 Pre: -.
 Post: El resultat de la funció és el conjunt d’elements c1 que conté C.
 */
-public Vector<c1> getAllElements() {
+public ArrayList<c1> getAllElements() {
     return elements;
 }
 
@@ -92,7 +91,7 @@ public Vector<c1> getAllElements() {
 Pre: -.
 Post: El resultat de la funció és el conjunt de posicions c2 que conté C.
 */
-public Vector<c2> getAllPositions(){
+public ArrayList<c2> getAllPositions(){
     return posicions;
 }
 
