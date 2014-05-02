@@ -1,3 +1,5 @@
+//package classes;
+
 import java.util.Vector;
 
 public class CharactersSet {
@@ -57,21 +59,19 @@ public class CharactersSet {
         }
 
         // Recorre el text ja dividit en caracters i calcula les freqüències
-        for (int i = 0; i < v.size(); ++i) {
-            System.out.print("Next For");
-            r.setRelation(getId(v.elementAt(i)), getId(v.elementAt(i + 1)), r.getRelation(getId(v.elementAt(i)), getId(v.elementAt(i + 1))) + 1f);
-            r.setRelation(getId(v.elementAt(i)), getId(v.elementAt(i + 2)), r.getRelation(getId(v.elementAt(i)), getId(v.elementAt(i + 2))) + 0.5f);
+        for (int i = 0; i < v.size() - 1; ++i) {
+            System.out.print("\n" + v.elementAt(i).getCharacter() + " - " + v.elementAt(i+1).getCharacter());
+            r.addToRelation(getId(v.elementAt(i)), getId(v.elementAt(i + 1)), 1f);
+            if (i != v.size() - 2) {
+                System.out.print("\n" + v.elementAt(i).getCharacter() + " - " + v.elementAt(i+2).getCharacter());
+                r.addToRelation(getId(v.elementAt(i)), getId(v.elementAt(i + 2)), 0.5f);
+            }
         }
     }
 
     public float getAffinity(int a, int b) {
         return r.getRelation(a, b);
     }
-
-    public float[] getAffinities() {
-        return r.getRelations();
-    }
-
 
     public int getId(Character c) {
         String s = c.getCharacter();

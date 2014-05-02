@@ -1,4 +1,4 @@
-package classes;
+//package classes;
 import java.util.*;
 
 public class Relation {
@@ -28,7 +28,7 @@ public class Relation {
         for (int i = 1; i <= a; ++i) {
             base += n - i;
         }
-        return a + b - 1;
+        return base + b - 1 - a;
     }
 
     public float getRelation(int a, int b) {
