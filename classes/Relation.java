@@ -1,10 +1,13 @@
+package classes;
 import java.util.*;
 
 public class Relation {
     private float[] relations;
     private float totalSum;
+    int n;
 
     public Relation(int n) {
+        this.n = n;
         totalSum = 0;
         relations = new float[(n*n-n)/2];
         Arrays.fill(relations, 0f);
@@ -16,9 +19,14 @@ public class Relation {
     */
     private int getArrayPosition(int a, int b) {
         if (a == b) {} // exception To Do 
+        if (a > b) {
             int aux = a;
             a = b;
             b = aux;
+        }
+        int base = 0;
+        for (int i = 1; i <= a; ++i) {
+            base += n - i;
         }
         return a + b - 1;
     }
