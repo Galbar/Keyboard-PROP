@@ -1,3 +1,4 @@
+package sharedClasses;
 import java.util.ArrayList;
 import java.util.Arrays;
 /*
@@ -24,6 +25,7 @@ public C(String id, c1[ ] elements, c2[ ] posicions, int[ ] rel){
    this.id=id;
    this.elements=elements;
    this.posicions=posicions;
+   this.rel = new Integer[rel.length];
    for (int i = 0; i < rel.length; ++i) this.rel[i] = rel[i];   
 }
 public C(String id){
@@ -63,6 +65,10 @@ posicions = novaposicio.toArray(posicions);
 ArrayList<Integer> p = new ArrayList<>(Arrays.asList(rel));
 p.add(elements.length);
 rel = p.toArray(rel);
+}
+
+public String getID() {
+    return id;
 }
 
 /*

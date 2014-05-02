@@ -8,6 +8,8 @@
  *
  * @author Josep
  */
+package sharedClasses;
+
 public class Pair<L, R> {
 	public L first;
 	public R second;
