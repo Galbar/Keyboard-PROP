@@ -94,6 +94,10 @@ public class CharactersSet {
         return r.getRelation(a, b);
     }
 
+    public float[][] getAllAffinities() {
+        return r.getRelations();
+    }
+
     public int getId(classes.Character c) {
         String s = c.getCharacter();
         return getId(s);

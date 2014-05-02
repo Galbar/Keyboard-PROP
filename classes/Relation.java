@@ -40,8 +40,14 @@ public class Relation {
         relations[getArrayPosition(a, b)] = value;
     }
 
-    public float[] getRelations() {
-        return relations;
+    public float[][] getRelations() {
+        float result[][] = new float[n][n];
+        for (int i = 0; i < n; ++i) {
+            for (int j = i + 1; j < n; ++j) {
+                result[i][j] = result[j][i] = getRelation(i, j);
+            }
+        }
+        return result;
     }
 
     /*

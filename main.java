@@ -12,12 +12,12 @@ public class main {
 
 	private static String readNextLine()
 	{
-		Scanner sc = new Scanner();
+		Scanner sc = new Scanner(System.in);
 		String s = "";
 		do
 		{
 			s = sc.nextLine();
-		} while (s.length() == 0 && s.charAt(0) == "#");
+		} while (s.length() == 0 && s.charAt(0) == '#');
 		return s;
 	}
 
@@ -65,7 +65,47 @@ public class main {
 		}
 		else
 		{
-			usage();
+			String name;
+			TopologyType topology_type;
+			UsageMode usage_mode;
+			Alphabet alphabet = new Alphabet();
+			PositionsSet positionsSet;
+			int num_keys;
+			QAP qap;
+
+			// Introdueix nom
+			name = readNextLine();
+
+			// Introdueix topologia
+			String topology = readNextLine();
+			if (topology.equals("Squared")) topology_type = TopologyType.Squared;
+			else if (topology.equals("Circular")) topology_type = TopologyType.Circular;
+			else return;
+
+			// Introdueix mode d'us
+			String usage = readNextLine();
+			if (usage.equals("Right")) usage_mode = UsageMode.Right;
+			else if (usage.equals("Left")) usage_mode = UsageMode.Left;
+			else if (usage.equals("Both")) usage_mode = UsageMode.Both;
+			else return;
+
+			// Introdueix Alfabet
+			num_keys = Integer.parseInt(readNextLine());
+			for (int i = 0; i < num_keys; ++i)
+				alphabet.addCharacter(readNextLine());
+
+			// PositionSet
+			positionsSet = new PositionsSet(topology_type, num_keys);
+			qap = new QAP(alphabet.getAllFrequencies() ,positionsSet.getAllDistances());
+			qap.solve();
+
+
+			// Introdueix Textos
+
+			// Calcula
+
+			// Mostra els resultats
+
 		}
 	}
 }

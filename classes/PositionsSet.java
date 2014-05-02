@@ -14,9 +14,9 @@ public class PositionsSet {
     private Vector<Position> p;
     
     private void Calculate() {
-        float dist;
         float lastRow = size%10;
         float totalRow = size - lastRow;
+        r = new Relation(p.size());
         Vector<Pair<Float, Float>> v = new Vector<>();
         
         for (int i = 0; i < totalRow; ++i) {
@@ -39,7 +39,7 @@ public class PositionsSet {
             for (int j = i + 1; j < size; ++j) {
                 float x = (float) Math.pow(v.get(j).second-v.get(i).second,2);
                 float y = (float) Math.pow(v.get(j).first-v.get(i).first,2);
-                dist = (float) sqrt(x+y);
+                float dist = (float) sqrt(x+y);
                 //System.out.println("i: " + i + " j: " + j + " dist: " + dist);
                 r.setRelation(i,j,dist);
                 p.add(new Position(x,y));
@@ -68,7 +68,7 @@ public class PositionsSet {
         return p;
     }
 
-    public Vector getAllDistances() {
+    public float[][] getAllDistances() {
         return r.getRelations();
     }
     

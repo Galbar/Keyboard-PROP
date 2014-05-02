@@ -1,6 +1,5 @@
-
+package classes;
 import java.util.Vector;
-
 
 public class Alphabet{
 
@@ -10,7 +9,7 @@ public class Alphabet{
 	
 	/*Inicialitzadora */
 	public Alphabet() {
-
+        c = new CharactersSet();
 	}
 	
 	/* Pre: - */
@@ -21,8 +20,8 @@ public class Alphabet{
 	
 	/* Pre: Rep un String */
     /* Post: Un nou nom ha sigut assignat a alphabet */
-    public void setName(String newname) {
-        this.name = newname;
+    public void setName(String name) {
+        this.name = name;
     }
     
     /* Pre: - */
@@ -35,5 +34,9 @@ public class Alphabet{
     {
     	classes.Character ch = new classes.Character(c);
     	this.c.addCharacter(ch);
+    }
+
+    public float[][] getAllFrequencies() {
+        return c.getAllAffinities();
     }
 }
