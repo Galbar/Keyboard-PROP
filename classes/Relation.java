@@ -1,5 +1,3 @@
-package classes;
-import sharedClasses.*;
 import java.util.*;
 
 public class Relation {
@@ -22,7 +20,6 @@ public class Relation {
             a = b;
             b = aux;
         }
-        for (int i = 0; i < a; 
         return a + b - 1;
     }
 
