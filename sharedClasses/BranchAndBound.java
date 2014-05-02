@@ -1,5 +1,4 @@
 package sharedClasses;
-
 import java.util.*;
 
 public class BranchAndBound {

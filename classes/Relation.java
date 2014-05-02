@@ -1,3 +1,5 @@
+package classes;
+import sharedClasses.*;
 import java.util.*;
 
 public class Relation {

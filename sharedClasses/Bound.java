@@ -42,11 +42,10 @@ public class Bound
 		Float L[][] = new Float[n][n];
 		L = add(X, Y);
 
-		HungarianAlgorithm ha = new HungarianAlgorithm();
 		Float aux[][] = new Float[n][n];
 		for (int i = 0; i < n; ++i)
 			aux[i] = L[i].clone();
-		int[][] assig = ha.computeAssignments(aux);
+		int[][] assig = HungarianAlgorithm.computeAssignments(aux);
 
 		for (int i = 0; i < n; ++i)
 			cost += L[assig[i][0]][assig[i][1]];
