@@ -1,3 +1,8 @@
+import classes.Keyboard;
+import classes.CharactersSet;
+import classes.Alphabet;
+import classes.PositionsSet;
+import classes.Position;
 import classes.*;
 import classes.enumerations.*;
 import sharedClasses.*;

@@ -4,7 +4,6 @@ import sharedClasses.*;
 import classes.enumerations.*;
 import static java.lang.Math.sqrt;
 import java.util.*;
-import classes.Position;
 
 public class PositionsSet {
     private final TopologyType T;
