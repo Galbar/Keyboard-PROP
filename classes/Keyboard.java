@@ -11,7 +11,7 @@ public class Keyboard <c1, c2> extends C <c1, c2>
 	private boolean specialChars;
 	private int width;
 	private int height;
-	private Vector<String> references;
+	private Vector<String> references = new Vector<String>();
 
 	/* Constructora */
 	/*

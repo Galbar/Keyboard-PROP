@@ -1,7 +1,7 @@
 package classes;
 
 public class Character {
-    public String character;
+    private String character;
 
     public Character(String character) {
         this.character = character;
