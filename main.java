@@ -40,6 +40,18 @@ public class main {
 		if( s.equals("-t") || s.equals("--help"))
 		{
 			print("Classes available for testing:");
+			print("Alphabet");
+			print("Character");
+			print("CharactersSet");
+			print("Keyboard");
+			print("Position");
+			print("PositionsSet");
+			print("Relation");
+			print("BranchAndBound");
+			print("BranchAndBound");
+			print("BranchAndBound");
+			print("BranchAndBound");
+			print("BranchAndBound");
 			print("BranchAndBound");
 		}
 	}
