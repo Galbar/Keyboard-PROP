@@ -38,16 +38,18 @@ public class CharactersSetDriver {
                 }
                 
 		charactersSet.calculateText(textf.toString());
-
+                
 		for (int i = 0; i < n; ++i) {
 			for ( int j = i + 1; j < n; ++j) {
-                                System.out.print(cs[i].getCharacter());
+                                System.out.print(charactersSet.getCharacterContent(i));
                                 System.out.print(" ");
-                                System.out.print(cs[j].getCharacter());
+                                System.out.print(charactersSet.getCharacterContent(j));
                                 System.out.print(" ");
 				System.out.print(charactersSet.getAffinity(i, j));
                                 System.out.print("\n\b");
 			}
 		}
+                System.out.print(charactersSet.getAffinity(0,1)==charactersSet.getAllAffinities()[0][1] && charactersSet.getId(cs[0]) == charactersSet.getId(cs[0].getCharacter()) && charactersSet.getCharacterContent(0) == charactersSet.getAllCharacters()[0].getCharacter());
+                
 	}
 }
