@@ -4,7 +4,7 @@ import java.util.*;
 public class Relation {
     private float[] relations;
     private float totalSum;
-    int n;
+    private int n;
 
     public Relation(int n) {
         this.n = n;
