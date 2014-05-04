@@ -47,7 +47,7 @@ public class main {
 			print("Position");
 			print("PositionsSet");
 			print("Relation");
-			print("# Shared Classes")
+			print("# Shared Classes");
 			print("Bound");
 			print("BranchAndBound");
 			print("C");
