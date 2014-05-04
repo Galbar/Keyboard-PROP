@@ -69,10 +69,7 @@ public class CharactersSet {
                 String s = characters.get(j).getCharacter();
 
                 if (i + s.length() <= text.length()) {
-                    System.out.print("Suficient llargada\n");
                     if (text.substring(i, i + s.length()).equals(s)) {
-                        System.out.print("Son iguals\n");
-
                         // S'ha trobat el caracter
                         found = true;
                         increment = s.length();
