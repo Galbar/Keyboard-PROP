@@ -30,7 +30,7 @@ public class CharactersSet {
     private Relation r;
 
     public CharactersSet(classes.Character[] cs) {
-        characters = new ArrayList<classes.Character>(Arrays.asList(cs));
+        characters = new ArrayList<>(Arrays.asList(cs));
         Collections.sort(characters, new ComparatorCharacter());
         r = new Relation(cs.length);
     }
