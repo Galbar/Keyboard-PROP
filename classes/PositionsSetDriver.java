@@ -30,7 +30,7 @@ public class PositionsSetDriver {
         ps.setDistance(x, y, dist);
         System.out.print("S'ha creat un conjunt de posicions amb ");
         System.out.print(ps.getAllPositions().length);
-        System.out.print(" posicions i amb distancia(proporcional) ");
+        System.out.print(" posicions i amb distancia ");
         System.out.print(ps.getDistance(x, y));
         System.out.print(" entre ");
         System.out.print(x);
