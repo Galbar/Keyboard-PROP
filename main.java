@@ -47,12 +47,14 @@ public class main {
 			print("Position");
 			print("PositionsSet");
 			print("Relation");
+			print("# Shared Classes")
+			print("Bound");
 			print("BranchAndBound");
-			print("BranchAndBound");
-			print("BranchAndBound");
-			print("BranchAndBound");
-			print("BranchAndBound");
-			print("BranchAndBound");
+			print("C");
+			print("InitialSolution");
+			print("Pair");
+			print("QAP");
+			print("TabuSearch");
 		}
 	}
 
