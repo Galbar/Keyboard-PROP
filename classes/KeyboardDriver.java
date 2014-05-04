@@ -19,8 +19,12 @@ public class KeyboardDriver {
         String nom = scaner.next();
         System.out.print("introdueixi el nombre de tecles\n\b");
         int n = scaner.nextInt();
+        classes.Position[] p =new classes.Position[n];
+        classes.Character[] c =new classes.Character[n];
+        int[] ass = new int[n];
         if(n%3 != 0) n+=2;
         classes.Keyboard k = new classes.Keyboard<>(nom,classes.enumerations.TopologyType.Squared,classes.enumerations.UsageMode.Default,n/3,3);
+        classes.Keyboard k1 =new classes.Keyboard<>(nom,classes.enumerations.TopologyType.Squared,classes.enumerations.UsageMode.Default,n/3,3,c,p,ass);
         System.out.print("introdueixi el nombre de referencies i aquestes\n\b");
         n = scaner.nextInt();
         for(int i=0;i<n;++i)k.addReference(scaner.next());
