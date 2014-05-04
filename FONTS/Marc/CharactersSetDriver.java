@@ -41,9 +41,9 @@ public class CharactersSetDriver {
 
 		for (int i = 0; i < n; ++i) {
 			for ( int j = i + 1; j < n; ++j) {
-                                System.out.print(cs[i]);
+                                System.out.print(cs[i].getCharacter());
                                 System.out.print(" ");
-                                System.out.print(cs[j]);
+                                System.out.print(cs[j].getCharacter());
                                 System.out.print(" ");
 				System.out.print(charactersSet.getAffinity(i, j));
                                 System.out.print("\n\b");
