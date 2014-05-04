@@ -49,7 +49,10 @@ public class Relation {
     * @param b Id de l'altre element que forma la relació. b != a.
     */
     public float getRelation(int a, int b) {
-        return relations[getArrayPosition(a, b)];
+        if (a != b)
+            return relations[getArrayPosition(a, b)];
+        else 
+            return 0;
     }
 
     /**
@@ -60,7 +63,10 @@ public class Relation {
     * @return Float que conté el precentatge que representa aquesta relació respecte totes les relacions.
     */
     public float getProportion(int a, int b) {
-        return relations[getArrayPosition(a, b)]/totalSum;
+        if (a != b) 
+            return relations[getArrayPosition(a, b)]/totalSum;
+        else
+            return 0;
     }
 
     /**
@@ -70,8 +76,10 @@ public class Relation {
     * @param value Float que conté el valor de la relació. 
     */
     public void setRelation(int a, int b, float value) {
-        totalSum += value - relations[getArrayPosition(a, b)];
-        relations[getArrayPosition(a, b)] = value;
+        if (a != b) {
+            totalSum += value - relations[getArrayPosition(a, b)];
+            relations[getArrayPosition(a, b)] = value;
+        }
     }
 
     /**
@@ -109,7 +117,9 @@ public class Relation {
     * @param value Float que conté el valor de la relació. 
     */
     public void addToRelation(int a, int b, float value) {
-        relations[getArrayPosition(a, b)] += value;
-        totalSum += value;
+        if (a != b) {
+            relations[getArrayPosition(a, b)] += value;
+            totalSum += value;
+        }
     }
 }
