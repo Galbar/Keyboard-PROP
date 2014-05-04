@@ -11,7 +11,8 @@ public class CharactersSetDriver {
 		int n = 0;
 		//while (n <= 0) n = scanner.nextInt();
 		n = 4; // ONLY FOR THIS TEST
-		CharactersSet charactersSet = new CharactersSet(n);
+                classes.Character[] cs = new classes.Character[n];
+		CharactersSet charactersSet = new CharactersSet(cs);
 
 		//System.out.print("Introdueixi els caracters de cada tecla:\n");
 
@@ -30,16 +31,16 @@ public class CharactersSetDriver {
 		}
 		*/
 		Character c = new Character("asp");
-		charactersSet.addCharacter(c, 0);
+		charactersSet.addCharacter(c);
 
 		c = new Character("we");
-		charactersSet.addCharacter(c, 1);
+		charactersSet.addCharacter(c);
 
 		c = new Character("q");
-		charactersSet.addCharacter(c, 2);
+		charactersSet.addCharacter(c);
 
 		c = new Character("d");
-		charactersSet.addCharacter(c, 3);
+		charactersSet.addCharacter(c);
 
 		//System.out.print("Introdueixi el text a analitzar:\n");
 		//String text = scanner.nextLine();
