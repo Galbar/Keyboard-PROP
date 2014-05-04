@@ -37,5 +37,6 @@ public class PositionsSetDriver {
         System.out.print(" i ");
         System.out.print(y);
         System.out.print("\n\b");
+        System.out.print(ps.getAllDistances()[x][y]==ps.getDistance(x, y));
     }
 }
