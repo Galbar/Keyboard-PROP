@@ -9,7 +9,7 @@ import sharedClasses.*;
 
 import java.util.*;
 
-public class main {
+public class Main {
 	private final static Scanner sc = new Scanner(System.in);
 	private static void print(String s)
 	{
@@ -40,21 +40,21 @@ public class main {
 		if( s.equals("-t") || s.equals("--help"))
 		{
 			print("Classes available for testing:");
-			print("Alphabet");
-			print("Character");
-			print("CharactersSet");
-			print("Keyboard");
-			print("Position");
-			print("PositionsSet");
-			print("Relation");
+			print("    Alphabet");
+			print("    Character");
+			print("    CharactersSet");
+			print("    Keyboard");
+			print("    Position");
+			print("    PositionsSet");
+			print("    Relation");
 			print("# Shared Classes");
-			print("Bound");
-			print("BranchAndBound");
-			print("C");
-			print("InitialSolution");
-			print("Pair");
-			print("QAP");
-			print("TabuSearch");
+			print("    Bound");
+			print("    BranchAndBound");
+			print("    C");
+			print("    InitialSolution");
+			print("    Pair");
+			print("    QAP");
+			print("    TabuSearch");
 		}
 	}
 
@@ -73,12 +73,73 @@ public class main {
 			}
 			else if ( option.equals("-t") || option.equals("--test") && args.length > 1 )
 			{
+				if(args.length < 2)
+				{
+					usage("-t");
+					return;
+				}
+				String s[] = new String[args.length-1];
+				for (int i = 2; i < args.length; ++i)
+					s[i-2] = args[i];
 				if (args[1].equals("BranchAndBound"))
 				{
-					String s[] = new String[args.length-1];
-					for (int i = 2; i < args.length; ++i)
-						s[i-1] = args[i];
 					DriverBranchAndBound.main(s);
+				}
+				else if (args[1].equals("Alphabet"))
+				{
+					print("Alphabet Driver");
+				}
+				else if (args[1].equals("Character"))
+				{
+					print("Character Driver");
+				}
+				else if (args[1].equals("CharactersSet"))
+				{
+					print("CharactersSet Driver");
+				}
+				else if (args[1].equals("Keyboard"))
+				{
+					print("Keyboard Driver");
+				}
+				else if (args[1].equals("Position"))
+				{
+					print("Position Driver");
+				}
+				else if (args[1].equals("PositionsSet"))
+				{
+					print("PositionsSet Driver");
+				}
+				else if (args[1].equals("Relation"))
+				{
+					print("Relation Driver");
+				}
+				else if (args[1].equals("Bound"))
+				{
+					print("Bound Driver");
+				}
+				else if (args[1].equals("BranchAndBound"))
+				{
+					print("BranchAndBound Driver");
+				}
+				else if (args[1].equals("C"))
+				{
+					print("C Driver");
+				}
+				else if (args[1].equals("InitialSolution"))
+				{
+					print("InitialSolution Driver");
+				}
+				else if (args[1].equals("Pair"))
+				{
+					print("Pair Driver");
+				}
+				else if (args[1].equals("QAP"))
+				{
+					print("QAP Driver");
+				}
+				else if (args[1].equals("TabuSearch"))
+				{
+					print("TabuSearch Driver");
 				}
 			}
 		}
