@@ -69,7 +69,7 @@ public class main {
 			}
 		}
 		else
-		{
+		{                    
 			String name;
 			TopologyType topology_type;
 			UsageMode usage_mode;
