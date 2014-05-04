@@ -1,17 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package classes;
 
 import java.util.Scanner;
 
 /**
- *
- * @author Sam
- */
+* Classe que comprova el funcionament de Character.
+*
+* @author Marc Muntanyola
+*/
+
 public class CharacterDriver {
     public static void main(String[] args) {
         System.out.print("Introdueixi el character a crear\n\b");

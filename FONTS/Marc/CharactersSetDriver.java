@@ -3,6 +3,12 @@ package classes;
 import java.util.Scanner;
 import java.lang.StringBuilder;
 
+/**
+* Classe que comprova el funcionament de CharactersSet.
+*
+* @author Marc Muntanyola
+*/
+
 public class CharactersSetDriver {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
