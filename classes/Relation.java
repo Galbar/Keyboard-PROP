@@ -41,8 +41,8 @@ public class Relation {
 
 
     public void setRelation(int a, int b, float value) {
-        System.out.println("setRelation: a="+a+", b="+b+", value="+value);
-        System.out.println("pos: "+getArrayPosition(a, b));
+        //System.out.println("setRelation: a="+a+", b="+b+", value="+value);
+        //System.out.println("pos: "+getArrayPosition(a, b));
         totalSum += value - relations[getArrayPosition(a, b)];
         relations[getArrayPosition(a, b)] = value;
     }

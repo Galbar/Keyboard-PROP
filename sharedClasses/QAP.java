@@ -1,9 +1,9 @@
+package sharedClasses;
+
 /**
  * @author Alvaro Mateo
  * 
  */
-package sharedClasses;
-
 public class QAP {
   private float[][] costs;
   private float[][] distances;
@@ -25,7 +25,7 @@ public class QAP {
   public int[] solve(boolean forceBranchAndBound) {
     int[] res;
     int x = distances.length;
-    if (forceBranchAndBound || x < 14)
+    if (forceBranchAndBound || x < 12)
       res = callBranch(this.distances, this.costs);
     else
       res = callAprox(this.distances, this.costs);

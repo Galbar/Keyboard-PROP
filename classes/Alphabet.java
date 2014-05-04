@@ -1,31 +1,45 @@
 package classes;
 import java.util.ArrayList;
 
+/**
+ * Conté tots els caràcters de l'alfabet.
+ *
+ * @author Albert Trelis
+ */
 public class Alphabet{
 
-	/*Atributs*/
-	private String name;
-	private ArrayList<Character> c;
-	
-	/*Inicialitzadora */
-	public Alphabet() {
-        c = new ArrayList<Character>();
-	}
-	
-	/* Pre: - */
-	/* Post: Retorna el nom de l'alfabet */
-	public String getName() {
-        return name;
+    /*Atributs*/
+    private String name;
+    private ArrayList<Character> c;
+
+    /**
+     * Constructora.
+     * 
+     */
+    public Alphabet() {
+    c = new ArrayList<Character>();
+    }
+
+    /**
+     * Consulta el nom de l'alfabet.
+     * @return El nom de l'alfabet.
+     */
+    public String getName() {
+    return name;
     }
 	
-	/* Pre: Rep un String */
-    /* Post: Un nou nom ha sigut assignat a alphabet */
+    /**
+     * Modifica el nom de l'alfabet.
+     * @param  x  String amb el nou nom.
+     */
     public void setName(String name) {
         this.name = name;
     }
     
-    /* Pre: - */
-    /* Post: Retorna tots els caràcters */
+    /**
+	 * Consulta els caràcters de l'alfabet.
+	 * @return Tots els caràcters que conté l'alfabet.
+	 */
     public classes.Character[] getCharacters() {
         classes.Character ret[] = new classes.Character[c.size()];
         for (int i = 0; i < this.c.size(); ++i)
@@ -35,6 +49,10 @@ public class Alphabet{
         return ret;
     }
 
+    /**
+	 * Afageig un nou caràcter
+	 * @param  x  Nou caràcter.
+	 */
     public void addCharacter(String c)
     {
     	classes.Character ch = new classes.Character(c);

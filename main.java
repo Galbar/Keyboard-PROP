@@ -1,3 +1,8 @@
+import classes.Keyboard;
+import classes.CharactersSet;
+import classes.Alphabet;
+import classes.PositionsSet;
+import classes.Position;
 import classes.*;
 import classes.enumerations.*;
 import sharedClasses.*;
@@ -35,7 +40,21 @@ public class main {
 		if( s.equals("-t") || s.equals("--help"))
 		{
 			print("Classes available for testing:");
+			print("Alphabet");
+			print("Character");
+			print("CharactersSet");
+			print("Keyboard");
+			print("Position");
+			print("PositionsSet");
+			print("Relation");
+			print("# Shared Classes");
+			print("Bound");
 			print("BranchAndBound");
+			print("C");
+			print("InitialSolution");
+			print("Pair");
+			print("QAP");
+			print("TabuSearch");
 		}
 	}
 
@@ -64,7 +83,7 @@ public class main {
 			}
 		}
 		else
-		{
+		{                    
 			String name;
 			TopologyType topology_type;
 			UsageMode usage_mode;

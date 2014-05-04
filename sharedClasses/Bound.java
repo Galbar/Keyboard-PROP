@@ -1,8 +1,23 @@
 package sharedClasses;
 import java.util.*;
 
+/**
+ * Classe que conté els mètodes necessaris per calcular la cota mínima de la
+ * solució parcial d'un QAP(A, B) que se li passa.
+ *
+ * @author Alessio Linares
+ */
 public class Bound
 {
+	/**
+	 * Funció principal de la classe. Aquesta rep la solució parcial i les
+	 * matrius de costos.
+	 * @param  partial_solution solució parcial per la qual s'ha de calcular
+	 *                          la cota mínima.
+	 * @param  distances        matriu de distancies entre localitzacions.
+	 * @param  costs            matriu de pes entre facilitats.
+	 * @return                  cota mínima del cost de la solució parcial donada.
+	 */
 	public static float bound (int[] partial_solution, float[][] distances, float[][] costs)
 	{
 		Vector<Integer> elements = new Vector<Integer>();
@@ -53,20 +68,12 @@ public class Bound
 		return cost;
 	}
 
-	private static Float[][] removeDiagonal(Float[][] A)
-	{
-		Integer n = A.length;
-		Float ret[][] = new Float[n][n-1];
-		for (int i = 0; i < n; ++i)
-			for (int j = 0; j < n; ++j)
-				if (i != j)
-					if (i > j)
-						ret[i][j] = A[i][j];
-					else
-						ret[i][j-1] = A[i][j];
-		return ret;
-	}
-
+	/**
+	 * Extreu la diagonal (i,i) de A i la guarda a v com a vector.
+	 * @param  A matriu a la que treure la diagonal.
+	 * @param  v array on es guarda la diagonal extreta.
+	 * @return   matriu que queda després de treure la diagonal a A.
+	 */
 	private static Float[][] removeDiagonal(Float[][] A, Float[] v)
 	{
 		Integer n = A.length;
@@ -83,6 +90,12 @@ public class Bound
 		return ret;
 	}
 
+	/**
+	 * Producte escalar entre els vectors u i v
+	 * @param  u vector
+	 * @param  v vector
+	 * @return   producte escalar dels vectors u i v
+	 */
 	private static Float dotProduct(Float[] u, Float[] v)
 	{
 		Float ret = new Float(0f);
@@ -91,6 +104,13 @@ public class Bound
 		return ret;
 	}
 
+	/**
+	 * Multiplica els vectors u i v, el primer horitzontal i el segon vertical,
+	 * quedant de resultat una matriu.
+	 * @param  u vector.
+	 * @param  v vector.
+	 * @return   matriu resultant de la multiplicació.
+	 */
 	private static Float[][] diagonalsProduct(Float[] u, Float[] v)
 	{
 		Integer n = u.length;
@@ -101,6 +121,12 @@ public class Bound
 		return ret;
 	}
 
+	/**
+	 * Suma de dos matrius.
+	 * @param  A matriu.
+	 * @param  B matriu.
+	 * @return   matriu resultant de la suma de les dos matrius.
+	 */
 	private static Float[][] add(Float[][] A, Float[][] B)
 	{
 		Integer n = A.length;
@@ -111,6 +137,19 @@ public class Bound
 		return ret;
 	}
 
+	/**
+	 * Funció que calcula el cost de les assignacions a la solució parcial i guarda
+	 * a elements i positions les facilitats i localitzacions, respectivament, que no
+	 * estan assignades.
+	 * @param  partial_solution solució parcial del QAP.
+	 * @param  distances        matriu de distancies entre localitzacions.
+	 * @param  costs            matriu de pes entre facilitats.
+	 * @param  elements         vector que, en acabar, guarda les facilitats que no
+	 *                          estan assignades.
+	 * @param  positions        vectors que, en acabar, guarda les localitzacions que
+	 *                          no estan assignades.
+	 * @return                  cost de les assignacions de la solució parcial.
+	 */
 	private static float calculate (int[] partial_solution, float[][] distances, float[][] costs, Vector<Integer> elements, Vector<Integer> positions)
 	{
 		Integer n = partial_solution.length;
@@ -135,6 +174,12 @@ public class Bound
 		return 2*cost;
 	}
 
+	/**
+	 * Retorna una matriu que contè de m només les files i columnes que indica v.
+	 * @param  m matriu a reduir.
+	 * @param  v vector que indica quines files i columnes mantenir.
+	 * @return   matriu resultant de l'operació.
+	 */
 	private static Float[][] removeUnneededRowsAndColumns (float[][] m, Vector<Integer> v)
 	{
 		Integer n = v.size();
