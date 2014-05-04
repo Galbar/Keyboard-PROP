@@ -116,6 +116,9 @@ public class Main {
 				if (args[1].equals("BranchAndBound"))
 					DriverBranchAndBound.main(s);
 
+				if (args[1].equals("HungarianAlgorithm"))
+					HungarianAlgorithmDriver.main(s);
+
 				if (args[1].equals("InitialSolution"))
 					InitialSolutionDriver.main(s);
 			}
