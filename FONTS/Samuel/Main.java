@@ -78,69 +78,41 @@ public class Main {
 					usage("-t");
 					return;
 				}
+
 				String s[] = new String[args.length-1];
 				for (int i = 2; i < args.length; ++i)
-					s[i-2] = args[i];
+				s[i-1] = args[i];
+
+
+				if (args[1].equals("Alphabet"))
+					AlphabetDriver.main(s);
+
+				if (args[1].equals("Character"))
+					CharacterDriver.main(s);
+
+				if (args[1].equals("CharactersSet"))
+					CharactersSetDriver.main(s);
+				
+				if (args[1].equals("Keyboard"))
+					KeyboardDriver.main(s);
+				
+				if (args[1].equals("Position"))
+					PositionDriver.main(s);
+				
+				if (args[1].equals("PositionsSet"))
+					PositionsSetDriver.main(s);
+				
+				if (args[1].equals("Relation"))
+					RelationDriver.main(s);
+				
+				if (args[1].equals("Bound"))
+					BoundDriver.main(s);
+				
 				if (args[1].equals("BranchAndBound"))
-				{
 					DriverBranchAndBound.main(s);
-				}
-				else if (args[1].equals("Alphabet"))
-				{
-					print("Alphabet Driver");
-				}
-				else if (args[1].equals("Character"))
-				{
-					print("Character Driver");
-				}
-				else if (args[1].equals("CharactersSet"))
-				{
-					print("CharactersSet Driver");
-				}
-				else if (args[1].equals("Keyboard"))
-				{
-					print("Keyboard Driver");
-				}
-				else if (args[1].equals("Position"))
-				{
-					print("Position Driver");
-				}
-				else if (args[1].equals("PositionsSet"))
-				{
-					print("PositionsSet Driver");
-				}
-				else if (args[1].equals("Relation"))
-				{
-					print("Relation Driver");
-				}
-				else if (args[1].equals("Bound"))
-				{
-					print("Bound Driver");
-				}
-				else if (args[1].equals("BranchAndBound"))
-				{
-					print("BranchAndBound Driver");
-				}
-				else if (args[1].equals("C"))
-				{
-					print("C Driver");
-				}
-				else if (args[1].equals("InitialSolution"))
-				{
-					print("InitialSolution Driver");
-				}
-				else if (args[1].equals("Pair"))
-				{
-					print("Pair Driver");
-				}
-				else if (args[1].equals("QAP"))
-				{
-					print("QAP Driver");
-				}
-				else if (args[1].equals("TabuSearch"))
-				{
-					print("TabuSearch Driver");
-				}
+
+				if (args[1].equals("InitialSolution"))
+					InitialSolutionDriver.main(s);
 			}
 		}
 		else
