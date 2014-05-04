@@ -11,7 +11,15 @@ package sharedClasses;
  * @author Sam
  */
 public class InitialSolution {
-
+/**
+	 * Funció principal de la classe. Aquesta espera una matriu nxn de costos i
+         * una de distancies i retorna les assignacions de caracters a posicions en
+         * una array on el index identifica la posició i el enter que conté el caracter.
+	 * @param  costs            matriu nxn amb els costos.
+	 * @param  distances        matriu nxn amb les distancies.
+	 * @return                  Array n on cada posició representa una assignació,
+	 *                          el contingut és el caracter i l'index la posició.
+	 */
     public static int[] compute(float[][] costs, float[][] distances) {
         boolean[] bo = new boolean[costs.length];
         int[] s = new int[costs.length];
