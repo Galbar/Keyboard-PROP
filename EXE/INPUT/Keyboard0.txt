@@ -1,0 +1,8 @@
+nouKeyboard
+26
+
+3
+
+./dir/a.txt
+hola
+reference.path
