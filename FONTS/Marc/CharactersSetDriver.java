@@ -12,12 +12,11 @@ import java.lang.StringBuilder;
 public class CharactersSetDriver {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
-		System.out.print("Introdueix el numero de tecles del teclat (n > 0): ");
+		System.out.print("Introdueix el numero de tecles del teclat (n > 1): ");
 		
 		int n = 0;
-		while (n <= 0) n = scanner.nextInt();
+		while (n <= 1) n = scanner.nextInt();
                 classes.Character[] cs = new classes.Character[n];
-		CharactersSet charactersSet = new CharactersSet(cs);
 
 		System.out.print("Introdueixi els caracters de cada tecla:\n");
 
@@ -25,24 +24,29 @@ public class CharactersSetDriver {
 			StringBuilder outputString = new StringBuilder();
 			outputString.append("Introdueixi els caracters de la tecla ").append(Integer.toString(i)).append(":");
 			System.out.print(outputString);
-			String s = scanner.nextLine();
-			s = scanner.nextLine();
-			s = scanner.nextLine();
-
-
-			Character c = new Character(s);
-			charactersSet.addCharacter(c);
+			String s = scanner.next();
+                        cs[i]=new classes.Character(s);
 		}
+		CharactersSet charactersSet = new CharactersSet(cs);
 		
-                System.out.print("Introdueixi el text a analitzar:\n");
-		String text = scanner.nextLine();
-		charactersSet.calculateText(text);
+                System.out.print("Introdueixi el text a analitzar acabat amb 'FiNaL':\n");
+                StringBuilder textf = new StringBuilder();
+                String text=scanner.next();
+                while(!"FiNaL".equals(text)){
+                    textf.append(text);
+                    text = scanner.next();
+                }
+                
+		charactersSet.calculateText(textf.toString());
 
 		for (int i = 0; i < n; ++i) {
 			for ( int j = i + 1; j < n; ++j) {
-				StringBuilder outputString = new StringBuilder();
-				outputString.append(charactersSet.getCharacterContent(i)).append(" - ").append(charactersSet.getCharacterContent(j)).append(" = ").append(Float.toString(charactersSet.getAffinity(i, j))).append("\n");
-				System.out.print(outputString);
+                                System.out.print(cs[i]);
+                                System.out.print(" ");
+                                System.out.print(cs[j]);
+                                System.out.print(" ");
+				System.out.print(charactersSet.getAffinity(i, j));
+                                System.out.print("\n\b");
 			}
 		}
 	}
