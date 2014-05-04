@@ -4,6 +4,11 @@ import sharedClasses.*;
 import classes.enumerations.*;
 import java.util.*;
 
+/**
+ *
+ * @author Samuel.Bryan.Pierno
+ */
+
 public class Keyboard <c1, c2> extends C <c1, c2>
 {
 	private TopologyType topology;
@@ -16,7 +21,7 @@ public class Keyboard <c1, c2> extends C <c1, c2>
 	/* Constructora */
 	/*
 	Pre: -
-	Post: New Instance
+	Post: New Instance with name=name,topology=topology, usageMode=usageMode, width=width, height=height
 	*/
     public Keyboard(String name, TopologyType topology, UsageMode usageMode, int width, int height)
     {
@@ -27,6 +32,11 @@ public class Keyboard <c1, c2> extends C <c1, c2>
         this.height = height;
     }
 
+        /* Constructora */
+	/*
+	Pre: -
+	Post: New Instance with the parameters set as passed
+	*/
     public Keyboard(String name, TopologyType topology, UsageMode usageMode, int width, int height, c1[ ] characters, c2[ ] positions, int[ ] assignments)
     {
     	super(name, characters, positions, assignments);
@@ -36,6 +46,7 @@ public class Keyboard <c1, c2> extends C <c1, c2>
         this.height = height;
     }
 
+        
 	public String getName()
 	{
 		return id;

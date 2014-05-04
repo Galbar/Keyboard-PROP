@@ -8,7 +8,7 @@ package sharedClasses;
 
 /**
  *
- * @author Sam
+ * @author Samuel.Bryan.Pierno
  */
 public class InitialSolution {
 /**

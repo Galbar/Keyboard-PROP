@@ -10,7 +10,7 @@ import java.util.Scanner;
 import classes.enumerations.*;
 /**
  *
- * @author Sam
+ * @author Samuel.Bryan.Pierno
  */
 public class KeyboardDriver {
     public static void main(String[] args){

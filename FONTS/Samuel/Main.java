@@ -9,6 +9,11 @@ import sharedClasses.*;
 
 import java.util.*;
 
+/**
+ *
+ * @author Samuel.Bryan.Pierno
+ */
+
 public class Main {
 	private final static Scanner sc = new Scanner(System.in);
 	private static void print(String s)
