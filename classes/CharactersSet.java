@@ -91,11 +91,11 @@ public class CharactersSet {
     }
 
     public float getAffinity(int a, int b) {
-        return r.getRelation(a, b);
+        return r.getProportion(a, b);
     }
 
     public float[][] getAllAffinities() {
-        return r.getRelations();
+        return r.getProportions();
     }
 
     public int getId(classes.Character c) {

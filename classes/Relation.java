@@ -32,8 +32,13 @@ public class Relation {
     }
 
     public float getRelation(int a, int b) {
+        return relations[getArrayPosition(a, b)];
+    }
+
+    public float getProportion(int a, int b) {
         return relations[getArrayPosition(a, b)]/totalSum;
     }
+
 
     public void setRelation(int a, int b, float value) {
         System.out.println("setRelation: a="+a+", b="+b+", value="+value);
@@ -47,6 +52,16 @@ public class Relation {
         for (int i = 0; i < n; ++i) {
             for (int j = i + 1; j < n; ++j) {
                 result[i][j] = result[j][i] = getRelation(i, j);
+            }
+        }
+        return result;
+    }
+
+    public float[][] getProportions() {
+        float result[][] = new float[n][n];
+        for (int i = 0; i < n; ++i) {
+            for (int j = i + 1; j < n; ++j) {
+                result[i][j] = result[j][i] = getProportion(i, j);
             }
         }
         return result;
