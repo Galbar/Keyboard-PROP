@@ -29,9 +29,21 @@ public class CharactersSetDriver {
 		}
 		CharactersSet charactersSet = new CharactersSet(cs);
 		
+                /**************/
+                charactersSet.calculateFrequency("56 hola 86 adeu");
+                
                 System.out.print("Introdueixi el text a analitzar acabat amb 'FiNaL':\n");
                 StringBuilder textf = new StringBuilder();
                 String text=scanner.next();
+                while(!"FiNaL".equals(text)){
+                    textf.append(text);
+                    text = scanner.next();
+                }
+                
+                
+                System.out.print("Introdueixi les freqüencies a analitzar acabat amb 'FiNaL':\n");
+                textf = new StringBuilder();
+                text = scanner.next();
                 while(!"FiNaL".equals(text)){
                     textf.append(text);
                     text = scanner.next();

@@ -49,8 +49,68 @@ public class CharactersSet {
         r = new Relation(cs.length);
     }
     
-    public void calculateFrequency(String text) {
-        // TO DO !!!
+    /**
+    * Calcula les freqüències proporcionades per l'usuari.
+    * @param text String que conté el text a analitzar.
+    */
+    public void calculateFrequency(String text) {     
+        char aux;
+        for (int ii = 0; ii < text.length(); ++ii) {
+            int x = 0;
+            String ss = new String();
+            aux = text.charAt(ii);
+            while (aux != ' ') {
+                x = x*10;
+                x += aux - 48;
+                ++ii;
+                aux = text.charAt(ii);
+            }
+            
+            ++ii;
+            aux = text.charAt(ii);
+            while (aux != ' ' && ii < text.length()-1) {
+                ss = ss + aux;
+                ++ii;
+                aux = text.charAt(ii);
+            }
+            if (ii == text.length()-1) {
+                ss = ss + aux;
+            }
+            
+            /* Calculate Text */
+            Vector <classes.Character> v = new Vector <classes.Character>();
+        // Divideix el text en caracters
+        int increment = 0;
+            for (int i = 0; i < ss.length(); i += increment) {
+                boolean found = false;
+                int j = 0;
+                while ((!found) && (j < characters.size())) {
+                    String s = characters.get(j).getCharacter();
+
+                    if (i + s.length() <= ss.length()) {
+                        if (ss.substring(i, i + s.length()).equals(s)) {
+                            // S'ha trobat el caracter
+                            found = true;
+                            increment = s.length();
+                            v.add(characters.get(j));
+                        }
+                        else 
+                            ++j;
+                    }
+                    else
+                        ++j;
+                }
+                if (!found) increment = 1;
+            }
+
+            // Recorre el text ja dividit en caracters i calcula les freqüències
+            for (int i = 0; i < v.size() - 1; ++i) {
+                r.addToRelation(getId(v.elementAt(i)), getId(v.elementAt(i + 1)), (float)(x));
+                if (i != v.size() - 2)
+                    r.addToRelation(getId(v.elementAt(i)), getId(v.elementAt(i + 2)), (float)(x)*(float)(0.5));
+            }
+
+        }
     }
 
     /**
