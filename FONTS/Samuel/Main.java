@@ -133,7 +133,7 @@ public class Main {
 
 			// Introdueix Alfabet
 			num_keys = Integer.parseInt(readNextLine());
-			String chars[] = String[num_keys];
+			String chars[] = new String[num_keys];
 			for (int i = 0; i < num_keys; ++i)
 				chars[i] = readNextLine();
 
@@ -143,9 +143,9 @@ public class Main {
 			// Introdueix mode d'us
 			String usage = readNextLine();
 			// Introdueix amplada del teclat
-			width = Integer.parseInt(readNextLine());
+			int width = Integer.parseInt(readNextLine());
 			// Introdueix alçada del teclat
-			height = Integer.parseInt(readNextLine());
+			int height = Integer.parseInt(readNextLine());
 
 			// String alphabetName, String topology, String usageMode, int width, int height, String chars[]
 			domain.createKeyboard(alphabetName, topology, usage, width, height, chars);

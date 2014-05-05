@@ -209,7 +209,7 @@ public class CharactersSet {
     * @param id Int que correspon al id del Character que es vol consultar. 
     * @return Character amb id introduida
     */
-    public String getCharacter(int id) {
+    public Character getCharacter(int id) {
         return characters.get(id);
     }
 

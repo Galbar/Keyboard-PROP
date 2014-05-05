@@ -95,4 +95,8 @@ public class Keyboard <c1, c2> extends C <c1, c2>
 			s[i] = references.get(i);
 		return s;
 	}
+
+	public void setScore(float s) {
+		qualificacio = s;
+	}
 }

@@ -198,7 +198,7 @@ public class PositionsSet {
     * @return Position amb id introduida
     */
     public Position getPosition(int id) {
-        return p.get(Position);
+        return p.get(id);
     }
     
 }
