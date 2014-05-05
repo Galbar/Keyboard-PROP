@@ -1,12 +1,6 @@
-import classes.Keyboard;
-import classes.CharactersSet;
-import classes.Alphabet;
-import classes.PositionsSet;
-import classes.Position;
 import classes.*;
 import classes.enumerations.*;
 import sharedClasses.*;
-
 import java.util.*;
 
 /**
@@ -124,41 +118,40 @@ public class Main {
 			}
 		}
 		else
-		{                    
-			String name;
+		{             
 			TopologyType topology_type;
 			UsageMode usage_mode;
 			Alphabet alphabet = new Alphabet();
 			PositionsSet positionsSet;
 			int num_keys;
 			QAP qap;
+       
+			DomainController domain = new DomainController();
 
-			// Introdueix nom
-			name = readNextLine();
-
-			// Introdueix topologia
-			String topology = readNextLine();
-			if (topology.equals("Squared")) topology_type = TopologyType.Squared;
-			else if (topology.equals("Circular")) topology_type = TopologyType.Circular;
-			else return;
-
-			// Introdueix mode d'us
-			String usage = readNextLine();
-			if (usage.equals("Right")) usage_mode = UsageMode.Right;
-			else if (usage.equals("Left")) usage_mode = UsageMode.Left;
-			else if (usage.equals("Both")) usage_mode = UsageMode.Both;
-			else return;
+			// Introdueix nom de l'alfabet
+			String alphabetName = readNextLine();
 
 			// Introdueix Alfabet
 			num_keys = Integer.parseInt(readNextLine());
+			String chars[] = String[num_keys];
 			for (int i = 0; i < num_keys; ++i)
-				alphabet.addCharacter(readNextLine());
+				chars[i] = readNextLine();
 
-			// PositionSet
-			positionsSet = new PositionsSet(topology_type, num_keys);
+			// Introdueix topologia
+			String topology = readNextLine();
+
+			// Introdueix mode d'us
+			String usage = readNextLine();
+			// Introdueix amplada del teclat
+			width = Integer.parseInt(readNextLine());
+			// Introdueix alçada del teclat
+			height = Integer.parseInt(readNextLine());
+
+			// String alphabetName, String topology, String usageMode, int width, int height, String chars[]
+			domain.createKeyboard(alphabetName, topology, usage, width, height, chars);
 
 			// Introdueix Textos
-
+/*
 			CharactersSet cs = new CharactersSet(alphabet.getCharacters());
 			classes.Character[] c = cs.getAllCharacters();
 			for(int i = 0; i < c.length; ++i)
@@ -176,16 +169,17 @@ public class Main {
 				}
 				cs.calculateText(text);
 			}
-			 
+
+			// QAP(A,B)
 
 			qap = new QAP(cs.getAllAffinities() ,positionsSet.getAllDistances());
 			int[] sol =  qap.solve();
-
-			// Calcula
-			Keyboard<classes.Character, Position>keyboard = new Keyboard<classes.Character, Position>(name,topology_type, usage_mode, 1, 1, cs.getAllCharacters(), positionsSet.getAllPositions(), sol);
-
-			// Mostra els resultats
-
+			String result = "";
+			for (int i = 0; i < num_keys; ++i) {
+				result += sol[i] + " ";
+			}
+			print(result);
+			*/
 		}
 	}
 }

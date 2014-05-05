@@ -53,9 +53,9 @@ public class Alphabet{
 	 * Afageig un nou caràcter
 	 * @param  x  Nou caràcter.
 	 */
-    public void addCharacter(String c)
+    public void addCharacter(classes.Character c)
     {
-    	classes.Character ch = new classes.Character(c);
+    	classes.Character ch = new classes.Character(c.getCharacter());
     	this.c.add(ch);
     }
 }

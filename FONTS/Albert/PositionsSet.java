@@ -192,6 +192,13 @@ public class PositionsSet {
         return r.getRelations();
     }
     
-   
+    /**
+    * Retorna la Position de PositionsSet amb id <id>
+    * @param id Int que correspon al id del Position que es vol consultar. 
+    * @return Position amb id introduida
+    */
+    public Position getPosition(int id) {
+        return p.get(Position);
+    }
     
 }

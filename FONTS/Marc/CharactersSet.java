@@ -145,6 +145,15 @@ public class CharactersSet {
     }
 
     /**
+    * retorna el Character de CharactersSet amb id <id>
+    * @param id Int que correspon al id del Character que es vol consultar. 
+    * @return Character amb id introduida
+    */
+    public String getCharacter(int id) {
+        return characters.get(id);
+    }
+
+    /**
     * Consulta els Characters que formen CharacterSet
     * @return Un Array de Characters
     */
