@@ -48,12 +48,7 @@ public class Main {
 			print("    Relation");
 			print("# Shared Classes");
 			print("    Bound");
-			print("    BranchAndBound");
-			print("    C");
 			print("    InitialSolution");
-			print("    Pair");
-			print("    QAP");
-			print("    TabuSearch");
 		}
 	}
 
@@ -107,9 +102,6 @@ public class Main {
 				if (args[1].equals("Bound"))
 					BoundDriver.main(s);
 				
-				if (args[1].equals("BranchAndBound"))
-					DriverBranchAndBound.main(s);
-
 				if (args[1].equals("HungarianAlgorithm"))
 					HungarianAlgorithmDriver.main(s);
 
@@ -151,13 +143,6 @@ public class Main {
 			domain.createKeyboard(alphabetName, topology, usage, width, height, chars);
 
 			// Introdueix Textos
-/*
-			CharactersSet cs = new CharactersSet(alphabet.getCharacters());
-			classes.Character[] c = cs.getAllCharacters();
-			for(int i = 0; i < c.length; ++i)
-			{
-				print(c[i].getCharacter());
-			}
 
 			int num_texts = Integer.parseInt(readNextLine());
 			for (int i = 0; i < num_texts; ++i) {
@@ -167,19 +152,12 @@ public class Main {
 					text += line;
 					line = readNextLine();
 				}
-				cs.calculateText(text);
+				domain.addText(text);
 			}
 
-			// QAP(A,B)
+			domain.process();
 
-			qap = new QAP(cs.getAllAffinities() ,positionsSet.getAllDistances());
-			int[] sol =  qap.solve();
-			String result = "";
-			for (int i = 0; i < num_keys; ++i) {
-				result += sol[i] + " ";
-			}
-			print(result);
-			*/
+			print("Solution cost: "+domain.getCost());
 		}
 	}
 }

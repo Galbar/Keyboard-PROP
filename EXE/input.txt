@@ -2,10 +2,6 @@
 
 # Nom del Alfabet
 Alessio-Marc
-# Topologia: Squared o Circular
-Squared
-# Mode d'ús: Right, Left o Both
-Left
 # Nombre de caracters
 4
 # Els caracters
@@ -13,6 +9,13 @@ asp
 q
 we
 d
+# Topologia: Squared o Circular
+Squared
+# Mode d'ús: Right, Left o Both
+Left
+# Mida del teclat, amplada i alçada
+10
+5
 # Nombre de texts
 1
 # Text
