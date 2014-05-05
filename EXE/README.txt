@@ -8,3 +8,7 @@ Options:
 -t, --test [-h|--help]      Enter class testing mode
            [class name]     (run the corresponding driver).
 -h, --help                  View this text.
+
+Input for drivers
+=================
+./INPUT/<Class>0.txt 		Contains an input example for <Class> testing
