@@ -107,7 +107,7 @@ public class CharactersSet {
             for (int i = 0; i < v.size() - 1; ++i) {
                 r.addToRelation(getId(v.elementAt(i)), getId(v.elementAt(i + 1)), (float)(x));
                 if (i != v.size() - 2)
-                    r.addToRelation(getId(v.elementAt(i)), getId(v.elementAt(i + 2)), (float)(x)*(float)(0.5));
+                    r.addToRelation(getId(v.elementAt(i)), getId(v.elementAt(i + 2)), (float)(x)*(float)(0.5)); // Revisar
             }
 
         }
@@ -148,7 +148,7 @@ public class CharactersSet {
         for (int i = 0; i < v.size() - 1; ++i) {
             r.addToRelation(getId(v.elementAt(i)), getId(v.elementAt(i + 1)), 1f);
             if (i != v.size() - 2)
-                r.addToRelation(getId(v.elementAt(i)), getId(v.elementAt(i + 2)), 0.5f);
+                r.addToRelation(getId(v.elementAt(i)), getId(v.elementAt(i + 2)), 0.5f); // Revisar
         }
     }
 
