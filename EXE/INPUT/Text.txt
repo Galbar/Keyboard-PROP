@@ -1,0 +1,1 @@
+Copiaré un dels fulls de la beca per posar algo de text: Els ordinadors personals del PLATIC2012 s’entreguen amb el sistema opereatiu pre-instal·lat. Si s’han solicitat sense sistema operatiu, s’entreguen amb Linux Ubuntu 12.04 LTS, i si s’han sol·licitat amb sistema operatiu, disposen de Microsoft Windows 7 Enterprise.
