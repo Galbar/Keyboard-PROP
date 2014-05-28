@@ -1,3 +1,4 @@
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -11,26 +12,27 @@ import java.awt.event.*;
  *
  * @author samuel.bryan.pierno
  */
-public class MainWindow {
-    private JFrame frame = new JFrame("Vista Principal");//("Main Window");
+public class NewKeyboard {
+    private JFrame frame = new JFrame("Crear teclat");
     private JPanel buttons_panel = new JPanel();
     private JButton alpha_button = new JButton("Gestionar alfabet");//("Manage alphabet");
     private JButton text_button = new JButton("Gestionar text");//("Manage text");
     private JButton create_button = new JButton("Crear teclat");//("Create keyboard");
-    private JButton load_button = new JButton("Carregar teclat");//("Load keyboard");
-    private static MainWindow instance;
-    private MainWindow(){
+    private JComboBox topology = new JComboBox();
+    private static NewKeyboard instance;
+    
+    private NewKeyboard(){
         initialize();
     }
-    public static MainWindow getInstance(){
-        if(instance == null) instance = new MainWindow();
+    public static NewKeyboard getInstance(){
+        if(instance == null){System.out.print("new\n");instance = new NewKeyboard();}
         instance.setEnabled(true);
         instance.setVisible(true);
         return instance;
     }
     private void initializeFrame() {
         // Tamanyo
-        frame.setMinimumSize(new Dimension(300, 200));
+        frame.setMinimumSize(new Dimension(450, 200));
         frame.setPreferredSize(frame.getMinimumSize());
         frame.setResizable(true);
         // Posicion y operaciones por defecto
@@ -46,7 +48,6 @@ public class MainWindow {
         alpha_button.setVisible(visible);
         text_button.setVisible(visible);
         create_button.setVisible(visible);
-        load_button.setVisible(visible);
         frame.pack();
         frame.setVisible(visible);
     }
@@ -56,7 +57,7 @@ public class MainWindow {
         alpha_button.setEnabled(enabled);
         text_button.setEnabled(enabled);
         create_button.setEnabled(enabled);
-        load_button.setEnabled(enabled);
+        topology.setEnabled(enabled);
     }
     
     private void setListeners(){
@@ -77,15 +78,14 @@ public class MainWindow {
         create_button.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
-                NewKeyboard nk = NewKeyboard.getInstance();
-                setVisible(false);
-                setEnabled(false);
+                //InterfaceController.getInstance().mainToCreate();
             }
         });
     }
     
     private void initialize(){
         initializeFrame();
+        initializeTopology();
         initializeButtonsPanel();
         setListeners();
         setEnabled(true);
@@ -102,7 +102,14 @@ public class MainWindow {
         buttons_panel.add(alpha_button,c);
         buttons_panel.add(text_button,c);
         c.gridy=1;
+        buttons_panel.add(topology,c);
+        c.gridy=2;
+        c.gridx=2;
         buttons_panel.add(create_button,c);
-        buttons_panel.add(load_button,c);
+    }
+    
+    private void initializeTopology(){
+        topology.addItem("Rectangular");
+        topology.addItem("Circular");
     }
 }
