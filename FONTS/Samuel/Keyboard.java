@@ -9,7 +9,7 @@ import java.util.*;
  * @author Samuel.Bryan.Pierno
  */
 
-public class Keyboard <c1, c2> extends C <c1, c2>
+public class Keyboard extends C <classes.Character, Position>
 {
 	private TopologyType topology;
 	private UsageMode usageMode;
@@ -37,7 +37,7 @@ public class Keyboard <c1, c2> extends C <c1, c2>
 	Pre: -
 	Post: New Instance with the parameters set as passed
 	*/
-    public Keyboard(String name, TopologyType topology, UsageMode usageMode, int width, int height, c1[ ] characters, c2[ ] positions, int[ ] assignments)
+    public Keyboard(String name, TopologyType topology, UsageMode usageMode, int width, int height, classes.Character[ ] characters, Position[ ] positions, int[ ] assignments)
     {
     	super(name, characters, positions, assignments);
         this.topology = topology;
