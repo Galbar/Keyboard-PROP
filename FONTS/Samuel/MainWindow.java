@@ -26,7 +26,7 @@ public class MainWindow {
         // Tamanyo
         frame.setMinimumSize(new Dimension(300, 200));
         frame.setPreferredSize(frame.getMinimumSize());
-        frame.setResizable(false);
+        frame.setResizable(true);
         // Posicion y operaciones por defecto
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

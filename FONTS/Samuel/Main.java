@@ -53,7 +53,7 @@ public class Main {
 	}
 
 	public static void main(String [ ] args)
-	{
+	{/*
 		if ( args.length > 0 )
 		{
 			String option = args[0];
@@ -118,7 +118,6 @@ public class Main {
 			int num_keys;
 			QAP qap;
        
-			DomainController domain = new DomainController();
 
 			// Introdueix nom de l'alfabet
 			String alphabetName = readNextLine();
@@ -159,5 +158,7 @@ public class Main {
 
 			print("Solution cost: "+domain.getCost());
 		}
-	}
+	*/
+    MainWindow maw = new MainWindow();
+    }
 }

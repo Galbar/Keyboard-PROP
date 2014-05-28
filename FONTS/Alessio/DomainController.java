@@ -6,7 +6,7 @@ import org.json.JSONObject;
 public class DomainController {
 	static private DomainController instance;
 
-	public DomainController() {}
+	private DomainController() {}
 	static public DomainController i() {
 		if (instance == null) {
 			instance = new DomainController();
