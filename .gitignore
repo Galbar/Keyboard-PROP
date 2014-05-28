@@ -1,2 +1,9 @@
 *.sublime*
 *.class
+src/
+test/
+nbproject/
+dist/
+build/
+*.xml
+*.mf
