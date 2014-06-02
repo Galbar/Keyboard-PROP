@@ -159,6 +159,6 @@ public class Main {
 			print("Solution cost: "+domain.getCost());
 		}
 	*/
-    MainWindow m = MainWindow.getInstance();
+    MainWindow.getInstance();
     }
 }

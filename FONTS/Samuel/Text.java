@@ -15,6 +15,7 @@ import java.awt.event.*;
 public class Text {
     private JFrame frame = new JFrame("Gestionar text");
     private JPanel buttons_panel = new JPanel();
+    @SuppressWarnings("FieldMayBeFinal")
     private JTextArea text = new JTextArea(15,35);
     private JButton freq = new JButton("Carregar freqûències");
     private JButton load = new JButton("Carregar text");
@@ -23,12 +24,17 @@ public class Text {
     private JLabel text_label = new JLabel();
     private JScrollPane scroll = new JScrollPane(text);
     private static Text instance;
+    private String callback;
     
     private Text(){
+        initialize();
     }
-    public static Text getInstance(){
+    public static Text getInstance(String s){
         if(instance == null)instance = new Text();
-        instance.initialize();
+        instance.frame.setLocationRelativeTo(null);
+        instance.setEnabled(true);
+        instance.setVisible(true);
+        if(!"e".equals(s)) instance.callback=s;
         return instance;
     }
     private void initializeFrame() {
@@ -67,25 +73,39 @@ public class Text {
         freq.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
-               // InterfaceController.getInstance().mainToText();
+               Explorer.getInstance("tq");
+               setVisible(false);
+               setEnabled(false);
             }
         });
         load.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
-                //InterfaceController.getInstance().mainToCreate();
+                Explorer.getInstance("t");
+                setVisible(false);
+                setEnabled(false);
             }
         });
         save.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
-                //InterfaceController.getInstance().mainToCreate();
+                Explorer.getInstance("gt"+callback);
+                InterfaceController.setText(text.getText());
+                setVisible(false);
+                setEnabled(false);
             }
         });
         cancel.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
-                MainWindow m = MainWindow.getInstance();
+                switch (callback) {
+                    case "k":
+                        NewKeyboard.getInstance();
+                        break;
+                    case "m":
+                        MainWindow.getInstance();
+                        break;
+                }
                 setEnabled(false);
                 setVisible(false);
             }
@@ -97,8 +117,6 @@ public class Text {
         initializeText();
         initializeButtonsPanel();
         setListeners();
-        setEnabled(true);
-        setVisible(true);
         frame.pack();
         frame.setVisible(true);
     }

@@ -25,7 +25,8 @@ public class NewKeyboard {
         initialize();
     }
     public static NewKeyboard getInstance(){
-        if(instance == null){System.out.print("new\n");instance = new NewKeyboard();}
+        if(instance == null)instance = new NewKeyboard();
+        instance.frame.setLocationRelativeTo(null);
         instance.setEnabled(true);
         instance.setVisible(true);
         return instance;
@@ -64,7 +65,7 @@ public class NewKeyboard {
         alpha_button.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
-                Alphabet A = Alphabet.getInstance();
+                Alphabet.getInstance("k");
                 setVisible(false);
                 setEnabled(false);
             }
@@ -72,13 +73,20 @@ public class NewKeyboard {
         text_button.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
-               // InterfaceController.getInstance().mainToText();
+               Text.getInstance("k");
+               setVisible(false);
+               setEnabled(false);
             }
         });
         create_button.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
-                //InterfaceController.getInstance().mainToCreate();
+                Loader.getInstance();
+                setVisible(false);
+                setEnabled(false);
+                InterfaceController.setSettings(topology.getSelectedItem().toString());
+                Loader.done();
+                FinalSolution.getInstance();                
             }
         });
     }
@@ -88,8 +96,6 @@ public class NewKeyboard {
         initializeTopology();
         initializeButtonsPanel();
         setListeners();
-        setEnabled(true);
-        setVisible(true);
         frame.pack();
         frame.setVisible(true);
     }
