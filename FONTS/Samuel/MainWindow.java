@@ -24,6 +24,7 @@ public class MainWindow {
     }
     public static MainWindow getInstance(){
         if(instance == null) instance = new MainWindow();
+        instance.frame.setLocationRelativeTo(null);
         instance.setEnabled(true);
         instance.setVisible(true);
         return instance;
@@ -63,7 +64,7 @@ public class MainWindow {
         alpha_button.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
-                Alphabet A = Alphabet.getInstance();
+                Alphabet.getInstance("m");
                 setVisible(false);
                 setEnabled(false);
             }
@@ -71,15 +72,25 @@ public class MainWindow {
         text_button.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
-               // InterfaceController.getInstance().mainToText();
+               Text.getInstance("m");
+               instance.setEnabled(false);
+               instance.setVisible(false);
             }
         });
         create_button.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
-                NewKeyboard nk = NewKeyboard.getInstance();
+                NewKeyboard.getInstance();
                 setVisible(false);
                 setEnabled(false);
+            }
+        });
+        load_button.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent event){
+                Explorer.getInstance("m");
+                setEnabled(false);
+                setVisible(false);
             }
         });
     }
@@ -88,8 +99,6 @@ public class MainWindow {
         initializeFrame();
         initializeButtonsPanel();
         setListeners();
-        setEnabled(true);
-        setVisible(true);
         frame.pack();
         frame.setVisible(true);
     }
