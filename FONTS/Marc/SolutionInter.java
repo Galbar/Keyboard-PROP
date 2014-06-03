@@ -3,7 +3,8 @@ import javax.swing.*;
 import java.util.Vector;
 import java.lang.Math.*;
 import java.awt.Color;
-
+import javax.swing.event.*;
+import java.awt.event.*;
 
 /* Per dibuixar el teclat necessito:
 	- Els dos arrays pos i chars.. (noms ?)
@@ -86,35 +87,46 @@ public class SolutionInter extends JFrame {
         //load_button.setEnabled(enabled);
     }*/
     
-    /*private void setListeners(){
-        alpha_button.addActionListener(new ActionListener(){
+    private void setListeners(){
+        save_button.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
-                Alphabet A = Alphabet.getInstance();
-                setVisible(false);
-                setEnabled(false);
+                //Alphabet A = Alphabet.getInstance();
+                //setVisible(false);
+                //setEnabled(false);
             }
         }); 
-        text_button.addActionListener(new ActionListener(){
+        close_button.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
-               // InterfaceController.getInstance().mainToText();
+                System.out.println("Tanca Solucio");
+                Frame frame = new JFrame("Closing an Application");
+                 int result = JOptionPane.showConfirmDialog(
+                frame,
+                "Segur que vols tancar la solució?\nSi no s'ha guardat es perdrà!",
+                "Tancar Solució?",
+                JOptionPane.YES_NO_OPTION);
+
+                if (result == JOptionPane.YES_OPTION) {
+                    setVisible(false);
+                    dispose();
+                }
             }
         });
-        create_button.addActionListener(new ActionListener(){
+        recalculate_button.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
-                NewKeyboard nk = NewKeyboard.getInstance();
-                setVisible(false);
-                setEnabled(false);
+                //NewKeyboard nk = NewKeyboard.getInstance();
+                //setVisible(false);
+                //setEnabled(false);
             }
         });
-    }*/
+    }
     
     private void initialize(){
         initializeFrame();
         initializeButtonPanel();
-        //setListeners();
+        setListeners();
         //setEnabled(true);
         //setVisible(true);
         this.pack();
