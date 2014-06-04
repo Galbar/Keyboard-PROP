@@ -5,6 +5,13 @@ import java.lang.Math.*;
 import java.awt.Color;
 import javax.swing.event.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+
+// <testing>
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+// </testing>
 
 /* Per dibuixar el teclat necessito:
 	- Els dos arrays pos i chars.. (noms ?)
@@ -12,6 +19,11 @@ import java.awt.event.*;
 	- Coordenades de cada posició
 */
 
+/* TO DO
+    - Recalculate DONE
+    - Save        Guardar Imatge fet, Falta el explorer que no compila. Necessito que el explorer em retorni l'string del path triat i despres JO crido al InterfaceController.
+    - Detectar click Key -> Swap: Primer s'apreta el boto, apareix text indicatiu  (label) i despres es cliquen les dos tecles.
+*/
 
 /*
 	Array [String] Chars, array amb els caracters de cada tecla. Accedir per index.
@@ -91,16 +103,19 @@ public class SolutionInter extends JFrame {
         save_button.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
-                //Alphabet A = Alphabet.getInstance();
-                //setVisible(false);
-                //setEnabled(false);
+                System.out.println("Guardar Solució");
+                //Explorer e = new Explorer();
+
+                BufferedImage image = ScreenImage.createImage(draw_panel);
+                InterfaceController.saveKeyboard("aaa", image);
             }
+               
         }); 
         close_button.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
-                System.out.println("Tanca Solucio");
-                Frame frame = new JFrame("Closing an Application");
+                System.out.println("Tancar Solucio");
+                Frame frame = new JFrame("Tancar Solucio");
                  int result = JOptionPane.showConfirmDialog(
                 frame,
                 "Segur que vols tancar la solució?\nSi no s'ha guardat es perdrà!",
@@ -116,9 +131,19 @@ public class SolutionInter extends JFrame {
         recalculate_button.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
-                //NewKeyboard nk = NewKeyboard.getInstance();
-                //setVisible(false);
-                //setEnabled(false);
+                System.out.println("Recalcular Solucio");
+                Frame frame = new JFrame("Recalcular Solucio");
+                 int result = JOptionPane.showConfirmDialog(
+                frame,
+                "Segur que vols recalcular la solució?\nSi no s'ha guardat es perdrà!",
+                "Recalcular Solució?",
+                JOptionPane.YES_NO_OPTION);
+
+                if (result == JOptionPane.YES_OPTION) {
+                    InterfaceController.recalculate();
+                    setVisible(false);
+                    dispose();
+                }
             }
         });
     }
@@ -155,25 +180,21 @@ public class SolutionInter extends JFrame {
 	//-----------------
 
 	    class DrawPanel extends JPanel {
+            private BufferedImage image = new BufferedImage(450, 200, BufferedImage.TYPE_3BYTE_BGR);
+            Vector<JLabel> keys = new Vector<JLabel>();
 
 	        DrawPanel() {
-                System.out.println("Construeix DrawPanel");
-	            // set a preferred size for the custom panel.
 	            setPreferredSize(new Dimension(450,200));
+                setLayout(null);
                 setOpaque(true);
                 setBackground(Color.WHITE);
+                
 	        }
 
 	        @Override
 	        public void paintComponent(Graphics g) {
-                System.out.println("wola!");
 	            super.paintComponent(g);
-
 	            drawKeys(g);
-	            //g.drawString("BLAH", 20, 20);
-	            //g.drawRect(200, 200, 200, 200);
-	            //g.fillRect(50,50,100,100);
-	            System.out.println("wola!");
 	        }
 
 	        private void drawKeys(Graphics g) {
@@ -181,15 +202,66 @@ public class SolutionInter extends JFrame {
                     System.out.println(i);
 	        		int x = Math.round(coords.get(rels.get(i)).x);
 	        		int y = Math.round(coords.get(rels.get(i)).y);
-                    System.out.println(x);
-                    System.out.println(y);
-                    System.out.println("--");
-                    g.setColor(Color.BLACK);
+                    /*g.setColor(Color.BLACK);
 	        		g.fillRect(x, y, 50,20); // 100 key size, may change
                     g.setColor(Color.RED);
 	        		g.drawString(chars.get(rels.get(i)), x+10, y+10);
+                    */
+                    JLabel label = new JLabel(chars.get(rels.get(i)), JLabel.CENTER);
+                    label.setOpaque(true);
+                    label.setForeground(Color.black);
+                    label.setBackground(Color.darkGray);
+                    keys.add(label);
+                    this.add(label);
+                    label.setLocation(x, y);
+                    label.setSize(50, 20);
 	        	}
+                setListeners();
 	        }
+
+            public BufferedImage getImage() {
+                return image;
+            }
+
+            private void setListeners(){
+                                            System.out.println("Mouse ininin");
+
+                for (int i = 0; i < keys.size(); ++i) {
+                                                System.out.println("Mforforforforlick");
+
+                    keys.get(i).addMouseListener(new MouseAdapter() {
+                        public void mouseReleased(MouseEvent event){
+                            //if (event.isPopupTrigger()) {
+                                // code
+                                /*if (swapping) {
+                                    keys.get(i).setBackground(Color.red);
+
+                                }*/
+                            //}
+                            //setBackground(Color.red);
+                            System.out.println("Mouse Click");
+                        }
+
+                        /* @Override
+                        public void mouseEntered(MouseEvent event) {
+                            Font font_original = keys.get(i).getFont();
+                            Map attributes = font_original.getAttributes();
+                            attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+                            keys.get(i).setFont(font_original.deriveFont(attributes));;
+                        }
+
+                        @Override
+                        public void mouseExited(MouseEvent event) {
+                            Font font_original = keys.get(i).getFont();
+                            Map attributes = font_original.getAttributes();
+                            attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_OFF);
+                            keys.get(i).setFont(font_original.deriveFont(attributes));;
+                        }*/
+                    });
+                }
+            }
+
+
 	    }    
 
 	public static void main(String args[]) {
