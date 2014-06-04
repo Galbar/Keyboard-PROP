@@ -41,4 +41,8 @@ public class DomainController {
 	public void saveKeyboard(String json) {
 		PersistanceController.i().saveKeyboard(json);
 	}
+
+	public static void main(String[] args) {
+		
+	}
 }

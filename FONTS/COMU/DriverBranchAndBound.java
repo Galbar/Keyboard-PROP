@@ -16,20 +16,21 @@ public class DriverBranchAndBound {
 		int length = Integer.parseInt(scan.nextLine());
 		float distances[][] = new float[length][length];
 		float costs[][] = new float[length][length];
+			
+		System.out.println("Costs matrix.\n");
+		for (int i = 0; i < length; ++i) 
+			for (int j = 0; j < length; ++j)
+				costs[i][j] = Float.parseFloat(scan.next());
 		
 		System.out.println("Distances matrix:\n");
 		for (int i = 0; i < length; ++i) 
 			for (int j = 0; j < length; ++j) 
 				distances[i][j] = Float.parseFloat(scan.next());
 		
-		System.out.println("Costs matrix.\n");
-		for (int i = 0; i < length; ++i) 
-			for (int j = 0; j < length; ++j)
-				costs[i][j] = Float.parseFloat(scan.next());
-			
 		int solution[] = new int[length];
 		solution = InitialSolution.compute(distances, costs);
 		scan.close();
+		System.out.println("Solving...");
 		BranchAndBound.solve(solution, distances, costs);
 		System.out.println("Assignment: " + Arrays.toString(solution));
 	}

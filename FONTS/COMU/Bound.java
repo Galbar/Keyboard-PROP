@@ -33,26 +33,26 @@ public class Bound
 		Float B[][] = new Float[n][n];
 		B = removeUnneededRowsAndColumns(distances, positions);
 
-		Float A_diagonal[] = new Float[n];
-		Float B_diagonal[] = new Float[n];
-		Float ANoDiagonal[][] = new Float[n][n-1];
-		ANoDiagonal = removeDiagonal(A, A_diagonal);
-		Float BNoDiagonal[][] = new Float[n][n-1];
-		BNoDiagonal = removeDiagonal(B, B_diagonal);
+		//Float A_diagonal[] = new Float[n];
+		//Float B_diagonal[] = new Float[n];
+		//Float ANoDiagonal[][] = new Float[n][n-1];
+		//ANoDiagonal = removeDiagonal(A, A_diagonal);
+		//Float BNoDiagonal[][] = new Float[n][n-1];
+		//BNoDiagonal = removeDiagonal(B, B_diagonal);
 		
 		for (int i = 0; i < n; ++i)
 		{
-			Arrays.sort(ANoDiagonal[i]);
-			Arrays.sort(BNoDiagonal[i], Collections.reverseOrder());
+			Arrays.sort(A[i]);
+			Arrays.sort(B[i], Collections.reverseOrder());
 		}
 
 		Float X[][] = new Float[n][n];		// minimum scalar product
 		for (int i = 0; i < n; ++i)
 			for (int j = 0; j < n; ++j)
-				X[i][j] = dotProduct(ANoDiagonal[i], BNoDiagonal[j]);
+				X[i][j] = dotProduct(A[i], B[j]);
 
 		Float Y[][] = new Float[n][n];
-		Y = diagonalsProduct(A_diagonal, B_diagonal);
+		Y = extendedSolution(costs, distances, elements, positions, partial_solution, cost);
 
 		Float L[][] = new Float[n][n];
 		L = add(X, Y);
@@ -105,19 +105,26 @@ public class Bound
 	}
 
 	/**
-	 * Multiplica els vectors u i v, el primer horitzontal i el segon vertical,
-	 * quedant de resultat una matriu.
-	 * @param  u vector.
-	 * @param  v vector.
-	 * @return   matriu resultant de la multiplicació.
+	 * Calcula una matriu on la posició i,j és el cost que s'afegiria al cost de
+	 * la solució si s'afegis una nova assignació no assignada previament.
+	 * @param  costs            Matriu de costs.
+	 * @param  distances        Matriu de distancies.
+	 * @param  elements         Vector amb els elements no assignats.
+	 * @param  positions        Vector amb les posicions no assignades.
+	 * @param  partial_solution Solució parcial.
+	 * @param  parcial_cost     Cost de la solució parcial.
+	 * @return                  Matriu amb el costs afegit de les assignacións.
 	 */
-	private static Float[][] diagonalsProduct(Float[] u, Float[] v)
+	private static Float[][] extendedSolution(float[][] costs, float[][] distances, Vector<Integer> elements, Vector<Integer> positions, int[] partial_solution, float parcial_cost)
 	{
-		Integer n = u.length;
+		Integer n = elements.size();
 		Float ret[][] = new Float[n][n];
 		for (int i = 0; i < n; ++i)
-			for (int j = 0; j < n; ++j)
-				ret[i][j] = u[i]*v[j];
+			for (int j = 0; j < n; ++j) {
+				partial_solution[elements.get(i)] = positions.get(j);
+				ret[i][j] = calculate(partial_solution, distances, costs)-parcial_cost;
+				partial_solution[elements.get(i)] = -1;
+			}
 		return ret;
 	}
 
@@ -135,6 +142,31 @@ public class Bound
 			for (int j = 0; j < n; ++j)
 				ret[i][j] = A[i][j] + B[i][j];
 		return ret;
+	}
+
+	/**
+	 * Funció que calcula el cost de les assignacions a la solució parcial.
+	 * @param  partial_solution solució parcial del QAP.
+	 * @param  distances        matriu de distancies entre localitzacions.
+	 * @param  costs            matriu de pes entre facilitats.
+	 * @return                  cost de les assignacions de la solució parcial.
+	 */
+	private static float calculate (int[] partial_solution, float[][] distances, float[][] costs)
+	{
+		Integer n = partial_solution.length;
+		float cost = 0f;
+		for ( Integer i = 0; i < n; ++i )
+		{
+			if (partial_solution[i] < 0) {
+				continue;
+			}
+			for ( Integer j = i; j < n; ++j )
+			{
+				if (partial_solution[j] < 0) continue;
+				cost += costs[i][j] * distances[partial_solution[i]][partial_solution[j]];
+			}
+		}
+		return 2*cost;
 	}
 
 	/**

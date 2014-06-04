@@ -53,7 +53,7 @@ public class Main {
 	}
 
 	public static void main(String [ ] args)
-	{/*
+	{
 		if ( args.length > 0 )
 		{
 			String option = args[0];
@@ -107,8 +107,11 @@ public class Main {
 
 				if (args[1].equals("InitialSolution"))
 					InitialSolutionDriver.main(s);
+
+				if (args[1].equals("DriverBranchAndBound"))
+					DriverBranchAndBound.main(s);
 			}
-		}
+		}/*
 		else
 		{             
 			TopologyType topology_type;
@@ -159,6 +162,6 @@ public class Main {
 			print("Solution cost: "+domain.getCost());
 		}
 	*/
-    MainWindow.getInstance();
+    //MainWindow.getInstance();
     }
 }
