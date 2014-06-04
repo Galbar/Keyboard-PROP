@@ -36,8 +36,9 @@ public class SolutionInter extends JFrame {
     //private DrawPanel draw_panel = new DrawPanel();
     private JPanel draw_panel = new JPanel();
     private JPanel button_panel = new JPanel();
-    private JButton save_button = new JButton("Guardar");//("Manage alphabet");
-    private JButton close_button = new JButton("Tancar");//("Manage text");
+    private JButton save_button = new JButton("Guardar");
+    private JButton close_button = new JButton("Tancar");
+    private JButton swap_button = new JButton("Swap");
 
     private Vector<String> chars;
     private Vector<Integer> rels;
@@ -104,9 +105,10 @@ public class SolutionInter extends JFrame {
                 System.out.println("Swap Tecles");
                 //Explorer e = new Explorer();
                 //String path = e.getPath(); //????
-
-                BufferedImage image = ScreenImage.createImage(draw_panel);
-                InterfaceController.saveKeyboard("aaa", image); // "aaa" will be path
+                int aux1 = rels.get(selected_keys.get(0));
+                int aux2 = rels.get(selected_keys.get(1));
+                rels.set(selected_keys.get(0), aux1);
+                selected_keys.get(1);
             }
                
         });
@@ -114,7 +116,8 @@ public class SolutionInter extends JFrame {
             keys.get(i).addMouseListener(new MouseAdapter() {
                 public void mouseReleased(MouseEvent event){
 
-                    setBackground(Color.red);
+                    JLabel label = (JLabel)event.getSource();
+                    label.setBackground(Color.red);
                     System.out.println("Select Key");
 
                 }
@@ -178,6 +181,8 @@ public class SolutionInter extends JFrame {
         button_panel.add(save_button,c);
         c.gridx=1;
         button_panel.add(close_button,c);
+        c.gridx=2;
+        button_panel.add(swap_button,c);
     }
 
     private void initializeDrawPanel() {
