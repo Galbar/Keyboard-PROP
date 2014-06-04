@@ -33,71 +33,39 @@ import javax.imageio.ImageIO;
 
 public class SolutionInter extends JFrame {
 
-    //private Painting painting = new Painting();
-    private DrawPanel draw_panel = new DrawPanel();
+    //private DrawPanel draw_panel = new DrawPanel();
+    private JPanel draw_panel = new JPanel();
     private JPanel button_panel = new JPanel();
     private JButton save_button = new JButton("Guardar");//("Manage alphabet");
     private JButton close_button = new JButton("Tancar");//("Manage text");
-    private JButton recalculate_button = new JButton("Recalcular");//("Create keyboard");
-    //private JButton load_button = new JButton("Carregar teclat");//("Load keyboard");
 
-    protected Vector<String> chars;
-    protected Vector<Integer> rels;
-    protected Vector<Position> coords; // temp
-   	// protected Matriu?? Vector de Pairs?? coords;
+    private Vector<String> chars;
+    private Vector<Integer> rels;
+    private Vector<Position> coords; // temp
+    private Vector<JLabel> keys;
+    private Vector<Integer> selected_keys; // Potser no sera vector
 
-    //private static SolutionInter instance;
-    
     private SolutionInter(Vector<String> new_chars, Vector<Integer> new_rels, Vector<Position> new_coords) {
     	chars = new_chars;
     	rels = new_rels;
     	coords = new_coords;
+        keys = new Vector<JLabel>();
+        selected_keys = new Vector<Integer>();
         initialize();
     }
 
-    /*
-    public static SolutionInter getInstance(Vector<String> new_chars, Vector<Integer> new_rels, Vector<Position> new_coords) {
-        if(instance == null) instance = new SolutionInter(new_chars, new_rels, new_coords);
-        instance.setEnabled(true);
-        instance.setVisible(true);
-        return instance;
-    }
-    */
-
     private void initializeFrame() {
-        // Tamanyo
         this.setMinimumSize(new Dimension(500, 300));
         this.setPreferredSize(this.getMinimumSize());
         this.setResizable(true);
-        // Posicion y operaciones por defecto
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // Se agrega panelContenidos al contentPane (el panelContenidos se
-        // podria ahorrar y trabajar directamente sobre el contentPane)
 
         JPanel contentPane = (JPanel) this.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        //contentPane.setOpaque(false);
         contentPane.add(draw_panel);
         contentPane.add(button_panel);
     }
-    
-    /*public void setVisible(boolean visible){
-        //alpha_button.setVisible(visible);
-        //text_button.setVisible(visible);
-        //create_button.setVisible(visible);
-        //load_button.setVisible(visible);
-        this.pack();
-        this.setVisible(visible);
-    }*/
-    
-    /*public void setEnabled(boolean enabled){
-        this.setEnabled(enabled);
-        //alpha_button.setEnabled(enabled);
-        //text_button.setEnabled(enabled);
-        //create_button.setEnabled(enabled);
-        //load_button.setEnabled(enabled);
-    }*/
     
     private void setListeners(){
         save_button.addActionListener(new ActionListener(){
@@ -105,9 +73,10 @@ public class SolutionInter extends JFrame {
             public void actionPerformed(ActionEvent event){
                 System.out.println("Guardar Solució");
                 //Explorer e = new Explorer();
+                //String path = e.getPath(); //????
 
                 BufferedImage image = ScreenImage.createImage(draw_panel);
-                InterfaceController.saveKeyboard("aaa", image);
+                InterfaceController.saveKeyboard("aaa", image); // "aaa" will be path
             }
                
         }); 
@@ -128,6 +97,33 @@ public class SolutionInter extends JFrame {
                 }
             }
         });
+        for (int i = 0; i < keys.size(); ++i) {
+            keys.get(i).addMouseListener(new MouseAdapter() {
+                public void mouseReleased(MouseEvent event){
+
+                    setBackground(Color.red);
+                    System.out.println("Select Key");
+
+                }
+
+                /* @Override
+                public void mouseEntered(MouseEvent event) {
+                    Font font_original = keys.get(i).getFont();
+                    Map attributes = font_original.getAttributes();
+                    attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+                    keys.get(i).setFont(font_original.deriveFont(attributes));;
+                }
+
+                @Override
+                public void mouseExited(MouseEvent event) {
+                    Font font_original = keys.get(i).getFont();
+                    Map attributes = font_original.getAttributes();
+                    attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_OFF);
+                    keys.get(i).setFont(font_original.deriveFont(attributes));;
+                }*/
+            });
+        }
+        /*
         recalculate_button.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
@@ -145,15 +141,15 @@ public class SolutionInter extends JFrame {
                     dispose();
                 }
             }
-        });
+        }); 
+        */
     }
     
     private void initialize(){
         initializeFrame();
         initializeButtonPanel();
+        initializeDrawPanel();
         setListeners();
-        //setEnabled(true);
-        //setVisible(true);
         this.pack();
         this.setVisible(true);
         this.setEnabled(true);
@@ -161,9 +157,6 @@ public class SolutionInter extends JFrame {
     
     private void initializeButtonPanel(){
         button_panel.setPreferredSize(new Dimension(450,100));
-        //button_panel.setOpaque(true);
-        //setBackground(Color.BLUE);
-
         button_panel.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.weighty=1;
@@ -172,13 +165,27 @@ public class SolutionInter extends JFrame {
         button_panel.add(save_button,c);
         c.gridx=1;
         button_panel.add(close_button,c);
-        c.gridx=2;
-        button_panel.add(recalculate_button,c);
+    }
+
+    private void initializeDrawPanel() {
+        for (int i = 0; i < rels.size(); ++i) {
+            System.out.println(i);
+            int x = Math.round(coords.get(rels.get(i)).x);
+            int y = Math.round(coords.get(rels.get(i)).y);
+            JLabel label = new JLabel(chars.get(rels.get(i)), JLabel.CENTER);
+            label.setOpaque(true);
+            label.setForeground(Color.black);
+            label.setBackground(Color.darkGray);
+            keys.add(label);
+            this.add(label);
+            label.setLocation(x, y);
+            label.setSize(50, 20);
+        }
     }
 
 
 	//-----------------
-
+        /*
 	    class DrawPanel extends JPanel {
             private BufferedImage image = new BufferedImage(450, 200, BufferedImage.TYPE_3BYTE_BGR);
             Vector<JLabel> keys = new Vector<JLabel>();
@@ -202,11 +209,11 @@ public class SolutionInter extends JFrame {
                     System.out.println(i);
 	        		int x = Math.round(coords.get(rels.get(i)).x);
 	        		int y = Math.round(coords.get(rels.get(i)).y);
-                    /*g.setColor(Color.BLACK);
-	        		g.fillRect(x, y, 50,20); // 100 key size, may change
-                    g.setColor(Color.RED);
-	        		g.drawString(chars.get(rels.get(i)), x+10, y+10);
-                    */
+                    //g.setColor(Color.BLACK);
+	        		//g.fillRect(x, y, 50,20); // 100 key size, may change
+                    //g.setColor(Color.RED);
+	        		//g.drawString(chars.get(rels.get(i)), x+10, y+10);
+                    
                     JLabel label = new JLabel(chars.get(rels.get(i)), JLabel.CENTER);
                     label.setOpaque(true);
                     label.setForeground(Color.black);
@@ -223,46 +230,46 @@ public class SolutionInter extends JFrame {
                 return image;
             }
 
-            private void setListeners(){
-                                            System.out.println("Mouse ininin");
-
+            private void setListeners() {
+                System.out.println("Mouse ininin");
                 for (int i = 0; i < keys.size(); ++i) {
-                                                System.out.println("Mforforforforlick");
+                     System.out.println("Mforforforforlick");
 
                     keys.get(i).addMouseListener(new MouseAdapter() {
                         public void mouseReleased(MouseEvent event){
                             //if (event.isPopupTrigger()) {
                                 // code
-                                /*if (swapping) {
-                                    keys.get(i).setBackground(Color.red);
+                                //if (swapping) {
+                                    //keys.get(i).setBackground(Color.red);
 
-                                }*/
+                                //}
                             //}
                             //setBackground(Color.red);
                             System.out.println("Mouse Click");
                         }
 
-                        /* @Override
-                        public void mouseEntered(MouseEvent event) {
-                            Font font_original = keys.get(i).getFont();
-                            Map attributes = font_original.getAttributes();
-                            attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-                            keys.get(i).setFont(font_original.deriveFont(attributes));;
-                        }
+                        // @Override
+                        //public void mouseEntered(MouseEvent event) {
+                            //Font font_original = keys.get(i).getFont();
+                            //Map attributes = font_original.getAttributes();
+                            //attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+                            //keys.get(i).setFont(font_original.deriveFont(attributes));;
+                        //}
 
-                        @Override
-                        public void mouseExited(MouseEvent event) {
-                            Font font_original = keys.get(i).getFont();
-                            Map attributes = font_original.getAttributes();
-                            attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_OFF);
-                            keys.get(i).setFont(font_original.deriveFont(attributes));;
-                        }*/
+                        //@Override
+                        //public void mouseExited(MouseEvent event) {
+                            //Font font_original = keys.get(i).getFont();
+                            //Map attributes = font_original.getAttributes();
+                            //attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_OFF);
+                            //keys.get(i).setFont(font_original.deriveFont(attributes));;
+                        //}
                     });
                 }
             }
 
 
-	    }    
+	    }
+        */
 
 	public static void main(String args[]) {
         EventQueue.invokeLater(new Runnable() {
