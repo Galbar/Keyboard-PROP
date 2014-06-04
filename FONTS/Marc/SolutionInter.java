@@ -63,8 +63,9 @@ public class SolutionInter extends JFrame {
 
         JPanel contentPane = (JPanel) this.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        contentPane.add(draw_panel);
+        
         contentPane.add(button_panel);
+        contentPane.add(draw_panel);
     }
     
     private void setListeners(){
@@ -79,7 +80,7 @@ public class SolutionInter extends JFrame {
                 InterfaceController.saveKeyboard("aaa", image); // "aaa" will be path
             }
                
-        }); 
+        });
         close_button.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
@@ -96,6 +97,18 @@ public class SolutionInter extends JFrame {
                     dispose();
                 }
             }
+        });
+        swap_button.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent event){
+                System.out.println("Swap Tecles");
+                //Explorer e = new Explorer();
+                //String path = e.getPath(); //????
+
+                BufferedImage image = ScreenImage.createImage(draw_panel);
+                InterfaceController.saveKeyboard("aaa", image); // "aaa" will be path
+            }
+               
         });
         for (int i = 0; i < keys.size(); ++i) {
             keys.get(i).addMouseListener(new MouseAdapter() {
