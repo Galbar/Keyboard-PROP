@@ -195,7 +195,7 @@ public class SolutionInter extends JFrame {
             label.setForeground(Color.black);
             label.setBackground(Color.darkGray);
             keys.add(label);
-            this.add(label);
+            draw_panel.add(label);
             label.setLocation(x, y);
             label.setSize(50, 20);
         }
