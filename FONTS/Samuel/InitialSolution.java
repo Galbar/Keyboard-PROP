@@ -1,4 +1,8 @@
-//AQUESTA VERSIO ES LA QUE INDUEIX EL NOM DE COST A LA MATRIU DE RELACIONS I ES LA QUE PITJORS RESULTATS DONA POSA ELS COSTOS BAIXOS A DISTANCIES BAIXES
+/*La solució inicial agafa els dos elements amb cost mínim entre ells i els 
+ *assigna a les dues posicions que tenen la distancia mínima llavors va 
+ *assignant el següent element amb cost mínim amb un dels anteriors a la següent
+ *posició amb distancia mínima a una de les anteriors.
+ */
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates

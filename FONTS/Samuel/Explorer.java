@@ -45,11 +45,11 @@ public class Explorer {
             case "tq":
                 instance.frame.setTitle("Carregar frequències");
                 break;
-            case "ga":
+            case "gam":case"gak":
                 instance.frame.setTitle("Guardar alfabet");
                 b = "a";
                 break;
-            case "gt":
+            case "gtm":case "gtk":
                 instance.frame.setTitle("Guardar text");
                 break;
             case "gtq":
