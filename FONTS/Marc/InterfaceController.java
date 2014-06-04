@@ -37,7 +37,7 @@ public class InterfaceController {
     public static void saveKeyboard(String path, BufferedImage image) {
         // Save Image
         try {
-            ImageIO.write(image, "jpg", new File("/home/marc/Documents/uni/quadri4/prop/Keyboard-PROP/FONTS/Marc/image.jpg"));
+            ImageIO.write(image, "jpg", new File("image.jpg"));
         }
         catch (IOException e){
             e.printStackTrace();
