@@ -3,6 +3,8 @@
  * and open the template in the editor.
  */
 
+package classes;
+
 import javax.swing.event.*;
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +13,7 @@ import java.awt.event.*;
  *
  * @author samuel.bryan.pierno
  */
-public class Alphabet {
+public class AlphabetView {
     private JFrame frame = new JFrame("Gestionar alfabet");
     private JPanel buttons_panel = new JPanel();
     private JTextField character = new JTextField();
@@ -21,13 +23,13 @@ public class Alphabet {
     private JButton cancel = new JButton("Cancel·la");
     private JLabel alphabet = new JLabel();
     private String callback;
-    private static Alphabet instance;
+    private static AlphabetView instance;
     
-    private Alphabet(){
+    private AlphabetView(){
         initialize();
     }
-    public static Alphabet getInstance(String called){
-        if(instance == null)instance = new Alphabet();
+    public static AlphabetView getInstance(String called){
+        if(instance == null)instance = new AlphabetView();
         instance.frame.setLocationRelativeTo(null);
         instance.setEnabled(true);
         instance.setVisible(true);

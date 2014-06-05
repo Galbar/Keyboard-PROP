@@ -19,8 +19,8 @@ if [[ ! -d classes/ ]]; then
 	
 	cp -f ../FONTS/Marc/Character.java classes/
 	cp -f ../FONTS/Marc/CharacterDriver.java classes/
-	cp -f ../FONTS/Marc/SolutionView.java
-	cp -f ../FONTS/Marc/ScreenImage.java
+	cp -f ../FONTS/Marc/SolutionView.java classes/
+	cp -f ../FONTS/Marc/ScreenImage.java classes/
 	cp -f ../FONTS/Marc/CharactersSetDriver.java classes/
 	cp -f ../FONTS/Marc/CharactersSet.java classes/
 	cp -f ../FONTS/Marc/RelationDriver.java classes/
@@ -28,6 +28,13 @@ if [[ ! -d classes/ ]]; then
 
 	cp -f ../FONTS/Samuel/Keyboard.java classes/
 	cp -f ../FONTS/Samuel/KeyboardDriver.java classes/
+	cp -f ../FONTS/Samuel/MainWindow.java classes/
+	cp -f ../FONTS/Samuel/Explorer.java classes/
+	cp -f ../FONTS/Samuel/Loader.java classes/
+	cp -f ../FONTS/Samuel/NewKeyboard.java classes/
+	cp -f ../FONTS/Samuel/Text.java classes/
+	cp -f ../FONTS/Samuel/InterfaceController.java classes/
+	cp -f ../FONTS/Samuel/AlphabetView.java classes/
 	mkdir classes/enumerations/
 	cp -f ../FONTS/Samuel/TopologyType.java classes/enumerations/
 	cp -f ../FONTS/Samuel/UsageMode.java classes/enumerations/

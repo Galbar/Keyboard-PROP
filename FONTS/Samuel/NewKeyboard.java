@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+package classes;
+
 import javax.swing.event.*;
 import javax.swing.*;
 import java.awt.*;
@@ -65,7 +67,7 @@ public class NewKeyboard {
         alpha_button.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
-                Alphabet.getInstance("k");
+                AlphabetView.getInstance("k");
                 setVisible(false);
                 setEnabled(false);
             }

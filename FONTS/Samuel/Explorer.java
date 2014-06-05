@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+package classes;
+
 import java.io.*;
 import javax.swing.event.*;
 import javax.swing.*;
@@ -32,29 +34,27 @@ public class Explorer {
     }
     public static Explorer getInstance(String b){
         if(instance == null)instance = new Explorer();
-        switch (b) {
-            case "a":
-                instance.frame.setTitle("Carregar alfabet");
-                break;
-            case "m":
-                instance.frame.setTitle("Carregar teclat");
-                break;
-            case "t":
-                instance.frame.setTitle("Carregar text");
-                break;
-            case "tq":
-                instance.frame.setTitle("Carregar frequències");
-                break;
-            case "gam":case"gak":
-                instance.frame.setTitle("Guardar alfabet");
-                b = "a";
-                break;
-            case "gtm":case "gtk":
-                instance.frame.setTitle("Guardar text");
-                break;
-            case "gtq":
-                instance.frame.setTitle("Guardar frequències");
-                break;
+        if (b.equals("a")) {
+            instance.frame.setTitle("Carregar alfabet");
+        }
+        else if (b.equals("m")) {
+            instance.frame.setTitle("Carregar teclat");
+        }
+        else if (b.equals("t")) {
+            instance.frame.setTitle("Carregar text");
+        }
+        else if (b.equals("tq")) {
+            instance.frame.setTitle("Carregar frequències");
+        }
+        else if (b.equals("gam") || b.equals("gak")) {
+            instance.frame.setTitle("Guardar alfabet");
+            b = "a";
+        }
+        else if (b.equals("gtm") || b.equals("gtk")) {
+            instance.frame.setTitle("Guardar text");
+        }
+        else if (b.equals("gtq")) {
+            instance.frame.setTitle("Guardar frequències");
         }
         instance.explore.setCurrentDirectory(instance.l_path);
         instance.explore.setSelectedFile(null);
@@ -97,70 +97,66 @@ public class Explorer {
             public void actionPerformed(ActionEvent ae) {
                 instance.setEnabled(false);
                 instance.setVisible(false);
-                switch (callback) {
-                    case "a":
-                        Alphabet.getInstance("e");
-                        break;
-                    case "m":
-                        MainWindow.getInstance();
-                        break;
-                    case "t": case "tq": case "gt":case "gtq":
-                        Text.getInstance("e");
-                        break;
-                    case "k":
-                        NewKeyboard.getInstance();
+                if (callback.equals("a")) {
+                    AlphabetView.getInstance("e");
                 }
+                else if (callback.equals("m")) {
+                    MainWindow.getInstance();
+                }
+                else if (callback.equals("t") || callback.equals("tq") || callback.equals("gt") || callback.equals("gtq")) {
+                    Text.getInstance("e");
+                }
+                else if (callback.equals("k")) {
+                    NewKeyboard.getInstance();
+                }
+                
                 if("ApproveSelection".equals(ae.getActionCommand())){
                     e_path=explore.getSelectedFile();
                     explore.accept(e_path);
                     log.append("\n"+e_path.getAbsolutePath());
-                    switch (callback) {
-                        case "a":
-                            InterfaceController.loadAlphabet(e_path.getAbsolutePath());
-                            break;
-                        case "m":
-                            InterfaceController.loadKeyboard(e_path.getAbsolutePath());
-                            break;
-                        case "t":
-                            InterfaceController.loadText(e_path.getAbsolutePath());
-                            break;
-                        case "tq":
-                            InterfaceController.loadFrequencies(e_path.getAbsolutePath());
-                            break;
-                        case "gt":
-                            InterfaceController.saveText(e_path.getAbsolutePath());
-                            break;
-                        case "gtq":
-                            InterfaceController.saveFrequencies(e_path.getAbsolutePath());
-                            break;
-                        case "gtm":
-                            MainWindow.getInstance();
-                            InterfaceController.saveFrequencies(e_path.getAbsolutePath());
-                            break;
-                        case "gtk":
-                            NewKeyboard.getInstance();
-                            InterfaceController.saveFrequencies(e_path.getAbsolutePath());
-                            break;
-                        case "gam":
-                            MainWindow.getInstance();
-                            InterfaceController.saveAlphabet(e_path.getAbsolutePath());
-                            break;
-                        case "gak":
-                            NewKeyboard.getInstance();
-                            InterfaceController.saveAlphabet(e_path.getAbsolutePath());
-                            break;
-                        case "ga":
-                            InterfaceController.saveAlphabet(e_path.getAbsolutePath());
-                            break;
+                    if (callback.equals("a")) {
+                        InterfaceController.loadAlphabet(e_path.getAbsolutePath());
+                    }
+                    else if (callback.equals("m")) {
+                        InterfaceController.loadKeyboard(e_path.getAbsolutePath());
+                    }
+                    else if (callback.equals("t")) {
+                        InterfaceController.loadText(e_path.getAbsolutePath());
+                    }
+                    else if (callback.equals("tq")) {
+                        InterfaceController.loadFrequencies(e_path.getAbsolutePath());
+                    }
+                    else if (callback.equals("gt")) {
+                        InterfaceController.saveText(e_path.getAbsolutePath());
+                    }
+                    else if (callback.equals("gtq")) {
+                        InterfaceController.saveFrequencies(e_path.getAbsolutePath());
+                    }
+                    else if (callback.equals("gtm")) {
+                        MainWindow.getInstance();
+                        InterfaceController.saveFrequencies(e_path.getAbsolutePath());
+                    }
+                    else if (callback.equals("gtk")) {
+                        NewKeyboard.getInstance();
+                        InterfaceController.saveFrequencies(e_path.getAbsolutePath());
+                    }
+                    else if (callback.equals("gam")) {
+                        MainWindow.getInstance();
+                        InterfaceController.saveAlphabet(e_path.getAbsolutePath());
+                    }
+                    else if (callback.equals("gak")) {
+                        NewKeyboard.getInstance();
+                        InterfaceController.saveAlphabet(e_path.getAbsolutePath());
+                    }
+                    else if (callback.equals("ga")) {
+                        InterfaceController.saveAlphabet(e_path.getAbsolutePath());
                     }
                 }else{
-                    switch(callback){
-                        case "gak": case "gam":
-                            Alphabet.getInstance("e");
-                            break;
-                        case "gtm": case "gtk":
-                            Text.getInstance("e");
-                            break;
+                    if (callback.equals("gak") || callback.equals("gam")){
+                        AlphabetView.getInstance("e");
+                    }
+                    else if (callback.equals("gtm") || callback.equals("gtk")){
+                        Text.getInstance("e");
                     }
                 }
             }

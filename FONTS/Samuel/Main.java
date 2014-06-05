@@ -111,9 +111,9 @@ public class Main {
 				if (args[1].equals("DriverBranchAndBound"))
 					DriverBranchAndBound.main(s);
 			}
-		}/*
+		}
 		else
-		{             
+		{/*             
 			TopologyType topology_type;
 			UsageMode usage_mode;
 			Alphabet alphabet = new Alphabet();
@@ -160,8 +160,8 @@ public class Main {
 			domain.process();
 
 			print("Solution cost: "+domain.getCost());
+		*/
+    		MainWindow.getInstance();
 		}
-	*/
-    //MainWindow.getInstance();
     }
 }
