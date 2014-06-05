@@ -23,8 +23,8 @@ public class KeyboardDriver {
         classes.Character[] c =new classes.Character[n];
         int[] ass = new int[n];
         if(n%3 != 0) n+=2;
-        classes.Keyboard k = new classes.Keyboard(nom,classes.enumerations.TopologyType.Squared,classes.enumerations.UsageMode.Default,n/3,3);
-        classes.Keyboard k1 =new classes.Keyboard(nom,classes.enumerations.TopologyType.Squared,classes.enumerations.UsageMode.Default,n/3,3,c,p,ass);
+        classes.Keyboard k = new classes.Keyboard(nom,classes.enumerations.TopologyType.Squared,n/3,3);
+        classes.Keyboard k1 =new classes.Keyboard(nom,classes.enumerations.TopologyType.Squared,n/3,3,c,p,ass);
         System.out.print("introdueixi el nombre de referencies i aquestes\n\b");
         n = scaner.nextInt();
         for(int i=0;i<n;++i)k.addReference(scaner.next());
@@ -36,8 +36,6 @@ public class KeyboardDriver {
         System.out.print(k.getWidth());
         System.out.print(" d'amplada, la topologia per defecte: ");
         System.out.print(k.getTopology());
-        System.out.print(", el mode d'us per defecte: ");
-        System.out.print(k.getUsageMode());
         System.out.print(" i les següents referencies:\n\b");
         String[] r = k.getReferences();
         for(int i = 0; i < r.length;++i){
