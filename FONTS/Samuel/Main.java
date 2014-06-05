@@ -2,6 +2,9 @@ import classes.*;
 import classes.enumerations.*;
 import sharedClasses.*;
 import java.util.*;
+import org.json.JSONException;
+
+import org.json.JSONObject;
 
 /**
  *
@@ -69,7 +72,6 @@ public class Main {
 			else if ( option.equals("-c") || option.equals("--commandline")){
 				TopologyType topology_type;
 				UsageMode usage_mode;
-				Alphabet alphabet = new Alphabet();
 				PositionsSet positionsSet;
 				CharactersSet charactersSet;
 				int num_keys;
@@ -102,8 +104,6 @@ public class Main {
 				// Introdueix alçada del teclat
 				int height = Integer.parseInt(readNextLine());
 
-				// String alphabetName, String topology, String usageMode, int width, int height, String chars[]
-				Keyboard k = new Keyboard(alphabetName, t, width, height);
 
 				// Introdueix Textos
 				int num_texts = Integer.parseInt(readNextLine());
@@ -120,10 +120,10 @@ public class Main {
 				QAP qap = new QAP(charactersSet.getAllAffinities() ,positionsSet.getAllDistances());
 
 				int qapSolution[] = qap.solve();
-				for (int i = 0; i < qapSolution.length; ++i) {
-					k.addElement(charactersSet.getCharacter(i), positionsSet.getPosition(qapSolution[i]));
-				}
-				k.setScore(Bound.bound(qapSolution, charactersSet.getAllAffinities(), positionsSet.getAllDistances()));
+
+				Keyboard k = new Keyboard(alphabetName, t, width, height, charactersSet.getAllCharacters(), positionsSet.getAllPositions(), qapSolution);
+
+				k.setScore(Bound.bound(k.getAllocations(), charactersSet.getAllAffinities(), positionsSet.getAllDistances()));
 
 				print("Assignments:");
 				for (int i = 0; i < num_keys;++i) {
