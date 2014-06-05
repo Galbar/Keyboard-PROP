@@ -106,7 +106,7 @@ public class SolutionView extends JFrame {
                 System.out.println("Swap Tecles");
                 //Explorer e = new Explorer();
                 //String path = e.getPath(); //????
-                InterfaceController.swap(selected_keys.get(0), selected_keys.get(1); // NOT DONE !!!
+                InterfaceController.swap(selected_keys.get(0), selected_keys.get(1)); // NOT DONE !!!
             }
                
         });
