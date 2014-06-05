@@ -17,7 +17,7 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import FONTS.Albert.PROPKeyboardException;
+import classes.PROPKeyboardException;
 
 import sun.misc.BASE64Encoder;
 import sun.misc.BASE64Decoder;
@@ -44,11 +44,13 @@ public class PersistanceController {
 
 
 
+
     /**
 	* Carrega Alfabet.
 	* @param pth És el path on hi ha le fitxer a carregar.
 	* @return String amb totes les dades del fitxer.
 	*/
+    /*
     public String loadAlphabet(String pth) throws PROPKeyboardException {
         try{
             JSONObject s = new JSONObject();
@@ -95,11 +97,13 @@ public class PersistanceController {
             throw new PROPKeyboardException("Error loadAlphabet: Error Intern");
         }
     }
+    */
    
     /**
 	* Guarda Alfabet
 	* @param str Estructura on hi ha tots els paràmetres a guardar.
 	*/	 
+    /*
     public void saveAlphabet(String str) throws PROPKeyboardException{
         try {
             FileWriter write = null;
@@ -122,7 +126,7 @@ public class PersistanceController {
             }
             PrintWriter print_line = new PrintWriter(write);
 
-            /* PRINT NAME */
+            // PRINT NAME 
             try {
                 print_line.println(s.get("name").toString());
             } catch (JSONException ex) {
@@ -130,7 +134,7 @@ public class PersistanceController {
             }
             print_line.println("");
             
-            /* PRINT NUMBER */
+            //PRINT NUMBER //
             try {
                 print_line.println(s.get("number").toString());
             } catch (JSONException ex) {
@@ -138,7 +142,7 @@ public class PersistanceController {
             }
             print_line.println("");
             
-            /* PRINT CHARACTERS */
+            //PRINT CHARACTERS //
             try {
                 for (int i = 0; i < (s.getDouble("number")); ++i) {
                     print_line.print(s.getJSONArray("characters").getString(i));
@@ -159,6 +163,8 @@ public class PersistanceController {
         * @param pth És el path on hi ha le fitxer a carregar.
         * @return String amb totes les dades del fitxer.
         */	    
+    
+    /*
     public String loadKeyboard(String pth) throws PROPKeyboardException {
         Path path = Paths.get(pth);
         List<String> lines = null;
@@ -169,21 +175,21 @@ public class PersistanceController {
         }
         JSONObject s = new JSONObject();
 
-        /* LOAD NAME */
+        //LOAD NAME //
         try {
             s.put("name", lines.get(0));
         } catch (JSONException ex) {
                 throw new PROPKeyboardException("Error loadKeyboard: reading name");
         }
 
-        /* LOAD TOPOLOGY */
+        //LOAD TOPOLOGY //
         try {
             s.put("topology", lines.get(2));
         } catch (JSONException ex) {
                 throw new PROPKeyboardException("Error loadKeyboard: reading topology");
         }
 
-        /* LOAD SPECIAL CHARS */
+        //LOAD SPECIAL CHARS //
         String aux = new String();
         String next = new String();
         int cont = 4;        
@@ -212,7 +218,7 @@ public class PersistanceController {
                 throw new PROPKeyboardException("Error loadKeyboard: reading special characters");
         }
 
-        /* LOAD heigth */
+        //LOAD heigth //
         try {
             s.put("heigth", lines.get(cont));
         } catch (JSONException ex) {
@@ -220,7 +226,7 @@ public class PersistanceController {
         }
         cont += 2;
 
-        /* LOAD WIDTH */
+        //LOAD WIDTH //
         try {
             s.put("width", lines.get(cont));
         } catch (JSONException ex) {
@@ -228,7 +234,7 @@ public class PersistanceController {
         }
         cont += 2;
 
-        /* LOAD REFERENCES */
+        //LOAD REFERENCES //
         aux = new String();
         next =new String();
         next = lines.get(cont);
@@ -246,7 +252,7 @@ public class PersistanceController {
         }
 
 
-        /* LOAD RELATIONS */
+        //LOAD RELATIONS //
         aux = new String();
         next =new String();
         solution = new String();
@@ -274,7 +280,7 @@ public class PersistanceController {
                 throw new PROPKeyboardException("Error loadKeyboard: reading relations");
         }
 
-        /* LOAD CHARACTERS */
+        //LOAD CHARACTERS //
         aux = new String();
         next =new String();
         solution = new String();
@@ -302,7 +308,7 @@ public class PersistanceController {
                 throw new PROPKeyboardException("Error loadKeyboard: reading characters");
         }
 
-        /* LOAD ASSIGMENTS */
+        //LOAD ASSIGMENTS //
         aux = new String();
         next =new String();
         solution = new String();
@@ -345,6 +351,7 @@ public class PersistanceController {
 	* Guarda Alfabet
 	* @param str Estructura on hi ha tots els paràmetres a guardar.
 	*/
+    /*
     public void saveKeyboard(String str) throws PROPKeyboardException {
         try {
             FileWriter write = null;
@@ -367,7 +374,7 @@ public class PersistanceController {
             }
             PrintWriter print_line = new PrintWriter(write);   
             
-            /* PRINT NAME */
+            //PRINT NAME //
             try {
                 print_line.println(s.get("name").toString());
             } catch (JSONException ex) {
@@ -375,7 +382,7 @@ public class PersistanceController {
             }
             print_line.println();
 
-            /* PRINT TOPOLOGY */
+            //PRINT TOPOLOGY //
             try {
                 print_line.println(s.get("topology").toString());
             } catch (JSONException ex) {
@@ -383,7 +390,7 @@ public class PersistanceController {
             }
             print_line.println("");
 
-            /* PRINT SPECIAL CHARACTERS */
+            //PRINT SPECIAL CHARACTERS //
             try {
                 for (int i = 0; i < (s.getJSONArray("characters").length()); ++i) {
                     print_line.print(s.getJSONArray("characters").getString(i));
@@ -395,7 +402,7 @@ public class PersistanceController {
             print_line.println("");
             print_line.println("");
             
-            /* PRINT HEIGHT */
+            //PRINT HEIGHT //
             try {
                 print_line.println(s.get("heigth").toString());
             } catch (JSONException ex) {
@@ -403,7 +410,7 @@ public class PersistanceController {
             }
             print_line.println("");
 
-            /* PRINT WIDTH */
+            //PRINT WIDTH //
             try {
                 print_line.println(s.get("width").toString());
             } catch (JSONException ex) {
@@ -411,7 +418,7 @@ public class PersistanceController {
             }
             print_line.println("");
 
-            /* PRINT REFERENCES */
+            //PRINT REFERENCES //
             try {
                 for (int i = 0; i < (s.getJSONArray("references").length()); ++i) {
                     print_line.println(s.getJSONArray("references").getString(i));
@@ -421,10 +428,10 @@ public class PersistanceController {
             }
            print_line.println("");
 
-            /* PRINT RELATIONS */
-            /* Estan ordenades de tal manera que el primer valor de la relació serà
+            //PRINT RELATIONS //
+            //Estan ordenades de tal manera que el primer valor de la relació serà
             el [0,0], el segon el [0,1]...
-            */
+            //
             try {
                 for (int i = 0; i < (s.getJSONArray("relations").length()); ++i) {
                     print_line.print(s.getJSONArray("relations").getString(i));
@@ -436,7 +443,7 @@ public class PersistanceController {
             print_line.println("");
             print_line.println("");
 
-            /* PRINT CHARACTERS */
+            //PRINT CHARACTERS //
             try {
                 for (int i = 0; i < (s.getJSONArray("characters").length()); ++i) {
                     print_line.print(s.getJSONArray("characters").getString(i));
@@ -448,7 +455,7 @@ public class PersistanceController {
             print_line.println("");
             print_line.println("");
 
-            /* PRINT ASSIGMENTS */
+            //PRINT ASSIGMENTS //
             try {
                 for (int i = 0; i < (s.getJSONArray("assigments").length()); ++i) {
                     print_line.print(s.getJSONArray("assigments").getString(i));
@@ -462,50 +469,24 @@ public class PersistanceController {
             throw new PROPKeyboardException("Error loadAlphabet: Error Intern");
         }    
     }
+    */
 
-    public void saveImage(String str) throws PROPKeyboardException {
+    public void saveKeyboardImage(String path, String image_string) throws PROPKeyboardException {
         try {
-            String pth = null;
-            String image_string = null;
-            JSONObject s = null;
-            try {
-                s = new JSONObject(str);
-            } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error saveImage: JSON string bad format");
-            }
-            try {
-                pth = s.get("path").toString();
-            } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error saveImage: path to string");
-            }
-
-            try {
-                image_string= s.get("image_string").toString();
-            } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error saveImage: image_string to string");
-            }
-
-            
-            try {
-                byte[] imageByte;
-                BASE64Decoder decoder = new BASE64Decoder();
-                imageByte = decoder.decodeBuffer(image_string);
-                ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
-                image = ImageIO.read(bis);
-                bis.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            try {
-                ImageIO.write(image, "jpg", new File(path));
-            } catch (IOException e){
-                e.printStackTrace();
-            }
-
+            byte[] imageByte;
+            BASE64Decoder decoder = new BASE64Decoder();
+            imageByte = decoder.decodeBuffer(image_string);
+            ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+            image = ImageIO.read(bis);
+            bis.close();
         } catch (Exception e) {
-            throw new PROPKeyboardException("Error loadAlphabet: Error Intern");
-        }    
+            e.printStackTrace();
+        }
+        try {
+            ImageIO.write(image, "jpg", new File(path));
+        } catch (IOException e){
+                e.printStackTrace();
+        }
     }
 
     
@@ -514,6 +495,7 @@ public class PersistanceController {
 	* @param pth És el path on hi ha le fitxer a carregar.
 	* @return String amb totes les dades del fitxer.
 	*/
+    /*
     public String loadKeyboard(String pth) throws PROPKeyboardException {
         Path path = Paths.get(pth);
         List<String> lines = null;
@@ -524,21 +506,21 @@ public class PersistanceController {
         }
         JSONObject s = new JSONObject();
         
-        /* LOAD NAME */
+        //LOAD NAME //
         try {
             s.put("name", lines.get(0));
         } catch (JSONException ex) {
                 throw new PROPKeyboardException("Error loadKeyboard: reading name");
         }
         
-        /* LOAD TOPOLOGY */
+        //LOAD TOPOLOGY //
         try {
             s.put("topology", lines.get(2));
         } catch (JSONException ex) {
                 throw new PROPKeyboardException("Error loadKeyboard: reading topology");
         }
                 
-        /* LOAD SPECIAL CHARS */
+        //LOAD SPECIAL CHARS //
         String aux = new String();
         String next = new String();
         int cont = 4;        
@@ -567,7 +549,7 @@ public class PersistanceController {
                 throw new PROPKeyboardException("Error loadKeyboard: reading special characters");
         }
         
-        /* LOAD heigth */
+        //LOAD heigth //
         try {
             s.put("heigth", lines.get(cont));
         } catch (JSONException ex) {
@@ -575,7 +557,7 @@ public class PersistanceController {
         }
         cont += 2;
         
-        /* LOAD WIDTH */
+        //LOAD WIDTH //
         try {
             s.put("width", lines.get(cont));
         } catch (JSONException ex) {
@@ -583,7 +565,7 @@ public class PersistanceController {
         }
         cont += 2;
         
-        /* LOAD REFERENCES */
+        //LOAD REFERENCES //
         aux = new String();
         next =new String();
         next = lines.get(cont);
@@ -600,7 +582,7 @@ public class PersistanceController {
                 throw new PROPKeyboardException("Error loadKeyboard: reading references");
         }
         
-        /* LOAD CHARACTERS */
+        //LOAD CHARACTERS //
         aux = new String();
         next =new String();
         solution = new String();
@@ -629,7 +611,7 @@ public class PersistanceController {
         }
         
         
-        /* LOAD RELATIONS */
+        //LOAD RELATIONS //
         aux = new String();
         next =new String();
         solution = new String();
@@ -671,7 +653,7 @@ public class PersistanceController {
         }
         
               
-        /* LOAD ASSIGMENTS */
+        //LOAD ASSIGMENTS //
         aux = new String();
         next =new String();
         solution = new String();
@@ -724,6 +706,7 @@ public class PersistanceController {
 	* Guarda Teclat
 	* @param str Estructura on hi ha tots els paràmetres a guardar.
 	*/
+    /*
     public void saveKeyboard(String str) throws PROPKeyboardException {
         try {
             FileWriter write = null;
@@ -746,7 +729,7 @@ public class PersistanceController {
             }
             PrintWriter print_line = new PrintWriter(write);   
             
-            /* PRINT NAME */
+            //PRINT NAME //
             try {
                 print_line.println(s.get("name").toString());
             } catch (JSONException ex) {
@@ -754,7 +737,7 @@ public class PersistanceController {
             }
             print_line.println();
 
-            /* PRINT TOPOLOGY */
+            //PRINT TOPOLOGY //
             try {
                 print_line.println(s.get("topology").toString());
             } catch (JSONException ex) {
@@ -762,7 +745,7 @@ public class PersistanceController {
             }
             print_line.println("");
 
-            /* PRINT SPECIAL CHARACTERS */
+            //PRINT SPECIAL CHARACTERS //
             try {
                 for (int i = 0; i < (s.getJSONArray("specialChars").length()); ++i) {
                     print_line.print(s.getJSONArray("specialChars").getString(i));
@@ -774,7 +757,7 @@ public class PersistanceController {
             print_line.println("");
             print_line.println("");
             
-            /* PRINT HEIGHT */
+            //PRINT HEIGHT //
             try {
                 print_line.println(s.get("heigth").toString());
             } catch (JSONException ex) {
@@ -782,7 +765,7 @@ public class PersistanceController {
             }
             print_line.println("");
 
-            /* PRINT WIDTH */
+            //PRINT WIDTH //
             try {
                 print_line.println(s.get("width").toString());
             } catch (JSONException ex) {
@@ -790,7 +773,7 @@ public class PersistanceController {
             }
             print_line.println("");
 
-            /* PRINT REFERENCES */
+            //PRINT REFERENCES //
             try {
                 for (int i = 0; i < (s.getJSONArray("references").length()); ++i) {
                     print_line.println(s.getJSONArray("references").getString(i));
@@ -801,7 +784,7 @@ public class PersistanceController {
            print_line.println("");
 
            
-           /* PRINT CHARACTERS */
+           //PRINT CHARACTERS //
             try {
                 for (int i = 0; i < (s.getJSONArray("characters").length()); ++i) {
                     print_line.print(s.getJSONArray("characters").getString(i));
@@ -815,10 +798,9 @@ public class PersistanceController {
             
             
             
-            /* PRINT RELATIONS */
-            /* Estan ordenades de tal manera que el primer valor de la relació serà
-            el [0,0], el segon el [0,1]...
-            */
+            // PRINT RELATIONS
+            // Estan ordenades de tal manera que el primer valor de la relació serà
+            // el [0,0], el segon el [0,1]...
             try {
                 for (int i = 0; i < (s.getJSONArray("relations").length()); ++i) {
                     print_line.print(s.getJSONArray("relations").getString(i));
@@ -832,7 +814,7 @@ public class PersistanceController {
 
             
 
-            /* PRINT ASSIGMENTS */
+            // PRINT ASSIGMENTS //
             try {
                 for (int i = 0; i < (s.getJSONArray("assigments").length()); ++i) {
                     print_line.print(s.getJSONArray("assigments").getString(i));
@@ -845,7 +827,7 @@ public class PersistanceController {
         } catch (Exception e) {
             throw new PROPKeyboardException("Error loadAlphabet: Error Intern");
         }    
-    }
+    }*/
     
 }
 

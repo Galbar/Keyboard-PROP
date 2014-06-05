@@ -43,10 +43,10 @@ public class InterfaceController {
     
     public static void saveImage(String path, String image_string) {
         // Save Image
-        JSONObject i = new JSONObject();
-        i.put("path", path);
-        i.put("image_string", image_string);
-        //DomainController.getInstance().saveImage(i.toString());
+        //JSONObject i = new JSONObject();
+        //i.put("path", path);
+        //i.put("image_string", image_string);
+        DomainController.i().saveKeyboardImage(path, image_string);
         //Test.getInstance().saveImage(i.toString());
     }
         

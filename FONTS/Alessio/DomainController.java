@@ -17,6 +17,8 @@ public class DomainController {
 		return instance;
 	}
 
+	/*
+
 	public String loadAlphabet(String path) throws PROPKeyboardException {
 		return PersistanceController.i().loadAlphabet(path);
 	}
@@ -45,9 +47,13 @@ public class DomainController {
 		PersistanceController.i().saveKeyboard(json);
 	}
 
-	public void saveKeyboardImage(String json) throws PROPKeyboardException {
-		PersistanceController.i().saveKeyboardImage(json);
+	*/
+
+	public void saveKeyboardImage(String path, String image_string) throws PROPKeyboardException {
+		PersistanceController.i().saveKeyboardImage(path, image_string);
 	}
+
+	/*
 
 	public String swap(String json) throws PROPKeyboardException {
 		if (currentKeyboard == null) throw new PROPKeyboardException("Keyboard not initialized");
@@ -173,9 +179,6 @@ public class DomainController {
 		}
 	}
 
-
-
-
-
-
+	*/
+	
 }
