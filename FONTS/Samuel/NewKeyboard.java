@@ -86,7 +86,7 @@ public class NewKeyboard {
                 setEnabled(false);
                 InterfaceController.setSettings(topology.getSelectedItem().toString());
                 Loader.done();
-                //FinalSolution.getInstance();                
+                //InterfaceController.createKeyboard(); // Falten els parametres.
             }
         });
     }

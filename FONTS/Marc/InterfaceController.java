@@ -50,5 +50,5 @@ public class InterfaceController {
     
     public static void saveFrequencies(String path){}
 
-    public static void recalculate(){}
+    public static void swap(int id1, int id2) {}
 }

@@ -1,6 +1,7 @@
 import java.awt.*;
 import javax.swing.*;
 import java.util.Vector;
+import java.util.Map;
 import java.lang.Math.*;
 import java.awt.Color;
 import javax.swing.event.*;
@@ -43,15 +44,15 @@ public class SolutionView extends JFrame {
     private Vector<String> chars;
     private Vector<Integer> rels;
     private Vector<Position> coords; // temp
-    private Vector<JLabel> keys;
-    private Vector<Integer> selected_keys; // Potser no sera vector
+    private Map<JLabel, Integer> keys;
+    private Map<JLabel, Integer> selected_keys; // Potser no sera vector
 
     private SolutionView(Vector<String> new_chars, Vector<Integer> new_rels, Vector<Position> new_coords) {
     	chars = new_chars;
     	rels = new_rels;
     	coords = new_coords;
-        keys = new Vector<JLabel>();
-        selected_keys = new Vector<Integer>();
+        keys = new Map<JLabel, Integer>();
+        selected_keys = new Map<JLabel, Integer>();
         initialize();
     }
 
@@ -65,8 +66,8 @@ public class SolutionView extends JFrame {
         JPanel contentPane = (JPanel) this.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         
-        contentPane.add(button_panel);
         contentPane.add(draw_panel);
+        contentPane.add(button_panel);
     }
     
     private void setListeners(){
@@ -105,20 +106,30 @@ public class SolutionView extends JFrame {
                 System.out.println("Swap Tecles");
                 //Explorer e = new Explorer();
                 //String path = e.getPath(); //????
-                int aux1 = rels.get(selected_keys.get(0));
-                int aux2 = rels.get(selected_keys.get(1));
-                rels.set(selected_keys.get(0), aux1);
-                selected_keys.get(1);
+                InterfaceController.swap(selected_keys.get(0), selected_keys.get(1); // NOT DONE !!!
             }
                
         });
-        for (int i = 0; i < keys.size(); ++i) {
-            keys.get(i).addMouseListener(new MouseAdapter() {
+        for (Map.Entry<JLabel, Integer> entry : keys.entrySet()) {
+            entry.getKey().addMouseListener(new MouseAdapter() {
                 public void mouseReleased(MouseEvent event){
 
                     JLabel label = (JLabel)event.getSource();
-                    label.setBackground(Color.red);
                     System.out.println("Select Key");
+
+                    if (selected_keys.size() == 2) {
+                        if (selected_keys.containsKey(label)) {
+                            selected_keys.remove(label);
+                            label.setBackground(Color.darkGray);
+                        }
+                        else {
+
+                        }
+                    }
+                    else {
+                        selected_keys.put(label, keys.get(label));
+                        label.setBackground(Color.red);
+                    }
 
                 }
 
@@ -186,6 +197,11 @@ public class SolutionView extends JFrame {
     }
 
     private void initializeDrawPanel() {
+        draw_panel.setPreferredSize(new Dimension(450,200));
+        draw_panel.setLayout(null);
+        draw_panel.setOpaque(true);
+        draw_panel.setBackground(Color.WHITE);
+        
         for (int i = 0; i < rels.size(); ++i) {
             System.out.println(i);
             int x = Math.round(coords.get(rels.get(i)).x);
@@ -194,7 +210,7 @@ public class SolutionView extends JFrame {
             label.setOpaque(true);
             label.setForeground(Color.black);
             label.setBackground(Color.darkGray);
-            keys.add(label);
+            keys.put(label, i);
             draw_panel.add(label);
             label.setLocation(x, y);
             label.setSize(50, 20);
