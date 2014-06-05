@@ -161,7 +161,38 @@ public class Main {
 
 			print("Solution cost: "+domain.getCost());
 		*/
-    		MainWindow.getInstance();
+    		//MainWindow.getInstance();
+    		
+        	
+        	Vector<String> new_chars = new Vector<String>(0);
+        	Vector<Integer> new_rels = new Vector<Integer>(0);
+        	Vector<Position> new_coords = new Vector<Position>(0);
+
+            new_chars.addElement("a");
+            new_chars.addElement("b");
+            new_chars.addElement("c");
+
+            new_rels.addElement(0);
+            new_rels.addElement(1);
+            new_rels.addElement(2);
+
+            Position p1 = new Position(10.0f, 10.0f);
+            Position p2 = new Position(80.0f, 10.0f);
+            Position p3 = new Position(70.0f, 50.0f);
+            new_coords.addElement(p1);
+            new_coords.addElement(p2);
+            new_coords.addElement(p3);
+
+            for (int i = 0; i < new_coords.size(); ++i) {
+                System.out.println(new_coords.get(i).x);
+                System.out.println(new_coords.get(i).y);
+                System.out.println("---");
+            }
+            System.out.println("Start");
+
+            //SolutionView sI = new SolutionView.getInstance(new_chars, new_rels, new_coords);
+            SolutionView sI = SolutionView.getInstance(new_chars, new_rels, new_coords);
+
 		}
     }
 }
