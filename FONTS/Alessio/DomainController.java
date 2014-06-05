@@ -10,50 +10,46 @@ public class DomainController {
 	private PositionsSet positionsSet;
 
 	private DomainController() {}
-	static public DomainController i() {
+	static public DomainController getInstance() {
 		if (instance == null) {
 			instance = new DomainController();
 		}
 		return instance;
 	}
 
-	/*
-
 	public String loadAlphabet(String path) throws PROPKeyboardException {
-		return PersistanceController.i().loadAlphabet(path);
+		return PersistanceController.getInstance().loadAlphabet(path);
 	}
 
 	public void saveAlphabet(String json) throws PROPKeyboardException {
-		PersistanceController.i().saveAlphabet(json);
+		PersistanceController.getInstance().saveAlphabet(json);
 	}
 
 	public String loadText(String path) throws PROPKeyboardException {
-		return PersistanceController.i().loadText(path);
+		return PersistanceController.getInstance().loadText(path);
 	}
 
 	public String loadFrequency(String path) throws PROPKeyboardException {
-		return PersistanceController.i().loadText(path);
+		return PersistanceController.getInstance().loadText(path);
 	}
 
 	public void saveText(String json) throws PROPKeyboardException {
-		PersistanceController.i().saveText(json);
+		PersistanceController.getInstance().saveText(json);
 	}
 
 	public String loadKeyboard(String path) throws PROPKeyboardException {
-		return PersistanceController.i().loadKeyboard(path);
+		return PersistanceController.getInstance().loadKeyboard(path);
 	}
 
 	public void saveKeyboard(String json) throws PROPKeyboardException {
-		PersistanceController.i().saveKeyboard(json);
+		PersistanceController.getInstance().saveKeyboard(json);
 	}
 
-	*/
 
 	public void saveKeyboardImage(String path, String image_string) throws PROPKeyboardException {
-		PersistanceController.i().saveKeyboardImage(path, image_string);
+		PersistanceController.getInstance().saveKeyboardImage(path, image_string);
 	}
 
-	/*
 
 	public String swap(String json) throws PROPKeyboardException {
 		if (currentKeyboard == null) throw new PROPKeyboardException("Keyboard not initialized");
@@ -179,10 +175,4 @@ public class DomainController {
 			throw new PROPKeyboardException("Error: JSON string bad format");
 		}
 	}
-<<<<<<< HEAD
-
-	*/
-	
-=======
->>>>>>> 09631f6688c64affa5b9484abb56c02d66ea8ba8
 }

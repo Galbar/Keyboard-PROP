@@ -473,16 +473,13 @@ public class PersistanceController {
 
     public void saveKeyboardImage(String path, String image_string) throws PROPKeyboardException {
         try {
+            BufferedImage image;
             byte[] imageByte;
             BASE64Decoder decoder = new BASE64Decoder();
             imageByte = decoder.decodeBuffer(image_string);
             ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
             image = ImageIO.read(bis);
             bis.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
             ImageIO.write(image, "jpg", new File(path));
         } catch (IOException e){
                 e.printStackTrace();
