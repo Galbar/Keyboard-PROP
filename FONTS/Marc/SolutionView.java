@@ -88,7 +88,7 @@ public class SolutionView extends JFrame {
                 String path = "aaa"; //e.getPath();
 
                 BufferedImage image = ScreenImage.createImage(draw_panel);
-                InterfaceController.saveImage(path, image); // "aaa" will be path
+                //InterfaceController.saveImage(path, image); // "aaa" will be path
             }
                
         });
@@ -127,11 +127,15 @@ public class SolutionView extends JFrame {
                         ++i;
                     }
                     InterfaceController.swap(ids[0], ids[1]); // NOT DONE YET!
-                    keys.remove(labels[0]);
-                    keys.remove(labels[1]);
-                    keys.put(labels[0], ids[1]);
-                    keys.put(labels[1], ids[0]);
+                    int aux = rels.get(ids[0]);
+                    rels.set(ids[0], rels.get(ids[1]));
+                    rels.set(ids[1], aux);
+                    //keys.remove(labels[0]);
+                    //keys.remove(labels[1]);
+                    //keys.put(labels[0], ids[1]);
+                    //keys.put(labels[1], ids[0]);
                     selected_keys.clear();
+                    draw();
                 }
             }
                
@@ -178,10 +182,6 @@ public class SolutionView extends JFrame {
                     JLabel label = (JLabel)event.getSource();
                     Border border = BorderFactory.createLineBorder(Color.BLUE);
                     label.setBorder(border);
-                    /*Font font_original = label.getFont();
-                    Map attributes = font_original.getAttributes();
-                    attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-                    label.setFont(font_original.deriveFont(attributes));; */
                 }
 
                 @Override
@@ -192,26 +192,6 @@ public class SolutionView extends JFrame {
                 }
             });
         }
-        /*
-        recalculate_button.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent event){
-                System.out.println("Recalcular Solucio");
-                Frame frame = new JFrame("Recalcular Solucio");
-                 int result = JOptionPane.showConfirmDialog(
-                frame,
-                "Segur que vols recalcular la solució?\nSi no s'ha guardat es perdrà!",
-                "Recalcular Solució?",
-                JOptionPane.YES_NO_OPTION);
-
-                if (result == JOptionPane.YES_OPTION) {
-                    InterfaceController.recalculate();
-                    setVisible(false);
-                    dispose();
-                }
-            }
-        }); 
-        */
     }
     
     private void initialize(){
@@ -249,8 +229,9 @@ public class SolutionView extends JFrame {
 
         for (int i = 0; i < rels.size(); ++i) {
             System.out.println(i);
-            JLabel label = new JLabel("", JLabel.CENTER);
+            JLabel label = new JLabel(chars.get(rels.get(i)), JLabel.CENTER);
             keys.put(label, i);
+            draw_panel.add(label);
         }
         draw();
     }
@@ -259,9 +240,6 @@ public class SolutionView extends JFrame {
 
         for (Map.Entry<JLabel, Integer> entry : keys.entrySet()) {
             JLabel label = entry.getKey();
-            
-            // Set Text
-            label.setText(chars.get(rels.get(keys.get(label)))), JLabel.CENTER);
 
             // Set Colors
             label.setOpaque(true);
@@ -271,12 +249,19 @@ public class SolutionView extends JFrame {
             label.setBorder(border);
 
             // Set Location
-            int x = Math.round(coords.get(rels.get(i)).x);
-            int y = Math.round(coords.get(rels.get(i)).y);
+            int x = Math.round(coords.get(rels.get(keys.get(label))).x);
+            int y = Math.round(coords.get(rels.get(keys.get(label))).y);
             label.setLocation(x, y);
             
             // Set Size
             label.setSize(50, 20);
+        }
+
+        draw_panel.revalidate();
+
+        // Print Rels:
+        for (int i = 0; i < rels.size(); i++) {
+            System.out.println(i + " - " + rels.get(i));
         }
 
     }

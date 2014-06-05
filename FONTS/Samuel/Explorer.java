@@ -148,7 +148,7 @@ public class Explorer {
                         InterfaceController.saveKeyboard(e_path.getAbsolutePath());
                     }
                     else if (callback.equals("i")) {
-                        InterfaceController.saveImage(e_path.getAbsolutePath());
+                        //InterfaceController.saveImage(e_path.getAbsolutePath()); // Falta l'imatge
                     }
                 }
             }
