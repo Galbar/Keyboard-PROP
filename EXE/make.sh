@@ -19,6 +19,8 @@ if [[ ! -d classes/ ]]; then
 	
 	cp -f ../FONTS/Marc/Character.java classes/
 	cp -f ../FONTS/Marc/CharacterDriver.java classes/
+	cp -f ../FONTS/Marc/SolutionView.java
+	cp -f ../FONTS/Marc/ScreenImage.java
 	cp -f ../FONTS/Marc/CharactersSetDriver.java classes/
 	cp -f ../FONTS/Marc/CharactersSet.java classes/
 	cp -f ../FONTS/Marc/RelationDriver.java classes/

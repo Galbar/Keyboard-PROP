@@ -114,4 +114,12 @@ public class MainWindow {
         buttons_panel.add(create_button,c);
         buttons_panel.add(load_button,c);
     }
+
+    public static void main(String args[]) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                MainWindow.getInstance();
+            }
+        });
+    }
 }
