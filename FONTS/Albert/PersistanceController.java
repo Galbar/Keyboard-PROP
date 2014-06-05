@@ -50,7 +50,6 @@ public class PersistanceController {
 	* @param pth És el path on hi ha le fitxer a carregar.
 	* @return String amb totes les dades del fitxer.
 	*/
-    /*
     public String loadAlphabet(String pth) throws PROPKeyboardException {
         try{
             JSONObject s = new JSONObject();
@@ -97,13 +96,11 @@ public class PersistanceController {
             throw new PROPKeyboardException("Error loadAlphabet: Error Intern");
         }
     }
-    */
    
     /**
 	* Guarda Alfabet
 	* @param str Estructura on hi ha tots els paràmetres a guardar.
-	*/	 
-    /*
+	*/	
     public void saveAlphabet(String str) throws PROPKeyboardException{
         try {
             FileWriter write = null;
@@ -162,9 +159,7 @@ public class PersistanceController {
         * Carrega Teclat
         * @param pth És el path on hi ha le fitxer a carregar.
         * @return String amb totes les dades del fitxer.
-        */	    
-    
-    /*
+        */	        
     public String loadKeyboard(String pth) throws PROPKeyboardException {
         Path path = Paths.get(pth);
         List<String> lines = null;
@@ -351,7 +346,7 @@ public class PersistanceController {
 	* Guarda Alfabet
 	* @param str Estructura on hi ha tots els paràmetres a guardar.
 	*/
-    /*
+    
     public void saveKeyboard(String str) throws PROPKeyboardException {
         try {
             FileWriter write = null;
@@ -430,7 +425,7 @@ public class PersistanceController {
 
             //PRINT RELATIONS //
             //Estan ordenades de tal manera que el primer valor de la relació serà
-            el [0,0], el segon el [0,1]...
+            //el [0,0], el segon el [0,1]...
             //
             try {
                 for (int i = 0; i < (s.getJSONArray("relations").length()); ++i) {
@@ -469,7 +464,6 @@ public class PersistanceController {
             throw new PROPKeyboardException("Error loadAlphabet: Error Intern");
         }    
     }
-    */
 
     public void saveKeyboardImage(String path, String image_string) throws PROPKeyboardException {
         try {
@@ -492,7 +486,6 @@ public class PersistanceController {
 	* @param pth És el path on hi ha le fitxer a carregar.
 	* @return String amb totes les dades del fitxer.
 	*/
-    /*
     public String loadKeyboard(String pth) throws PROPKeyboardException {
         Path path = Paths.get(pth);
         List<String> lines = null;
@@ -703,7 +696,6 @@ public class PersistanceController {
 	* Guarda Teclat
 	* @param str Estructura on hi ha tots els paràmetres a guardar.
 	*/
-    /*
     public void saveKeyboard(String str) throws PROPKeyboardException {
         try {
             FileWriter write = null;
@@ -824,7 +816,7 @@ public class PersistanceController {
         } catch (Exception e) {
             throw new PROPKeyboardException("Error loadAlphabet: Error Intern");
         }    
-    }*/
+    }
     
 }
 

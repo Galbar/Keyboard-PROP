@@ -45,14 +45,8 @@ public class DomainController {
 		PersistanceController.getInstance().saveKeyboard(json);
 	}
 
-<<<<<<< HEAD
-
 	public void saveKeyboardImage(String path, String image_string) throws PROPKeyboardException {
 		PersistanceController.getInstance().saveKeyboardImage(path, image_string);
-=======
-	public void saveKeyboardImage(String json) throws PROPKeyboardException {
-		PersistanceController.getInstance().saveKeyboardImage(json);
->>>>>>> 5ff905287c429be33f46ec9938fd4b118e1274f1
 	}
 
 
