@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+package classes;
+
 import java.io.*;
 import javax.swing.event.*;
 import javax.swing.*;
@@ -99,7 +101,7 @@ public class Explorer {
                 instance.setVisible(false);
                 switch (callback) {
                     case "a":
-                        Alphabet.getInstance("e");
+                        AlphabetView.getInstance("e");
                         break;
                     case "m":
                         MainWindow.getInstance();

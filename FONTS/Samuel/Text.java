@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+package classes;
+
 import javax.swing.event.*;
 import javax.swing.*;
 import java.awt.*;
@@ -98,13 +100,11 @@ public class Text {
         cancel.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
-                switch (callback) {
-                    case "k":
-                        NewKeyboard.getInstance();
-                        break;
-                    case "m":
-                        MainWindow.getInstance();
-                        break;
+                if (callback.equals("k")) {
+                    NewKeyboard.getInstance();
+                }
+                else if (callback.equals("m")) {
+                    MainWindow.getInstance();
                 }
                 setEnabled(false);
                 setVisible(false);

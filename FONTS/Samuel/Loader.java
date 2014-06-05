@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+package classes;
+
 import javax.swing.event.*;
 import javax.swing.*;
 import java.awt.*;

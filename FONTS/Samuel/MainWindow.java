@@ -3,6 +3,8 @@
  * and open the template in the editor.
  */
 
+package classes;
+
 import javax.swing.event.*;
 import javax.swing.*;
 import java.awt.*;
@@ -64,7 +66,7 @@ public class MainWindow {
         alpha_button.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
-                Alphabet.getInstance("m");
+                AlphabetView.getInstance("m");
                 setVisible(false);
                 setEnabled(false);
             }

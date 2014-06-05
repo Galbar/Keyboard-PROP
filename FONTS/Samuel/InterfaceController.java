@@ -3,6 +3,8 @@
  * and open the template in the editor.
  */
 
+package classes;
+
 /**
  *
  * @author samuel.bryan.pierno
