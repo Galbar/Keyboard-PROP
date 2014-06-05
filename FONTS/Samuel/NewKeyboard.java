@@ -20,6 +20,7 @@ public class NewKeyboard {
     private JButton alpha_button = new JButton("Gestionar alfabet");//("Manage alphabet");
     private JButton text_button = new JButton("Gestionar text");//("Manage text");
     private JButton create_button = new JButton("Crear teclat");//("Create keyboard");
+    private JButton cancel_button = new JButton("Cancel·la");
     private JComboBox topology = new JComboBox();
     private static NewKeyboard instance;
     
@@ -51,6 +52,7 @@ public class NewKeyboard {
         alpha_button.setVisible(visible);
         text_button.setVisible(visible);
         create_button.setVisible(visible);
+        cancel_button.setVisible(visible);
         frame.pack();
         frame.setVisible(visible);
     }
@@ -60,6 +62,7 @@ public class NewKeyboard {
         alpha_button.setEnabled(enabled);
         text_button.setEnabled(enabled);
         create_button.setEnabled(enabled);
+        cancel_button.setEnabled(enabled);
         topology.setEnabled(enabled);
     }
     
@@ -68,7 +71,6 @@ public class NewKeyboard {
             @Override
             public void actionPerformed(ActionEvent event){
                 AlphabetView.getInstance("k");
-                setVisible(false);
                 setEnabled(false);
             }
         }); 
@@ -76,7 +78,6 @@ public class NewKeyboard {
             @Override
             public void actionPerformed(ActionEvent event){
                Text.getInstance("k");
-               setVisible(false);
                setEnabled(false);
             }
         });
@@ -87,8 +88,16 @@ public class NewKeyboard {
                 setVisible(false);
                 setEnabled(false);
                 InterfaceController.setSettings(topology.getSelectedItem().toString());
-                Loader.done();
+                //Loader.done();
                 //InterfaceController.createKeyboard(); // Falten els parametres.
+            }
+        });
+        cancel_button.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent event){
+                MainWindow.getInstance();
+                setVisible(false);
+                setEnabled(false);
             }
         });
     }
@@ -112,8 +121,10 @@ public class NewKeyboard {
         c.gridy=1;
         buttons_panel.add(topology,c);
         c.gridy=2;
-        c.gridx=2;
+        c.gridx=1;
         buttons_panel.add(create_button,c);
+        c.gridx=2;
+        buttons_panel.add(cancel_button,c);
     }
     
     private void initializeTopology(){

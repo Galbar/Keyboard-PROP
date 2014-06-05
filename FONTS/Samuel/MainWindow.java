@@ -33,7 +33,7 @@ public class MainWindow {
     }
     private void initializeFrame() {
         // Tamanyo
-        frame.setMinimumSize(new Dimension(300, 200));
+        frame.setMinimumSize(new Dimension(450, 300));
         frame.setPreferredSize(frame.getMinimumSize());
         frame.setResizable(true);
         // Posicion y operaciones por defecto
@@ -67,7 +67,6 @@ public class MainWindow {
             @Override
             public void actionPerformed(ActionEvent event){
                 AlphabetView.getInstance("m");
-                setVisible(false);
                 setEnabled(false);
             }
         }); 
@@ -75,15 +74,13 @@ public class MainWindow {
             @Override
             public void actionPerformed(ActionEvent event){
                Text.getInstance("m");
-               instance.setEnabled(false);
-               instance.setVisible(false);
+               setEnabled(false);
             }
         });
         create_button.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
                 NewKeyboard.getInstance();
-                setVisible(false);
                 setEnabled(false);
             }
         });
@@ -92,7 +89,6 @@ public class MainWindow {
             public void actionPerformed(ActionEvent event){
                 Explorer.getInstance("m");
                 setEnabled(false);
-                setVisible(false);
             }
         });
     }

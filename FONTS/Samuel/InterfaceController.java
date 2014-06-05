@@ -40,4 +40,5 @@ public class InterfaceController {
     
     public static void saveFrequencies(String path){}
     
+    public static void saveImage(String path){}
 }

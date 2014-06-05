@@ -17,7 +17,6 @@ public class AlphabetView {
     private JFrame frame = new JFrame("Gestionar alfabet");
     private JPanel buttons_panel = new JPanel();
     private JTextField character = new JTextField();
-    private JButton add = new JButton("Afegir caracters"); //DEPRECATED?
     private JButton load = new JButton("Carregar alfabet");
     private JButton save = new JButton("Guardar alfabet");
     private JButton cancel = new JButton("Cancel·la");
@@ -38,7 +37,7 @@ public class AlphabetView {
     }
     private void initializeFrame() {
         // Tamanyo
-        frame.setMinimumSize(new Dimension(450, 200));
+        frame.setMinimumSize(new Dimension(550, 200));
         frame.setPreferredSize(frame.getMinimumSize());
         frame.setResizable(true);
         // Posicion y operaciones por defecto
@@ -51,9 +50,8 @@ public class AlphabetView {
     }
     
     public void setVisible(boolean visible){
-        add.setVisible(visible);
         alphabet.setText("Alfabet: ");
-        character.setColumns(30);
+        character.setColumns(45);
         load.setVisible(visible);
         save.setVisible(visible);
         cancel.setVisible(visible);
@@ -63,7 +61,6 @@ public class AlphabetView {
     
     public void setEnabled(boolean enabled){
         frame.setEnabled(enabled);
-        add.setEnabled(enabled);
         load.setEnabled(enabled);
         save.setEnabled(enabled);
         cancel.setEnabled(enabled);
@@ -71,25 +68,17 @@ public class AlphabetView {
     }
     
     private void setListeners(){ 
-        add.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent event){
-                
-            }
-        });
         load.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
                 Explorer.getInstance("a");
-                setVisible(false);
                 setEnabled(false);
             }
         });
         save.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
-                Explorer.getInstance("ga"+callback);
-                setVisible(false);
+                Explorer.getInstance("ga");
                 setEnabled(false);
             }
         });
@@ -120,19 +109,16 @@ public class AlphabetView {
         GridBagConstraints c = new GridBagConstraints();
         c.weighty=1;
         c.weightx=1;
-        c.gridwidth=2;
+        c.gridwidth=3;
         buttons_panel.add(alphabet,c);
         c.gridy=1;
         buttons_panel.add(character,c);
         c.gridwidth=1;
         c.gridy=2;
-        buttons_panel.add(add,c);
-        c.gridx=1;
         buttons_panel.add(load,c);
-        c.gridy=3;
-        c.gridx=0;
-        buttons_panel.add(save,c);
         c.gridx=1;
+        buttons_panel.add(save,c);
+        c.gridx=2;
         buttons_panel.add(cancel,c);
     }
     

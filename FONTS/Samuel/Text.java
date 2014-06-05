@@ -19,7 +19,7 @@ public class Text {
     private JPanel buttons_panel = new JPanel();
     @SuppressWarnings("FieldMayBeFinal")
     private JTextArea text = new JTextArea(15,35);
-    private JButton freq = new JButton("Carregar freqûències");
+    private JButton freq = new JButton("Carregar freqüències");
     private JButton load = new JButton("Carregar text");
     private JButton save = new JButton("Guardar text");
     private JButton cancel = new JButton("Cancel·la");
@@ -76,7 +76,6 @@ public class Text {
             @Override
             public void actionPerformed(ActionEvent event){
                Explorer.getInstance("tq");
-               setVisible(false);
                setEnabled(false);
             }
         });
@@ -84,16 +83,14 @@ public class Text {
             @Override
             public void actionPerformed(ActionEvent event){
                 Explorer.getInstance("t");
-                setVisible(false);
                 setEnabled(false);
             }
         });
         save.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
-                Explorer.getInstance("gt"+callback);
+                Explorer.getInstance("gt");
                 InterfaceController.setText(text.getText());
-                setVisible(false);
                 setEnabled(false);
             }
         });
