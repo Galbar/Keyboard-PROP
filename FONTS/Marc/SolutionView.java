@@ -1,17 +1,18 @@
+package classes;
+
 import java.awt.*;
 import javax.swing.*;
-import java.util.Vector;
+import java.util.*;
 import java.lang.Math.*;
 import java.awt.Color;
 import javax.swing.event.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-
-// <testing>
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-// </testing>
+import java.awt.font.TextAttribute;
+import javax.swing.border.*;
 
 /* Per dibuixar el teclat necessito:
 	- Els dos arrays pos i chars.. (noms ?)
@@ -39,19 +40,27 @@ public class SolutionView extends JFrame {
     private JButton save_button = new JButton("Guardar");
     private JButton close_button = new JButton("Tancar");
     private JButton swap_button = new JButton("Swap");
+    private JButton export_image_button = new JButton("Exportar Imatge");
 
     private Vector<String> chars;
     private Vector<Integer> rels;
     private Vector<Position> coords; // temp
-    private Vector<JLabel> keys;
-    private Vector<Integer> selected_keys; // Potser no sera vector
+    private HashMap<JLabel, Integer> keys;
+    private HashMap<JLabel, Integer> selected_keys; // Potser no sera vector
+
+    private static SolutionView instance;
+
+    public static SolutionView getInstance(Vector<String> new_chars, Vector<Integer> new_rels, Vector<Position> new_coords) {
+        if(instance == null) instance = new SolutionView(new_chars, new_rels, new_coords);
+        return instance;
+    }
 
     private SolutionView(Vector<String> new_chars, Vector<Integer> new_rels, Vector<Position> new_coords) {
     	chars = new_chars;
     	rels = new_rels;
     	coords = new_coords;
-        keys = new Vector<JLabel>();
-        selected_keys = new Vector<Integer>();
+        keys = new HashMap<JLabel, Integer>();
+        selected_keys = new HashMap<JLabel, Integer>();
         initialize();
     }
 
@@ -65,20 +74,21 @@ public class SolutionView extends JFrame {
         JPanel contentPane = (JPanel) this.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         
-        contentPane.add(button_panel);
         contentPane.add(draw_panel);
+        contentPane.add(button_panel);
     }
     
     private void setListeners(){
-        save_button.addActionListener(new ActionListener(){
+        export_image_button.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
-                System.out.println("Guardar Solució");
+                System.out.println("Guardar Imatge");
                 //Explorer e = new Explorer();
-                //String path = e.getPath(); //????
+                Explorer e = Explorer.getInstance("i");
+                String path = "aaa"; //e.getPath();
 
                 BufferedImage image = ScreenImage.createImage(draw_panel);
-                InterfaceController.saveKeyboard("aaa", image); // "aaa" will be path
+                //InterfaceController.saveImage(path, image); // "aaa" will be path
             }
                
         });
@@ -102,63 +112,86 @@ public class SolutionView extends JFrame {
         swap_button.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
-                System.out.println("Swap Tecles");
-                //Explorer e = new Explorer();
-                //String path = e.getPath(); //????
-                int aux1 = rels.get(selected_keys.get(0));
-                int aux2 = rels.get(selected_keys.get(1));
-                rels.set(selected_keys.get(0), aux1);
-                selected_keys.get(1);
+                if (selected_keys.size() < 2) {
+                    JOptionPane.showMessageDialog(null, "Selecciona dos tecles per fer el swap!");
+                }
+                else {
+                    System.out.println("Swap Tecles");
+                    int[] ids = new int[2];
+                    JLabel[] labels = new JLabel[2];
+                    int i = 0; 
+                    for (Map.Entry<JLabel, Integer> entry : selected_keys.entrySet()) {
+                        labels[i] = entry.getKey();
+                        labels[i].setBackground(Color.LIGHT_GRAY);
+                        ids[i] = selected_keys.get(labels[i]);
+                        ++i;
+                    }
+                    InterfaceController.swap(ids[0], ids[1]); // NOT DONE YET!
+                    int aux = rels.get(ids[0]);
+                    rels.set(ids[0], rels.get(ids[1]));
+                    rels.set(ids[1], aux);
+                    //keys.remove(labels[0]);
+                    //keys.remove(labels[1]);
+                    //keys.put(labels[0], ids[1]);
+                    //keys.put(labels[1], ids[0]);
+                    selected_keys.clear();
+                    draw();
+                }
             }
                
         });
-        for (int i = 0; i < keys.size(); ++i) {
-            keys.get(i).addMouseListener(new MouseAdapter() {
+
+        save_button.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent event){
+                System.out.println("Guardar Solució");
+                Explorer e = Explorer.getInstance("s");
+                String path = "aaa"; //e.getPath();
+                InterfaceController.saveKeyboard(path);
+            }
+               
+        });
+
+
+
+        for (Map.Entry<JLabel, Integer> entry : keys.entrySet()) {
+            entry.getKey().addMouseListener(new MouseAdapter() {
                 public void mouseReleased(MouseEvent event){
 
                     JLabel label = (JLabel)event.getSource();
-                    label.setBackground(Color.red);
                     System.out.println("Select Key");
 
+                    if (selected_keys.containsKey(label)) {
+                        selected_keys.remove(label);
+                        label.setBackground(Color.LIGHT_GRAY);
+                    }
+                    else {
+                        if (selected_keys.size() == 2) {
+                            selected_keys.remove(label);
+                            label.setBackground(Color.LIGHT_GRAY);
+                        }
+                        else {
+                            selected_keys.put(label, keys.get(label));
+                            label.setBackground(Color.red);
+                        }
+                    }
                 }
 
-                /* @Override
+                @Override
                 public void mouseEntered(MouseEvent event) {
-                    Font font_original = keys.get(i).getFont();
-                    Map attributes = font_original.getAttributes();
-                    attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-                    keys.get(i).setFont(font_original.deriveFont(attributes));;
+                    JLabel label = (JLabel)event.getSource();
+                    Border border = BorderFactory.createLineBorder(Color.BLUE);
+                    label.setBorder(border);
                 }
 
                 @Override
                 public void mouseExited(MouseEvent event) {
-                    Font font_original = keys.get(i).getFont();
-                    Map attributes = font_original.getAttributes();
-                    attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_OFF);
-                    keys.get(i).setFont(font_original.deriveFont(attributes));;
-                }*/
+                    JLabel label = (JLabel)event.getSource();
+                    Border border = BorderFactory.createLineBorder(Color.BLACK);
+                    label.setBorder(border);
+                }
             });
         }
-        /*
-        recalculate_button.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent event){
-                System.out.println("Recalcular Solucio");
-                Frame frame = new JFrame("Recalcular Solucio");
-                 int result = JOptionPane.showConfirmDialog(
-                frame,
-                "Segur que vols recalcular la solució?\nSi no s'ha guardat es perdrà!",
-                "Recalcular Solució?",
-                JOptionPane.YES_NO_OPTION);
-
-                if (result == JOptionPane.YES_OPTION) {
-                    InterfaceController.recalculate();
-                    setVisible(false);
-                    dispose();
-                }
-            }
-        }); 
-        */
     }
     
     private void initialize(){
@@ -175,30 +208,62 @@ public class SolutionView extends JFrame {
         button_panel.setPreferredSize(new Dimension(450,100));
         button_panel.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        c.weighty=1;
-        c.weightx=1;
-        c.gridx=0;
-        button_panel.add(save_button,c);
-        c.gridx=1;
-        button_panel.add(close_button,c);
-        c.gridx=2;
-        button_panel.add(swap_button,c);
+        c.weighty = 1;
+        c.weightx = 1;
+        c.gridx = 0;
+        button_panel.add(swap_button, c);
+        c.gridx = 1;
+        button_panel.add(export_image_button, c);
+        c.gridx = 2;
+        button_panel.add(save_button, c);
+        c.gridx = 3;
+        button_panel.add(close_button, c);
     }
 
     private void initializeDrawPanel() {
+        draw_panel.setPreferredSize(new Dimension(450,200));
+        draw_panel.setLayout(null);
+        draw_panel.setOpaque(true);
+        draw_panel.setBackground(Color.WHITE);
+
+
         for (int i = 0; i < rels.size(); ++i) {
             System.out.println(i);
-            int x = Math.round(coords.get(rels.get(i)).x);
-            int y = Math.round(coords.get(rels.get(i)).y);
             JLabel label = new JLabel(chars.get(rels.get(i)), JLabel.CENTER);
+            keys.put(label, i);
+            draw_panel.add(label);
+        }
+        draw();
+    }
+
+    private void draw() {
+
+        for (Map.Entry<JLabel, Integer> entry : keys.entrySet()) {
+            JLabel label = entry.getKey();
+
+            // Set Colors
             label.setOpaque(true);
             label.setForeground(Color.black);
-            label.setBackground(Color.darkGray);
-            keys.add(label);
-            draw_panel.add(label);
+            label.setBackground(Color.LIGHT_GRAY);
+            Border border = BorderFactory.createLineBorder(Color.BLACK);
+            label.setBorder(border);
+
+            // Set Location
+            int x = Math.round(coords.get(rels.get(keys.get(label))).x);
+            int y = Math.round(coords.get(rels.get(keys.get(label))).y);
             label.setLocation(x, y);
+            
+            // Set Size
             label.setSize(50, 20);
         }
+
+        draw_panel.revalidate();
+
+        // Print Rels:
+        for (int i = 0; i < rels.size(); i++) {
+            System.out.println(i + " - " + rels.get(i));
+        }
+
     }
 
 

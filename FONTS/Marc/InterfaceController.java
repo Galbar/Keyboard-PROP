@@ -1,3 +1,5 @@
+package classes;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -33,9 +35,12 @@ public class InterfaceController {
     public static void loadText(String path){}
     
     public static void loadAlphabet(String path){}
+
+    public static void saveKeyboard(String path) {}
     
-    public static void saveKeyboard(String path, BufferedImage image) {
+    public static void saveImage(String path, BufferedImage image) {
         // Save Image
+
         try {
             ImageIO.write(image, "jpg", new File("image.jpg"));
         }
@@ -50,5 +55,7 @@ public class InterfaceController {
     
     public static void saveFrequencies(String path){}
 
-    public static void recalculate(){}
+    public static void swap(int id1, int id2) {
+        System.out.println("asdasawd");
+    }
 }

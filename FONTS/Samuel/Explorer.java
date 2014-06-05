@@ -40,17 +40,23 @@ public class Explorer {
         else if (b.equals("m")) {
             instance.frame.setTitle("Carregar teclat");
         }
+        else if (b.equals("s")) {
+            instance.frame.setTitle("Guardar solució");
+        }
+        else if (b.equals("i")) {
+            instance.frame.setTitle("Guardar imatge");
+        }
         else if (b.equals("t")) {
             instance.frame.setTitle("Carregar text");
         }
         else if (b.equals("tq")) {
             instance.frame.setTitle("Carregar frequències");
         }
-        else if (b.equals("gam") || b.equals("gak")) {
+        else if (b.equals("ga")) {
             instance.frame.setTitle("Guardar alfabet");
             b = "a";
         }
-        else if (b.equals("gtm") || b.equals("gtk")) {
+        else if (b.equals("gt")) {
             instance.frame.setTitle("Guardar text");
         }
         else if (b.equals("gtq")) {
@@ -97,7 +103,7 @@ public class Explorer {
             public void actionPerformed(ActionEvent ae) {
                 instance.setEnabled(false);
                 instance.setVisible(false);
-                if (callback.equals("a")) {
+                if (callback.equals("a") || callback.equals("ga")) {
                     AlphabetView.getInstance("e");
                 }
                 else if (callback.equals("m")) {
@@ -108,6 +114,9 @@ public class Explorer {
                 }
                 else if (callback.equals("k")) {
                     NewKeyboard.getInstance();
+                }
+                else if (callback.equals("s")){
+                   // SolutionView.enable();
                 }
                 
                 if("ApproveSelection".equals(ae.getActionCommand())){
@@ -132,31 +141,14 @@ public class Explorer {
                     else if (callback.equals("gtq")) {
                         InterfaceController.saveFrequencies(e_path.getAbsolutePath());
                     }
-                    else if (callback.equals("gtm")) {
-                        MainWindow.getInstance();
-                        InterfaceController.saveFrequencies(e_path.getAbsolutePath());
-                    }
-                    else if (callback.equals("gtk")) {
-                        NewKeyboard.getInstance();
-                        InterfaceController.saveFrequencies(e_path.getAbsolutePath());
-                    }
-                    else if (callback.equals("gam")) {
-                        MainWindow.getInstance();
-                        InterfaceController.saveAlphabet(e_path.getAbsolutePath());
-                    }
-                    else if (callback.equals("gak")) {
-                        NewKeyboard.getInstance();
-                        InterfaceController.saveAlphabet(e_path.getAbsolutePath());
-                    }
                     else if (callback.equals("ga")) {
                         InterfaceController.saveAlphabet(e_path.getAbsolutePath());
                     }
-                }else{
-                    if (callback.equals("gak") || callback.equals("gam")){
-                        AlphabetView.getInstance("e");
+                    else if (callback.equals("s")) {
+                        InterfaceController.saveKeyboard(e_path.getAbsolutePath());
                     }
-                    else if (callback.equals("gtm") || callback.equals("gtk")){
-                        Text.getInstance("e");
+                    else if (callback.equals("i")) {
+                        //InterfaceController.saveImage(e_path.getAbsolutePath()); // Falta l'imatge
                     }
                 }
             }
