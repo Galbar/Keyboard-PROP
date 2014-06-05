@@ -2,6 +2,9 @@ import classes.*;
 import classes.enumerations.*;
 import sharedClasses.*;
 import java.util.*;
+import org.json.JSONException;
+
+import org.json.JSONObject;
 
 /**
  *
@@ -32,6 +35,7 @@ public class Main {
 		print("-t, --test [-h|--help]      Enter class testing mode");
 		print("           [class name]     (run the corresponding driver).");
 		print("-h, --help                  View this text.");
+		print("-c, --commandline           Run without GUI and input through standard input");
 	}
 
 	private static void usage(String s)
@@ -64,6 +68,96 @@ public class Main {
 			else if ( args.length > 1 && (args[1].equals("-h") || args[1].equals("--help")) )
 			{
 				usage(args[0]);
+			}
+			else if ( option.equals("-c") || option.equals("--commandline")){
+				TopologyType topology_type;
+				UsageMode usage_mode;
+				PositionsSet positionsSet;
+				CharactersSet charactersSet;
+				int num_keys;
+
+				// Introdueix nom de l'alfabet
+				String alphabetName = readNextLine();
+
+				// Introdueix Alfabet
+				num_keys = Integer.parseInt(readNextLine());
+				String chars[] = new String[num_keys];
+				for (int i = 0; i < num_keys; ++i)
+					chars[i] = readNextLine();
+
+				classes.Character characters[] = new classes.Character[num_keys];
+				for (int i = 0; i < num_keys; ++i) {
+					characters[i] = new classes.Character(chars[i]);
+				}
+				charactersSet = new CharactersSet(characters);
+				
+				// Introdueix topologia
+				String topology = readNextLine();
+				TopologyType t;
+				if (topology.equals("Squared")) t = TopologyType.Squared;
+				else t = TopologyType.Circular;
+
+				positionsSet = new PositionsSet(t, num_keys);
+
+				// Introdueix amplada del teclat
+				int width = Integer.parseInt(readNextLine());
+				// Introdueix alçada del teclat
+				int height = Integer.parseInt(readNextLine());
+
+
+				// Introdueix Textos
+				int num_texts = Integer.parseInt(readNextLine());
+				for (int i = 0; i < num_texts; ++i) {
+					String text = "";
+					String line = readNextLine();
+					while (!line.equals("\\end")) {
+						text += line;
+						line = readNextLine();
+					}
+					charactersSet.calculateText(text);
+				}
+
+				QAP qap = new QAP(charactersSet.getAllAffinities() ,positionsSet.getAllDistances());
+
+				int qapSolution[] = qap.solve();
+
+				Keyboard k = new Keyboard(alphabetName, t, width, height, charactersSet.getAllCharacters(), positionsSet.getAllPositions(), qapSolution);
+
+				k.setScore(Bound.bound(k.getAllocations(), charactersSet.getAllAffinities(), positionsSet.getAllDistances()));
+
+				print("Assignments:");
+				for (int i = 0; i < num_keys;++i) {
+					System.out.println(k.getAllocation(i).first.getCharacter()+"\t<->\t("+k.getAllocation(i).second.x+","+k.getAllocation(i).second.y+")");
+				}
+				print("Solution cost: "+k.getScore());
+
+				System.out.print("id:\t");
+				String a = "Cha:\t";
+				String b = "Pos:\t";
+				for (int i = 0; i < num_keys; ++i) {
+					System.out.print(i+"\t\t");
+					a += k.getAllElements().get(i).getCharacter()+"\t\t";
+					b += "("+k.getAllPositions().get(i).x+","+k.getAllPositions().get(i).y+")\t";
+				}
+				print("");
+				print(a);
+				print(b);
+
+				print("Relations between characters:");
+				for (int i = 0; i < num_keys; ++i) {
+					for (int j = 0; j < num_keys; ++j) {
+						System.out.print(charactersSet.getAffinity(i, j)+"\t");
+					}
+					print("");
+				}
+
+				print("Distances between positions:");
+				for (int i = 0; i < num_keys; ++i) {
+					for (int j = 0; j < num_keys; ++j) {
+						System.out.print(positionsSet.getDistance(i, j)+"\t");
+					}
+					print("");
+				}
 			}
 			else if ( option.equals("-t") || option.equals("--test") && args.length > 1 )
 			{
@@ -113,86 +207,8 @@ public class Main {
 			}
 		}
 		else
-		{/*             
-			TopologyType topology_type;
-			UsageMode usage_mode;
-			Alphabet alphabet = new Alphabet();
-			PositionsSet positionsSet;
-			int num_keys;
-			QAP qap;
-       
-
-			// Introdueix nom de l'alfabet
-			String alphabetName = readNextLine();
-
-			// Introdueix Alfabet
-			num_keys = Integer.parseInt(readNextLine());
-			String chars[] = new String[num_keys];
-			for (int i = 0; i < num_keys; ++i)
-				chars[i] = readNextLine();
-
-			// Introdueix topologia
-			String topology = readNextLine();
-
-			// Introdueix mode d'us
-			String usage = readNextLine();
-			// Introdueix amplada del teclat
-			int width = Integer.parseInt(readNextLine());
-			// Introdueix alçada del teclat
-			int height = Integer.parseInt(readNextLine());
-
-			// String alphabetName, String topology, String usageMode, int width, int height, String chars[]
-			domain.createKeyboard(alphabetName, topology, usage, width, height, chars);
-
-			// Introdueix Textos
-
-			int num_texts = Integer.parseInt(readNextLine());
-			for (int i = 0; i < num_texts; ++i) {
-				String text = "";
-				String line = readNextLine();
-				while (!line.equals("\\end")) {
-					text += line;
-					line = readNextLine();
-				}
-				domain.addText(text);
-			}
-
-			domain.process();
-
-			print("Solution cost: "+domain.getCost());
-		*/
-    		//MainWindow.getInstance();
-    		
-        	
-        	Vector<String> new_chars = new Vector<String>(0);
-        	Vector<Integer> new_rels = new Vector<Integer>(0);
-        	Vector<Position> new_coords = new Vector<Position>(0);
-
-            new_chars.addElement("a");
-            new_chars.addElement("b");
-            new_chars.addElement("c");
-
-            new_rels.addElement(0);
-            new_rels.addElement(1);
-            new_rels.addElement(2);
-
-            Position p1 = new Position(10.0f, 10.0f);
-            Position p2 = new Position(80.0f, 10.0f);
-            Position p3 = new Position(70.0f, 50.0f);
-            new_coords.addElement(p1);
-            new_coords.addElement(p2);
-            new_coords.addElement(p3);
-
-            for (int i = 0; i < new_coords.size(); ++i) {
-                System.out.println(new_coords.get(i).x);
-                System.out.println(new_coords.get(i).y);
-                System.out.println("---");
-            }
-            System.out.println("Start");
-
-            //SolutionView sI = new SolutionView.getInstance(new_chars, new_rels, new_coords);
-            SolutionView sI = SolutionView.getInstance(new_chars, new_rels, new_coords);
-
+		{
+    		MainWindow.getInstance();
 		}
     }
 }

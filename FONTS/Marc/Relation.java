@@ -97,6 +97,20 @@ public class Relation {
     }
 
     /**
+    * Consulta totes les relacions entre tots els elements restant-les al total.
+    * @return Matriu de floats que conté totes les relacions.
+    */
+    public float[][] getInversedRelations() {
+        float result[][] = new float[n][n];
+        for (int i = 0; i < n; ++i) {
+            for (int j = i + 1; j < n; ++j) {
+                result[i][j] = result[j][i] = totalSum-getRelation(i, j);
+            }
+        }
+        return result;
+    }
+
+    /**
     * Consulta totes les relacions entre tots els elements. Relacions en forma de percentatge respecte la suma total del valor de totes les relacions.
     * @return Matriu de floats que conté els percentatges que representen les relacions respecte la suma de totes les altres relacions.
     */

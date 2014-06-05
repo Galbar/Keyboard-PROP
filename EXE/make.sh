@@ -9,10 +9,12 @@ if [[ ! -d classes/ ]]; then
 	mkdir classes
 	cp -f ../FONTS/Albert/Alphabet.java classes/
 	cp -f ../FONTS/Albert/AlphabetDriver.java classes/
+	cp -f ../FONTS/Albert/PROPKeyboardException.java classes/
 	cp -f ../FONTS/Albert/Position.java classes/
 	cp -f ../FONTS/Albert/PositionDriver.java classes/
 	cp -f ../FONTS/Albert/PositionsSet.java classes/
 	cp -f ../FONTS/Albert/PositionsSetDriver.java classes/
+	cp -f ../FONTS/Albert/PersistanceController.java classes/
 
 	cp -f ../FONTS/Alessio/DomainController.java classes/
 	cp -f ../FONTS/Alessio/DomainControllerDriver.java classes/

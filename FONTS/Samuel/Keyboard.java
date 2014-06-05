@@ -12,7 +12,6 @@ import java.util.*;
 public class Keyboard extends C <classes.Character, Position>
 {
 	private TopologyType topology;
-	private UsageMode usageMode;
 	private boolean specialChars;
 	private int width;
 	private int height;
@@ -21,13 +20,12 @@ public class Keyboard extends C <classes.Character, Position>
 	/* Constructora */
 	/*
 	Pre: -
-	Post: New Instance with name=name,topology=topology, usageMode=usageMode, width=width, height=height
+	Post: New Instance with name=name,topology=topology, width=width, height=height
 	*/
-    public Keyboard(String name, TopologyType topology, UsageMode usageMode, int width, int height)
+    public Keyboard(String name, TopologyType topology, int width, int height)
     {
     	super(name);
         this.topology = topology;
-        this.usageMode = usageMode;
         this.width = width;
         this.height = height;
     }
@@ -37,11 +35,10 @@ public class Keyboard extends C <classes.Character, Position>
 	Pre: -
 	Post: New Instance with the parameters set as passed
 	*/
-    public Keyboard(String name, TopologyType topology, UsageMode usageMode, int width, int height, classes.Character[ ] characters, Position[ ] positions, int[ ] assignments)
+    public Keyboard(String name, TopologyType topology, int width, int height, classes.Character[ ] characters, Position[ ] positions, int[ ] assignments)
     {
     	super(name, characters, positions, assignments);
         this.topology = topology;
-        this.usageMode = usageMode;
         this.width = width;
         this.height = height;
     }
@@ -58,14 +55,6 @@ public class Keyboard extends C <classes.Character, Position>
 	*/
 	public TopologyType getTopology() {
 		return topology;
-	}
-
-    /*
-	Pre: -
-	Post: Returns the usage mode of the keyboard
-	*/
-	public UsageMode getUsageMode() {
-		return usageMode;
 	}
 
     /*

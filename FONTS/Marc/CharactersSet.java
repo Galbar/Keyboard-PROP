@@ -106,8 +106,6 @@ public class CharactersSet {
             // Recorre el text ja dividit en caracters i calcula les freqüències
             for (int i = 0; i < v.size() - 1; ++i) {
                 r.addToRelation(getId(v.elementAt(i)), getId(v.elementAt(i + 1)), (float)(x));
-                if (i != v.size() - 2)
-                    r.addToRelation(getId(v.elementAt(i)), getId(v.elementAt(i + 2)), (float)(x)*(float)(0.5)); // Revisar
             }
 
         }
@@ -147,8 +145,6 @@ public class CharactersSet {
         // Recorre el text ja dividit en caracters i calcula les freqüències
         for (int i = 0; i < v.size() - 1; ++i) {
             r.addToRelation(getId(v.elementAt(i)), getId(v.elementAt(i + 1)), 1f);
-            if (i != v.size() - 2)
-                r.addToRelation(getId(v.elementAt(i)), getId(v.elementAt(i + 2)), 0.5f); // Revisar
         }
     }
 
@@ -159,7 +155,7 @@ public class CharactersSet {
     * @return Float que representa el percentatge de vegades que els Characters amb id a i b han aparegut junts en els texts calculats.
     */
     public float getAffinity(int a, int b) {
-        return r.getProportion(a, b);
+        return r.getRelation(a, b);
     }
 
     /**
@@ -167,7 +163,7 @@ public class CharactersSet {
     * @result Matriu de floats que conté els percentatges.
     */
     public float[][] getAllAffinities() {
-        return r.getProportions();
+        return r.getRelations();
     }
 
     /**
