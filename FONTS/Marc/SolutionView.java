@@ -7,29 +7,25 @@ import java.lang.Math.*;
 import java.awt.Color;
 import javax.swing.event.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.awt.font.TextAttribute;
 import javax.swing.border.*;
-
-/* Per dibuixar el teclat necessito:
-	- Els dos arrays pos i chars.. (noms ?)
-	- Noms de les tecles
-	- Coordenades de cada posició
-*/
+import sun.misc.BASE64Encoder;
+import sun.misc.BASE64Decoder;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.awt.image.BufferedImage;
 
 /* TO DO
-    - Recalculate DONE
-    - Save        Guardar Imatge fet, Falta el explorer que no compila. Necessito que el explorer em retorni l'string del path triat i despres JO crido al InterfaceController.
-    - Detectar click Key -> Swap: Primer s'apreta el boto, apareix text indicatiu  (label) i despres es cliquen les dos tecles.
+    Al utilitzar singleton no puc fer el dibuix quan es construeix la classe. Haig de fer un metode apart
+    i cridar-lo quan creo la classe i quan em torno a fer visible. -> setVisible(true);
+    Aquest metode ha d'elminiar (buidar) els atributs keys i selected_keys, i tambe chars, rels i coords,
+    i tornar a crear-los tots i cridar la funció draw.
 */
 
 /*
-	Array [String] Chars, array amb els caracters de cada tecla. Accedir per index.
-	Array [] Coords, array amb les coordenades de cada tecla. Accedir per index.
-	Array [int] Rel, array que relacion l'array Chars amb l'array Coords: Rel[i] = j -> Chars[i] va amb Coords[j] (O al reves ¿?)
+
 */	
 
 public class SolutionView extends JFrame {
@@ -52,6 +48,14 @@ public class SolutionView extends JFrame {
 
     public static SolutionView getInstance(Vector<String> new_chars, Vector<Integer> new_rels, Vector<Position> new_coords) {
         if(instance == null) instance = new SolutionView(new_chars, new_rels, new_coords);
+        else {
+            instance.reinitiate(new_chars, new_rels, new_coords);
+        }
+        return instance;
+    }
+
+    public static SolutionView getInstance() {
+        if(instance == null) System.out.println("ERROOR... Esper-ho i Desitjo que mai vegis aquesta linia...");
         return instance;
     }
 
@@ -78,17 +82,34 @@ public class SolutionView extends JFrame {
         contentPane.add(button_panel);
     }
     
+    public static String encodeToString(BufferedImage image, String type) {
+        String imageString = null;
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+        try {
+            ImageIO.write(image, type, bos);
+            byte[] imageBytes = bos.toByteArray();
+
+            BASE64Encoder encoder = new BASE64Encoder();
+            imageString = encoder.encode(imageBytes);
+
+            bos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return imageString;
+    }
+
     private void setListeners(){
         export_image_button.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
                 System.out.println("Guardar Imatge");
-                //Explorer e = new Explorer();
-                Explorer e = Explorer.getInstance("i");
-                String path = "aaa"; //e.getPath();
-
                 BufferedImage image = ScreenImage.createImage(draw_panel);
-                //InterfaceController.saveImage(path, image); // "aaa" will be path
+                String image_string = encodeToString(image, "jpeg");
+                System.out.println(image_string);
+                Explorer e = Explorer.getInstance("i", image_string);
+                setEnabled(false);
             }
                
         });
@@ -145,9 +166,10 @@ public class SolutionView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent event){
                 System.out.println("Guardar Solució");
+                setEnabled(false);
                 Explorer e = Explorer.getInstance("s");
-                String path = "aaa"; //e.getPath();
-                InterfaceController.saveKeyboard(path);
+                //String path = "aaa"; //e.getPath();
+                //InterfaceController.saveKeyboard(path);
             }
                
         });
@@ -203,6 +225,16 @@ public class SolutionView extends JFrame {
         this.setVisible(true);
         this.setEnabled(true);
     }
+
+    public void reinitiate(Vector<String> new_chars, Vector<Integer> new_rels, Vector<Position> new_coords) {
+        chars = new_chars;
+        rels = new_rels;
+        coords = new_coords;
+        keys.clear();
+        selected_keys.clear();
+        draw_panel.removeAll();
+        initializeDrawPanel();
+    }
     
     private void initializeButtonPanel(){
         button_panel.setPreferredSize(new Dimension(450,100));
@@ -256,14 +288,14 @@ public class SolutionView extends JFrame {
             // Set Size
             label.setSize(50, 20);
         }
+    }
 
-        draw_panel.revalidate();
+    public void setVisiblePublic(Boolean visible) {
+        this.setVisible(visible);
+    }
 
-        // Print Rels:
-        for (int i = 0; i < rels.size(); i++) {
-            System.out.println(i + " - " + rels.get(i));
-        }
-
+    public void setEnabledPublic(Boolean enabled) {
+        this.setEnabled(enabled);
     }
 
 
