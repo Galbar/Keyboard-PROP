@@ -26,14 +26,30 @@ public class Explorer {
     private File l_path;
     private File e_path;
     private String callback;
-    
+    private String image;
     private static Explorer instance;
     
     private Explorer(){
         initialize();
     }
-    public static Explorer getInstance(String b){
+    
+    public static Explorer getInstance(String b, String image_string) {
         if(instance == null)instance = new Explorer();
+        if (b.equals("i")) {
+            instance.frame.setTitle("Carregar alfabet");
+            instance.setImage(image_string);
+        }
+        instance.explore.setCurrentDirectory(instance.l_path);
+        instance.explore.setSelectedFile(null);
+        instance.frame.setLocationRelativeTo(null);
+        instance.setEnabled(true);
+        instance.setVisible(true);
+        instance.callback=b;
+        return instance;
+    }
+
+    public static Explorer getInstance(String b) {
+        if(instance == null) instance = new Explorer();
         if (b.equals("a")) {
             instance.frame.setTitle("Carregar alfabet");
         }
@@ -146,9 +162,11 @@ public class Explorer {
                     }
                     else if (callback.equals("s")) {
                         InterfaceController.saveKeyboard(e_path.getAbsolutePath());
+                        SolutionView.getInstance().setEnabledPublic(true);
                     }
                     else if (callback.equals("i")) {
-                        //InterfaceController.saveImage(e_path.getAbsolutePath()); // Falta l'imatge
+                        InterfaceController.saveImage(e_path.getAbsolutePath(), image);
+                        SolutionView.getInstance().setEnabledPublic(true);
                     }
                 }
             }
@@ -187,6 +205,10 @@ public class Explorer {
         explore.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         explore.setApproveButtonText("Acceptar");
         explore.setApproveButtonToolTipText(frame.getTitle());
+    }
+
+    public void setImage(String new_image) {
+        image = new_image;
     }
    
 }

@@ -2,7 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package FONTS.Albert;
+
+//package FONTS.Albert;
+package classes;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,6 +18,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import FONTS.Albert.PROPKeyboardException;
+
+import sun.misc.BASE64Encoder;
+import sun.misc.BASE64Decoder;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -452,6 +462,52 @@ public class PersistanceController {
             throw new PROPKeyboardException("Error loadAlphabet: Error Intern");
         }    
     }
+
+    public void saveImage(String str) throws PROPKeyboardException {
+        try {
+            String pth = null;
+            String image_string = null;
+            JSONObject s = null;
+            try {
+                s = new JSONObject(str);
+            } catch (JSONException ex) {
+                throw new PROPKeyboardException("Error saveImage: JSON string bad format");
+            }
+            try {
+                pth = s.get("path").toString();
+            } catch (JSONException ex) {
+                throw new PROPKeyboardException("Error saveImage: path to string");
+            }
+
+            try {
+                image_string= s.get("image_string").toString();
+            } catch (JSONException ex) {
+                throw new PROPKeyboardException("Error saveImage: image_string to string");
+            }
+
+            
+            try {
+                byte[] imageByte;
+                BASE64Decoder decoder = new BASE64Decoder();
+                imageByte = decoder.decodeBuffer(image_string);
+                ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+                image = ImageIO.read(bis);
+                bis.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                ImageIO.write(image, "jpg", new File(path));
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+
+        } catch (Exception e) {
+            throw new PROPKeyboardException("Error loadAlphabet: Error Intern");
+        }    
+    }
+
     
     /**
 	* Carrega Teclat.
