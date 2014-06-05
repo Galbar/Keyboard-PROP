@@ -61,6 +61,7 @@ public class DomainController {
 			JSONObject jsob = new JSONObject(json);
 			currentKeyboard.swap(jsob.getInt("id1"), jsob.getInt("id2"));
 			currentKeyboard.setScore(Bound.bound(currentKeyboard.getAllocations(), charactersSet.getAllAffinities(), positionsSet.getAllDistances()));
+			return fromKeyboardToJSONObject(currentKeyboard).toString();
 		} catch (JSONException ex) {
 			throw new PROPKeyboardException("Error: JSON string bad format");
 		}
@@ -178,7 +179,10 @@ public class DomainController {
 			throw new PROPKeyboardException("Error: JSON string bad format");
 		}
 	}
+<<<<<<< HEAD
 
 	*/
 	
+=======
+>>>>>>> 09631f6688c64affa5b9484abb56c02d66ea8ba8
 }
