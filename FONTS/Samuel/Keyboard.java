@@ -14,16 +14,18 @@ public class Keyboard extends C <classes.Character, Position>
 	private TopologyType topology;
 	private boolean specialChars;
 	private Vector<String> references = new Vector<String>();
+	private String alphabetName = new String();
 
 	/* Constructora */
 	/*
 	Pre: -
 	Post: New Instance with name=name,topology=topology, width=width, height=height
 	*/
-    public Keyboard(String name, TopologyType topology)
+    public Keyboard(String name, TopologyType topology, String name2)
     {
     	super(name);
         this.topology = topology;
+        this.alphabetName = name2;
     }
 
         /* Constructora */
@@ -31,10 +33,11 @@ public class Keyboard extends C <classes.Character, Position>
 	Pre: -
 	Post: New Instance with the parameters set as passed
 	*/
-    public Keyboard(String name, TopologyType topology, classes.Character[ ] characters, Position[ ] positions, int[ ] assignments)
+    public Keyboard(String name, TopologyType topology, String name2, classes.Character[ ] characters, Position[ ] positions, int[ ] assignments)
     {
     	super(name, characters, positions, assignments);
         this.topology = topology;
+        this.alphabetName = name2;
     }
 
         
