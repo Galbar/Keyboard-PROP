@@ -88,7 +88,8 @@ public class InterfaceController {
             j.put("texts", txtArr);
 
             String res = DomainController.getInstance().calculateKeyboard(j.toString()); // retorna Json
-            JSONObject k = new JSONObject(res);
+            JSONObject jinfo = new JSONObject(res);
+            JSONObject k = jinfo.getJSONObject("keyboard");
             // UN COP TINC LA RESPOSTA:
 
             //String topology_type = j.getString("topology");
