@@ -7,8 +7,8 @@ import sharedClasses.*;
 public class DomainController {
 	static private DomainController instance;
 	private Keyboard currentKeyboard;
-	private CharactersSet charactersSet;
-	private PositionsSet positionsSet;
+	private float[][] charactersSetValues;
+	private float[][] positionsSetValues;
 
 	private DomainController() {}
 	static public DomainController getInstance() {
@@ -39,16 +39,26 @@ public class DomainController {
 	}
 
 	public String loadKeyboard(String path) throws PROPKeyboardException {
-		return PersistanceController.getInstance().loadKeyboard(path);
+		try {
+			String json = PersistanceController.getInstance().loadKeyboard(path);
+			JSONObject j = new JSONObject(json);
+			currentKeyboard = fromJSONObjectToKeyboard(j.getJSONObject("keyboard"));
+			charactersSetValues = fromJSONArrayToFloatMatrix(j.getJSONArray("affinities"));
+			positionsSetValues = fromJSONArrayToFloatMatrix(j.getJSONArray("distances"));
+			return json;
+		} catch (JSONException e) {
+			throw new PROPKeyboardException("Error: JSON string bad format");
+		}
 	}
 
 	public void saveKeyboard(String path) throws PROPKeyboardException {
 		try {	
 			JSONObject jret = new JSONObject();
 			jret.put("keyboard", fromKeyboardToJSONObject(currentKeyboard));
-			jret.put("affinities", fromFloatMatrixToJSONArray(charactersSet.getAllAffinities()));
-			jret.put("distances", fromFloatMatrixToJSONArray(positionsSet.getAllDistances()));
+			jret.put("affinities", fromFloatMatrixToJSONArray(charactersSetValues));
+			jret.put("distances", fromFloatMatrixToJSONArray(positionsSetValues));
 			jret.put("path", path);
+			System.out.println(jret.toString());
 			PersistanceController.getInstance().saveKeyboard(jret.toString());
 		} catch (JSONException ex) {
             throw new PROPKeyboardException("Error: JSON string bad format");
@@ -65,7 +75,7 @@ public class DomainController {
 		try {
 			JSONObject jsob = new JSONObject(json);
 			currentKeyboard.swap(jsob.getInt("id1"), jsob.getInt("id2"));
-			currentKeyboard.setScore(Bound.bound(currentKeyboard.getAllocations(), charactersSet.getAllAffinities(), positionsSet.getAllDistances()));
+			currentKeyboard.setScore(Bound.bound(currentKeyboard.getAllocations(), charactersSetValues, positionsSetValues));
 			return fromKeyboardToJSONObject(currentKeyboard).toString();
 		} catch (JSONException ex) {
 			throw new PROPKeyboardException("Error: JSON string bad format");
@@ -87,24 +97,33 @@ public class DomainController {
 				throw new PROPKeyboardException("Error: JSON string bad format");
 			}
 
-			charactersSet = new CharactersSet(alph.getCharacters());
+			CharactersSet charactersSet = new CharactersSet(alph.getCharacters());
 			String freqPath = j.getString("frequency_file");
 			if (!freqPath.equals("")) {
-				currentKeyboard.addReference(freqPath);
 				charactersSet.calculateFrequency(loadText(freqPath));
 			}
 			JSONArray txtArr = j.getJSONArray("texts");
 			for (int i = 0; i < txtArr.length(); ++i) {
-				charactersSet.calculateText(loadText(txtArr.getString(i)));
-				currentKeyboard.addReference(txtArr.getString(i));
+				String s = txtArr.getString(i);
+				charactersSet.calculateText(loadText(s));
 			}
-			positionsSet = new PositionsSet(t, alph.getCharacters().length);
-
+			charactersSetValues = charactersSet.getAllAffinities();
+			PositionsSet positionsSet = new PositionsSet(t, alph.getCharacters().length);
+			positionsSetValues = positionsSet.getAllDistances();
 			QAP qap = new QAP(charactersSet.getAllAffinities() ,positionsSet.getAllDistances());
 			int[] qapSolution = qap.solve(j.getBoolean("force_BB"));
 
-			currentKeyboard = new Keyboard(j.getString("name"), t, charactersSet.getAllCharacters(), positionsSet.getAllPositions(), qapSolution);
+			currentKeyboard = new Keyboard(j.getString("name"), t, alph.getName(), charactersSet.getAllCharacters(), positionsSet.getAllPositions(), qapSolution);
 			currentKeyboard.setScore(Bound.bound(currentKeyboard.getAllocations(), charactersSet.getAllAffinities(), positionsSet.getAllDistances()));
+			
+			if (!freqPath.equals("")) {
+				currentKeyboard.addReference(freqPath);
+			}
+			
+			for (int i = 0; i < txtArr.length(); ++i) {
+				String s = txtArr.getString(i);
+				currentKeyboard.addReference(s);
+			}
 			JSONObject jret = new JSONObject();
 			jret.put("keyboard", fromKeyboardToJSONObject(currentKeyboard));
 			jret.put("affinities", fromFloatMatrixToJSONArray(charactersSet.getAllAffinities()));
@@ -118,15 +137,15 @@ public class DomainController {
 
 	public String recalculateCurrentKeyboard() throws PROPKeyboardException {
 		try {
-			QAP qap = new QAP(charactersSet.getAllAffinities() ,positionsSet.getAllDistances());
+			QAP qap = new QAP(charactersSetValues ,positionsSetValues);
 			int[] qapSolution = qap.solve();
 
-			currentKeyboard = new Keyboard(currentKeyboard.getName(), currentKeyboard.getTopology(), charactersSet.getAllCharacters(), positionsSet.getAllPositions(), qapSolution);
-			currentKeyboard.setScore(Bound.bound(currentKeyboard.getAllocations(), charactersSet.getAllAffinities(), positionsSet.getAllDistances()));
+			currentKeyboard = new Keyboard(currentKeyboard, qapSolution);
+			currentKeyboard.setScore(Bound.bound(currentKeyboard.getAllocations(), charactersSetValues, positionsSetValues));
 			JSONObject jret = new JSONObject();
 			jret.put("keyboard", fromKeyboardToJSONObject(currentKeyboard));
-			jret.put("affinities", fromFloatMatrixToJSONArray(charactersSet.getAllAffinities()));
-			jret.put("distances", fromFloatMatrixToJSONArray(positionsSet.getAllDistances()));
+			jret.put("affinities", fromFloatMatrixToJSONArray(charactersSetValues));
+			jret.put("distances", fromFloatMatrixToJSONArray(positionsSetValues));
 			return jret.toString();
 		} catch (JSONException ex) {
 			throw new PROPKeyboardException("Error: JSON string bad format");
@@ -182,8 +201,7 @@ public class DomainController {
 				pos[i] = new Position(new Float(jpos.getJSONObject(i).getDouble("x")), new Float(jpos.getJSONObject(i).getDouble("y")));
 				assig[i] = jassig.getInt(i);
 			}
-			System.out.println("hais");
-			Keyboard k = new Keyboard(j.getString("name"), t, chars, pos, assig);
+			Keyboard k = new Keyboard(j.getString("name"), t, j.getString("alphabet_name"), chars, pos, assig);
 			k.setScore((float)j.getDouble("score"));
 
 			JSONArray jrefs = j.getJSONArray("references");
@@ -218,6 +236,7 @@ public class DomainController {
 			j.put("assignments", jassig);
 			j.put("name", k.getName());
 			j.put("score", k.getScore());
+			j.put("alphabet_name", k.getAlphabetName());
 			JSONArray jrefs = new JSONArray();
 			String[] refs = k.getReferences();
 			for (int i = 0;i < refs.length; ++i) {

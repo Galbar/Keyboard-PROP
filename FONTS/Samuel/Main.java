@@ -78,6 +78,7 @@ public class Main {
 
 				// Introdueix nom de l'alfabet
 				String alphabetName = readNextLine();
+				String keyboardName = readNextLine();
 
 				// Introdueix Alfabet
 				num_keys = Integer.parseInt(readNextLine());
@@ -115,7 +116,7 @@ public class Main {
 
 				int qapSolution[] = qap.solve();
 
-				Keyboard k = new Keyboard(alphabetName, t, charactersSet.getAllCharacters(), positionsSet.getAllPositions(), qapSolution);
+				Keyboard k = new Keyboard(alphabetName, t, keyboardName, charactersSet.getAllCharacters(), positionsSet.getAllPositions(), qapSolution);
 
 				k.setScore(Bound.bound(k.getAllocations(), charactersSet.getAllAffinities(), positionsSet.getAllDistances()));
 

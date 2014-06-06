@@ -13,7 +13,7 @@ public class Keyboard extends C <classes.Character, Position>
 {
 	private TopologyType topology;
 	private boolean specialChars;
-	private Vector<String> references = new Vector<String>();
+	private Vector<String> references;
 	private String alphabetName = new String();
 
 	/* Constructora */
@@ -26,6 +26,7 @@ public class Keyboard extends C <classes.Character, Position>
     	super(name);
         this.topology = topology;
         this.alphabetName = name2;
+        references = new Vector<String>();
     }
 
         /* Constructora */
@@ -38,8 +39,18 @@ public class Keyboard extends C <classes.Character, Position>
     	super(name, characters, positions, assignments);
         this.topology = topology;
         this.alphabetName = name2;
+        references = new Vector<String>();
     }
 
+    public Keyboard(Keyboard k, int[] assignments) {
+    	super(k.id);
+    	this.elements = k.elements;
+    	this.posicions = k.posicions;
+    	this.rel = k.rel;
+    	this.topology = k.topology;
+    	this.alphabetName = k.alphabetName;
+    	this.references = k.references;
+    }
         
 	public String getName()
 	{
@@ -55,7 +66,7 @@ public class Keyboard extends C <classes.Character, Position>
 	}
 
 	public void addReference(String r) {
-     	references.add(r);
+     	references.add(new String(r));
 	}
 
 	public String[] getReferences()
@@ -68,5 +79,9 @@ public class Keyboard extends C <classes.Character, Position>
 
 	public void setScore(float s) {
 		qualificacio = s;
+	}
+
+	public String getAlphabetName() {
+		return alphabetName;
 	}
 }

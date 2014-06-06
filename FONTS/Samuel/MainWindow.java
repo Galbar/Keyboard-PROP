@@ -68,6 +68,7 @@ public class MainWindow {
             public void actionPerformed(ActionEvent event){
                 AlphabetView.getInstance("m");
                 setEnabled(false);
+                setVisible(false);
             }
         }); 
         text_button.addActionListener(new ActionListener(){
@@ -75,6 +76,7 @@ public class MainWindow {
             public void actionPerformed(ActionEvent event){
                Text.getInstance("m");
                setEnabled(false);
+               setVisible(false);
             }
         });
         create_button.addActionListener(new ActionListener(){
@@ -82,6 +84,7 @@ public class MainWindow {
             public void actionPerformed(ActionEvent event){
                 NewKeyboard.getInstance();
                 setEnabled(false);
+                setVisible(false);
             }
         });
         load_button.addActionListener(new ActionListener(){
@@ -89,6 +92,7 @@ public class MainWindow {
             public void actionPerformed(ActionEvent event){
                 Explorer.getInstance("m");
                 setEnabled(false);
+                setVisible(false);
             }
         });
     }
@@ -111,13 +115,5 @@ public class MainWindow {
         c.gridy=1;
         buttons_panel.add(create_button,c);
         buttons_panel.add(load_button,c);
-    }
-
-    public static void main(String args[]) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                MainWindow.getInstance();
-            }
-        });
     }
 }

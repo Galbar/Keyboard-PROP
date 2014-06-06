@@ -19,7 +19,7 @@ public class AlphabetView {
     private JTextField character = new JTextField();
     private JButton load = new JButton("Carregar alfabet");
     private JButton save = new JButton("Guardar alfabet");
-    private JButton cancel = new JButton("Cancel·la");
+    private JButton cancel = new JButton("Fet");
     private JLabel alphabet = new JLabel("Alfabet:");
     private JTextField name = new JTextField();
     private JLabel nom = new JLabel("Nom:");

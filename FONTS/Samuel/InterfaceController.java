@@ -121,21 +121,47 @@ public class InterfaceController {
     }
     
     public static String loadKeyboard(String path) {
-        String result = "error";
+        String res = "error";
         try {
-            result = DomainController.getInstance().loadKeyboard(path);
+            res = DomainController.getInstance().loadKeyboard(path);
+            JSONObject jinfo = new JSONObject(res);
+            JSONObject k = jinfo.getJSONObject("keyboard");
+            // UN COP TINC LA RESPOSTA:
+
+            //String topology_type = j.getString("topology");
+            JSONArray jchars = k.getJSONArray("characters");
+            JSONArray jpos = k.getJSONArray("positions");
+            JSONArray jassig = k.getJSONArray("assignments");
+
+            Vector<String> chars = new Vector<String>();//jchars.length());
+            Vector<Integer> rels = new Vector<Integer>();//jassig.length());
+            Vector<Position> coords = new Vector<Position>();//jpos.length());
+            System.out.println(jchars.length());
+            for (int i = 0; i < jchars.length(); ++i) {
+                
+                chars.add(jchars.getString(i));
+                Position pos = new Position(new Float(jpos.getJSONObject(i).getDouble("x")), new Float(jpos.getJSONObject(i).getDouble("y")));
+                System.out.println(i);
+                coords.add(pos);
+                rels.add(jassig.getInt(i));
+            }
+            float score = (float)k.getDouble("score");
+            SolutionView.getInstance(chars, rels, coords, score);
         } catch (PROPKeyboardException ex) {
             Frame frame = new JFrame("Error");
             JOptionPane.showMessageDialog(frame,"Error al carregar el teclat.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (JSONException ex) {
+            Frame frame = new JFrame("Error");
+            JOptionPane.showMessageDialog(frame,"Error al carregar el teclat.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        return result;
+        return res;
     }
     
     public String loadText(String path) {
         String result = "error";
         try {
             result = DomainController.getInstance().loadText(path);
-            Text.getInstance("e").setText(result);
+            Text.getInstance("e").setText(result, path);
         } catch (PROPKeyboardException ex) {
             Frame frame = new JFrame("Error");
             JOptionPane.showMessageDialog(frame,"Error al carregar el text.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -203,6 +229,7 @@ public class InterfaceController {
             i.put("path", path);
             i.put("text", text);
             DomainController.getInstance().saveText(i.toString());
+            Text.getInstance("e").setText(text, path);
         } catch (JSONException ex) {
             
         } catch (PROPKeyboardException ex) {
@@ -290,11 +317,12 @@ public class InterfaceController {
         return 0f;
     }
 
-    public addText(String new_text) {
+    public void addText(String new_text) {
         references.add(new_text); 
+        System.out.println("Added: "+new_text);
     }
 
-    public setFrequencyFile(String path) {
+    public void setFrequencyFile(String path) {
         frequencyFilepPath = path;
     }
 }

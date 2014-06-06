@@ -10,7 +10,7 @@ import javax.swing.event.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.utils.*;
+import java.util.*;
 /**
  *
  * @author samuel.bryan.pierno
@@ -23,11 +23,12 @@ public class Text {
     private JButton afegir_text = new JButton("Afegir text");
     private JButton load = new JButton("Carregar arxiu");
     private JButton save = new JButton("Guardar arxiu");
-    private JButton cancel = new JButton("Cancel·la");
+    private JButton cancel = new JButton("Fet");
     private JLabel text_label = new JLabel();
     private JScrollPane scroll = new JScrollPane(text);
     private static Text instance;
     private String callback;
+    private String currentTextPath = new String();
     
     private JCheckBox freqs = new JCheckBox();
     private JLabel texts = new JLabel("Freqüències:");
@@ -79,9 +80,7 @@ public class Text {
         afegir_text.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
-               //Explorer.getInstance("tq");
-               //setEnabled(false);
-               InterfaceController.getInstance().addText(text);
+               InterfaceController.getInstance().addText(currentTextPath);
             }
         });
         load.addActionListener(new ActionListener(){
@@ -157,8 +156,8 @@ public class Text {
         buttons_panel.add(cancel,c);
     }
 
-    public void setText(String new_text) {
+    public void setText(String new_text, String path) {
         text.setText(new_text);
+        currentTextPath = path;
     }
-   
 }
