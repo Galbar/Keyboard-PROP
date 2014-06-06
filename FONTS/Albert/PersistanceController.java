@@ -150,66 +150,45 @@ public class PersistanceController {
                 throw new PROPKeyboardException("Error loadKeyboard: Path");
         }
         JSONObject s = new JSONObject();
-
+        JSONObject keyboard = new JSONObject();
+        
         /* LOAD NAME */
         try {
-            s.put("name", lines.get(0));
+            keyboard.put("name", lines.get(0));
         } catch (JSONException ex) {
                 throw new PROPKeyboardException("Error loadKeyboard: reading name");
         }
-
+        
         /* LOAD TOPOLOGY */
         try {
-            s.put("topology", lines.get(2));
+            keyboard.put("topology", lines.get(2));
         } catch (JSONException ex) {
                 throw new PROPKeyboardException("Error loadKeyboard: reading topology");
         }
-
-        /* LOAD SPECIAL CHARS */
+        
+        int cont = 4;        
         String aux = new String();
         String next = new String();
-        int cont = 4;        
-        next = lines.get(cont);
-        while (!next.equals("")) {
-            aux += lines.get(cont);
-            ++cont;
-            next = lines.get(cont);
-        }
-        ++cont;
         JSONArray a = new JSONArray();
-        String solution = new String();
-        for (int i = 0; i < aux.length(); ++i) {
-            if (aux.charAt(i) != ' ') {
-                solution += aux.charAt(i);
-            }
-            else {
-                a.put(solution);
-                solution = new String();
-            }
-        }
-        a.put(solution);
+        String solution = new String();        
+        
+        
+        /* LOAD SCORE */
         try {
-            s.put("specialChars", a);
+            keyboard.put("score", lines.get(cont));
         } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error loadKeyboard: reading special characters");
-        }
-
-        /* LOAD heigth */
-        try {
-            s.put("heigth", lines.get(cont));
-        } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error loadKeyboard: reading heigth");
+                throw new PROPKeyboardException("Error loadKeyboard: reading score");
         }
         cont += 2;
-
-        /* LOAD WIDTH */
+        
+        /* LOAD ALPHABET_NAME */
         try {
-            s.put("width", lines.get(cont));
+            keyboard.put("alphabet_name", lines.get(cont));
         } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error loadKeyboard: reading width");
+                throw new PROPKeyboardException("Error loadKeyboard: reading alphabet_name");
         }
         cont += 2;
-
+        
         /* LOAD REFERENCES */
         aux = new String();
         next =new String();
@@ -222,13 +201,12 @@ public class PersistanceController {
         }
         ++cont;
         try {
-            s.put("references", a);
+            keyboard.put("references", a);
         } catch (JSONException ex) {
                 throw new PROPKeyboardException("Error loadKeyboard: reading references");
         }
-
-
-        /* LOAD RELATIONS */
+        
+        /* LOAD POSITIONS */
         aux = new String();
         next =new String();
         solution = new String();
@@ -251,11 +229,49 @@ public class PersistanceController {
         }
         a.put(solution);
         try {
-            s.put("relations", a);
+            keyboard.put("positions", a);
         } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error loadKeyboard: reading relations");
+                throw new PROPKeyboardException("Error loadKeyboard: reading positions");
         }
-
+        try {
+            s.put("keyboard", keyboard);
+        } catch (JSONException ex) {
+            Logger.getLogger(loadKeyboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        /* LOAD ASSIGMENTS */
+        aux = new String();
+        next =new String();
+        solution = new String();
+        next = lines.get(cont);
+        while (!next.equals("")) {
+            aux += lines.get(cont);
+            ++cont;
+            next = lines.get(cont);
+        }
+        ++cont;
+        a = new JSONArray();
+        for (int i = 0; i < aux.length(); ++i) {
+            if (aux.charAt(i) != ' ') {
+                solution += aux.charAt(i);
+            }
+            else {
+                a.put(solution);
+                solution = new String();
+            }
+        }
+        a.put(solution);
+        try {
+            keyboard.put("assigments", a);
+        } catch (JSONException ex) {
+                throw new PROPKeyboardException("Error loadKeyboard: reading assigments");
+        }
+        try {
+            s.put("keyboard", keyboard);
+        } catch (JSONException ex) {
+            Logger.getLogger(loadKeyboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         /* LOAD CHARACTERS */
         aux = new String();
         next =new String();
@@ -268,8 +284,12 @@ public class PersistanceController {
         }
         ++cont;
         a = new JSONArray();
-        for (int i = 0; i < aux.length(); ++i) {
-            if (aux.charAt(i) != ' ') {
+        for (int i = 0; i < aux.length()-1; ++i) {
+            if (aux.charAt(i) == '\\') {
+                solution += ' ';
+                ++i;
+            }
+            else if (aux.charAt(i) != ' ') {
                 solution += aux.charAt(i);
             }
             else {
@@ -279,19 +299,60 @@ public class PersistanceController {
         }
         a.put(solution);
         try {
-            s.put("characters", a);
+            keyboard.put("characters", a);
         } catch (JSONException ex) {
                 throw new PROPKeyboardException("Error loadKeyboard: reading characters");
         }
-
-        /* LOAD ASSIGMENTS */
+        try {
+            s.put("keyboard", keyboard);
+        } catch (JSONException ex) {
+            Logger.getLogger(loadKeyboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        /* LOAD AFFINITIES */
         aux = new String();
         next =new String();
         solution = new String();
         next = lines.get(cont);
+        Vector v = new Vector();
+        while (!next.equals("")) {
+            v.add(lines.get(cont));
+            ++cont;
+            next = lines.get(cont);
+        }
+        ++cont;
+     
+        int n = v.size();
+        JSONArray jmat = new JSONArray();
+        for (int i = 0; i < n; ++i) {
+            jmat.put(new JSONArray());
+            int l = jmat.length()-1;
+            aux = (String) v.get(i);
+            for (int j = 0; j < aux.length(); ++j) {
+                if (j%2 == 0) {
+                    try {
+                        jmat.getJSONArray(l).put(aux.charAt(j)-'0');
+                    } catch (JSONException ex) {
+                        Logger.getLogger(loadKeyboard.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } 
+            }
+        }
+        try {
+            s.put("affinities", jmat);
+        } catch (JSONException ex) {
+            Logger.getLogger(loadKeyboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        /* LOAD DISTANCES */
+        aux = new String();
+        next =new String();
+        solution = new String();
+        next = lines.get(cont);
+        v = new Vector();
         boolean end = false;
         while (!next.equals("") && !end) {
-            aux += lines.get(cont);
+            v.add(lines.get(cont));
             ++cont;
             if (cont < lines.size()) {
                 next = lines.get(cont);
@@ -300,23 +361,30 @@ public class PersistanceController {
                 end = true;
         }
         ++cont;
-        a = new JSONArray();
-        for (int i = 0; i < aux.length(); ++i) {
-            if (aux.charAt(i) != ' ') {
-                solution += aux.charAt(i);
-            }
-            else {
-                a.put(solution);
-                solution = new String();
+     
+        n = v.size();
+        jmat = new JSONArray();
+        for (int i = 0; i < n; ++i) {
+            jmat.put(new JSONArray());
+            int l = jmat.length()-1;
+            aux = (String) v.get(i);
+            for (int j = 0; j < aux.length(); ++j) {
+                if (j%2 == 0) {
+                    System.out.println("aux: "+aux.charAt(j));
+                    try {
+                        jmat.getJSONArray(l).put(aux.charAt(j)-'0');
+                    } catch (JSONException ex) {
+                        Logger.getLogger(loadKeyboard.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } 
             }
         }
-        a.put(solution);
         try {
-            s.put("assigments", a);
+            s.put("distances", jmat);
         } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error loadKeyboard: reading assigments");
+            Logger.getLogger(loadKeyboard.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         return s.toString();
     } 
     
@@ -332,6 +400,7 @@ public class PersistanceController {
             FileWriter write = null;
             String pth = null;
             JSONObject s = null;
+            JSONObject keyboard = null;
             try {
                 s = new JSONObject(str);
             } catch (JSONException ex) {
@@ -351,7 +420,8 @@ public class PersistanceController {
             
             /* PRINT NAME */
             try {
-                print_line.println(s.get("name").toString());
+                keyboard = (JSONObject) s.get("keyboard");
+                print_line.println(keyboard.get("name").toString());
             } catch (JSONException ex) {
                 throw new PROPKeyboardException("Error saveKeyboard: writing name");
             }
@@ -359,69 +429,71 @@ public class PersistanceController {
 
             /* PRINT TOPOLOGY */
             try {
-                print_line.println(s.get("topology").toString());
+                print_line.println(keyboard.get("topology").toString());
             } catch (JSONException ex) {
                 throw new PROPKeyboardException("Error saveKeyboard: writing topology");
             }
             print_line.println("");
 
-            /* PRINT SPECIAL CHARACTERS */
+            
+            
+            /* PRINT SCORE */
             try {
-                for (int i = 0; i < (s.getJSONArray("characters").length()); ++i) {
-                    print_line.print(s.getJSONArray("characters").getString(i));
-                    print_line.print(" ");
-                }
+                print_line.println(keyboard.get("score").toString());
             } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error saveKeyboard: writing special characters");
+                throw new PROPKeyboardException("Error saveKeyboard: writing score");
             }
-            print_line.println("");
             print_line.println("");
             
-            /* PRINT HEIGHT */
+            /* PRINT ALPHABET_NAME */
             try {
-                print_line.println(s.get("heigth").toString());
+                print_line.println(keyboard.get("alphabet_name").toString());
             } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error saveKeyboard: writing height");
-            }
-            print_line.println("");
-
-            /* PRINT WIDTH */
-            try {
-                print_line.println(s.get("width").toString());
-            } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error saveKeyboard: writing width");
+                throw new PROPKeyboardException("Error saveKeyboard: writing alphabet_name");
             }
             print_line.println("");
 
             /* PRINT REFERENCES */
             try {
-                for (int i = 0; i < (s.getJSONArray("references").length()); ++i) {
-                    print_line.println(s.getJSONArray("references").getString(i));
+                for (int i = 0; i < (keyboard.getJSONArray("references").length()); ++i) {
+                    print_line.println(keyboard.getJSONArray("references").getString(i));
                 }
             } catch (JSONException ex) {
                 throw new PROPKeyboardException("Error saveKeyboard: writing references");
             }
            print_line.println("");
 
-            /* PRINT RELATIONS */
-            /* Estan ordenades de tal manera que el primer valor de la relació serà
-            el [0,0], el segon el [0,1]...
-            */
+           /* PRINT POSITIONS */
             try {
-                for (int i = 0; i < (s.getJSONArray("relations").length()); ++i) {
-                    print_line.print(s.getJSONArray("relations").getString(i));
+                for (int i = 0; i < (keyboard.getJSONArray("positions").length()); ++i) {
+                    print_line.print(keyboard.getJSONArray("positions").getString(i));
                     print_line.print(" ");
                 }
             } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error saveKeyboard: writing relations");
+                throw new PROPKeyboardException("Error saveKeyboard: writing positions");
             }
-            print_line.println("");
-            print_line.println("");
-
-            /* PRINT CHARACTERS */
+           print_line.println("");
+           print_line.println("");
+           
+           /* PRINT ASSIGMENTS */
             try {
-                for (int i = 0; i < (s.getJSONArray("characters").length()); ++i) {
-                    print_line.print(s.getJSONArray("characters").getString(i));
+                for (int i = 0; i < (keyboard.getJSONArray("assigments").length()); ++i) {
+                    print_line.print(keyboard.getJSONArray("assigments").getString(i));
+                    print_line.print(" ");
+                }
+            } catch (JSONException ex) {
+                throw new PROPKeyboardException("Error saveKeyboard: writing assigments");
+            }
+           print_line.println("");
+           print_line.println("");
+           
+           /* PRINT CHARACTERS */
+            try {
+                for (int i = 0; i < (keyboard.getJSONArray("characters").length()); ++i) {
+                    if(keyboard.getJSONArray("characters").getString(i).equals(" ")) {
+                        print_line.print("\\");
+                    }
+                    print_line.print(keyboard.getJSONArray("characters").getString(i));
                     print_line.print(" ");
                 }
             } catch (JSONException ex) {
@@ -429,15 +501,47 @@ public class PersistanceController {
             }
             print_line.println("");
             print_line.println("");
-
-            /* PRINT ASSIGMENTS */
+            
+            
+            /* PRINT RELATIONS */
+            /* Estan ordenades de tal manera que el primer valor de la relació serà
+            el [0,0], el segon el [0,1]...
+            */
+            JSONArray affinities = s.getJSONArray("affinities");
             try {
-                for (int i = 0; i < (s.getJSONArray("assigments").length()); ++i) {
-                    print_line.print(s.getJSONArray("assigments").getString(i));
-                    print_line.print(" ");
+                
+                int n = affinities.length();
+                JSONArray jmat = new JSONArray();
+                for (int i = 0; i < n; ++i) {
+                    jmat = affinities.getJSONArray(i);
+                    for (int j = 0; j < n; ++j) {
+                        print_line.print(jmat.get(j));
+                        print_line.print(" ");
+                    }
+                    print_line.println("");
                 }
             } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error saveKeyboard: writing assigments");
+                throw new PROPKeyboardException("Error saveKeyboard: writing affinities");
+            }
+            print_line.println("");
+
+            
+            /* PRINT ASSIGMENTS */
+            JSONArray distances = s.getJSONArray("distances");
+            try {
+               
+                int n = distances.length();
+                JSONArray jmat = new JSONArray();
+                for (int i = 0; i < n; ++i) {
+                    jmat = distances.getJSONArray(i);
+                    for (int j = 0; j < n; ++j) {
+                        print_line.print(jmat.get(j));
+                        print_line.print(" ");
+                    }
+                    print_line.println("");
+                }
+            } catch (JSONException ex) {
+                throw new PROPKeyboardException("Error saveKeyboard: writing distances");
             }
             print_line.close();  
         } catch (Exception e) {
@@ -504,7 +608,6 @@ public class PersistanceController {
             throw new PROPKeyboardException("Error loadAlphabet: Error Intern");
         }
     }
-    
     
 }
 
