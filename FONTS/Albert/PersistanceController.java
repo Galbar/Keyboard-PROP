@@ -15,6 +15,8 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.util.Vector;
+
 
 import sun.misc.BASE64Encoder;
 import sun.misc.BASE64Decoder;
@@ -236,7 +238,7 @@ public class PersistanceController {
         try {
             s.put("keyboard", keyboard);
         } catch (JSONException ex) {
-            Logger.getLogger(loadKeyboard.class.getName()).log(Level.SEVERE, null, ex);
+            throw new PROPKeyboardException("Error loadKeyboard: put keyboard");
         }
         
         /* LOAD ASSIGMENTS */
@@ -269,7 +271,7 @@ public class PersistanceController {
         try {
             s.put("keyboard", keyboard);
         } catch (JSONException ex) {
-            Logger.getLogger(loadKeyboard.class.getName()).log(Level.SEVERE, null, ex);
+            throw new PROPKeyboardException("Error loadKeyboard: put keyboard");
         }
         
         /* LOAD CHARACTERS */
@@ -306,7 +308,7 @@ public class PersistanceController {
         try {
             s.put("keyboard", keyboard);
         } catch (JSONException ex) {
-            Logger.getLogger(loadKeyboard.class.getName()).log(Level.SEVERE, null, ex);
+            throw new PROPKeyboardException("Error loadKeyboard: put keyboard");
         }
         
         /* LOAD AFFINITIES */
@@ -333,7 +335,7 @@ public class PersistanceController {
                     try {
                         jmat.getJSONArray(l).put(aux.charAt(j)-'0');
                     } catch (JSONException ex) {
-                        Logger.getLogger(loadKeyboard.class.getName()).log(Level.SEVERE, null, ex);
+                        throw new PROPKeyboardException("Error loadKeyboard: put keyboard");
                     }
                 } 
             }
@@ -341,7 +343,7 @@ public class PersistanceController {
         try {
             s.put("affinities", jmat);
         } catch (JSONException ex) {
-            Logger.getLogger(loadKeyboard.class.getName()).log(Level.SEVERE, null, ex);
+            throw new PROPKeyboardException("Error loadKeyboard: put keyboard");
         }
         
         /* LOAD DISTANCES */
@@ -374,7 +376,7 @@ public class PersistanceController {
                     try {
                         jmat.getJSONArray(l).put(aux.charAt(j)-'0');
                     } catch (JSONException ex) {
-                        Logger.getLogger(loadKeyboard.class.getName()).log(Level.SEVERE, null, ex);
+                        throw new PROPKeyboardException("Error loadKeyboard: put keyboard");
                     }
                 } 
             }
@@ -382,7 +384,7 @@ public class PersistanceController {
         try {
             s.put("distances", jmat);
         } catch (JSONException ex) {
-            Logger.getLogger(loadKeyboard.class.getName()).log(Level.SEVERE, null, ex);
+            throw new PROPKeyboardException("Error loadKeyboard: put keyboard");
         }
         
         return s.toString();
