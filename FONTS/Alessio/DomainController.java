@@ -75,7 +75,7 @@ public class DomainController {
 			charactersSet = new CharactersSet(alph.getCharacters());
 			JSONArray txtArr = j.getJSONArray("texts");
 			for (int i = 0; i < txtArr.length(); ++i) {
-				charactersSet.calculateText(loadText(txtArr.get(i)));
+				charactersSet.calculateText(loadText(txtArr.getString(i)));
 			}
 			positionsSet = new PositionsSet(t, alph.getCharacters().length);
 

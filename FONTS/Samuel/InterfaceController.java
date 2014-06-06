@@ -50,7 +50,7 @@ public class InterfaceController {
             DomainController.getInstance().saveKeyboardImage(i.toString());
         } catch (JSONException ex) {
             
-        } catch (PROPKeyboardException) {
+        } catch (PROPKeyboardException ex) {
             
         }
     }
