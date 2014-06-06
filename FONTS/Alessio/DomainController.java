@@ -104,7 +104,7 @@ public class DomainController {
 			//jret.put("affinities", fromFloatMatrixToJSONArray(charactersSet.getAllAffinities()));
 			//jret.put("distances", fromFloatMatrixToJSONArray(positionsSet.getAllDistances()));
 			//return jret;
-			return fromKeyboardToJSONObject()
+			return fromKeyboardToJSONObject();
 
 		} catch (JSONException ex) {
 			System.out.println("json string bad format");
