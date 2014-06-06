@@ -87,8 +87,8 @@ public class SolutionView extends JFrame {
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         
         contentPane.add(draw_panel);
-        contentPane.add(info_panel);
         contentPane.add(button_panel);
+        contentPane.add(info_panel);
     }
     
     public static String encodeToString(BufferedImage image, String type) {

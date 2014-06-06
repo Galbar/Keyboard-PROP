@@ -42,8 +42,13 @@ public class DomainController {
 		return PersistanceController.getInstance().loadKeyboard(path);
 	}
 
-	public void saveKeyboard(String json) throws PROPKeyboardException {
-		PersistanceController.getInstance().saveKeyboard(json);
+	public void saveKeyboard(String path) throws PROPKeyboardException {
+		JSONObject jret = new JSONObject();
+		jret.put("keyboard", fromKeyboardToJSONObject(currentKeyboard));
+		jret.put("affinities", fromFloatMatrixToJSONArray(charactersSet.getAllAffinities()));
+		jret.put("distances", fromFloatMatrixToJSONArray(positionsSet.getAllDistances()));
+		jret.put("path", path);
+		PersistanceController.getInstance().saveKeyboard(jret.toString);
 	}
 
 	public void saveKeyboardImage(String json) throws PROPKeyboardException {
@@ -99,15 +104,30 @@ public class DomainController {
 
 			currentKeyboard = new Keyboard(j.getString("name"), t, j.getInt("width"), j.getInt("height"), charactersSet.getAllCharacters(), positionsSet.getAllPositions(), qapSolution);
 			currentKeyboard.setScore(Bound.bound(currentKeyboard.getAllocations(), charactersSet.getAllAffinities(), positionsSet.getAllDistances()));
-			//JSONObject jret = new JSONObject();
-			//jret.put("keyboard", fromKeyboardToJSONObject(currentKeyboard));
-			//jret.put("affinities", fromFloatMatrixToJSONArray(charactersSet.getAllAffinities()));
-			//jret.put("distances", fromFloatMatrixToJSONArray(positionsSet.getAllDistances()));
-			//return jret;
-			return fromKeyboardToJSONObject(currentKeyboard).toString();
+			JSONObject jret = new JSONObject();
+			jret.put("keyboard", fromKeyboardToJSONObject(currentKeyboard));
+			jret.put("affinities", fromFloatMatrixToJSONArray(charactersSet.getAllAffinities()));
+			jret.put("distances", fromFloatMatrixToJSONArray(positionsSet.getAllDistances()));
+			return jret.toString();
 
 		} catch (JSONException ex) {
-			System.out.println("json string bad format");
+			throw new PROPKeyboardException("Error: JSON string bad format");
+		}
+	}
+
+	public String recalculateCurrentKeyboard() throws PROPKeyboardException {
+		try {
+			QAP qap = new QAP(charactersSet.getAllAffinities() ,positionsSet.getAllDistances());
+			int[] qapSolution = qap.solve();
+
+			currentKeyboard = new Keyboard(currentKeyboard.getName(), currentKeyboard.getTopology(), currentKeyboard.getWidth(), currentKeyboard.getHeight(), charactersSet.getAllCharacters(), positionsSet.getAllPositions(), qapSolution);
+			currentKeyboard.setScore(Bound.bound(currentKeyboard.getAllocations(), charactersSet.getAllAffinities(), positionsSet.getAllDistances()));
+			JSONObject jret = new JSONObject();
+			jret.put("keyboard", fromKeyboardToJSONObject(currentKeyboard));
+			jret.put("affinities", fromFloatMatrixToJSONArray(charactersSet.getAllAffinities()));
+			jret.put("distances", fromFloatMatrixToJSONArray(positionsSet.getAllDistances()));
+			return jret.toString();
+		} catch (JSONException ex) {
 			throw new PROPKeyboardException("Error: JSON string bad format");
 		}
 	}
@@ -164,6 +184,11 @@ public class DomainController {
 			System.out.println("hais");
 			Keyboard k = new Keyboard(j.getString("name"), t, j.getInt("width"), j.getInt("height"), chars, pos, assig);
 			k.setScore((float)j.getDouble("score"));
+
+			JSONArray jrefs = j.getJSONArray("references");
+			for (int i = 0;i < refs.length; ++i) {
+				k.addReference(jrefs.getString(i));
+			}
 			return k;
 		} catch (JSONException ex) {
 			throw new PROPKeyboardException("Error: JSON string bad format");
@@ -194,6 +219,12 @@ public class DomainController {
 			j.put("height", k.getHeight());
 			j.put("width", k.getWidth());
 			j.put("score", k.getScore());
+			JSONArray jrefs = new JSONArray();
+			String[] refs = k.getReferences();
+			for (int i = 0;i < refs.length; ++i) {
+				jrefs.put(refs[i]);
+			}
+			j.put("references", jrefs);
 			return j;
 		} catch (JSONException ex) {
 			throw new PROPKeyboardException("Error: JSON string bad format");
