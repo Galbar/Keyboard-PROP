@@ -56,38 +56,12 @@ public class PersistanceController {
             } catch (IOException ex) {
                 throw new PROPKeyboardException("Error loadAlphabet: Path");
             } 
-            try {
-                s.put("name",lines.get(0));
-            } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error loadAlphabet: reading name");
+            String ret = new String();
+            for (int i = 0; i < lines.size(); ++i) {
+                ret += lines.get(i);
             }
-            try {
-                s.put("number",lines.get(2));
-            } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error loadAlphabet: reading number");
-            }
-            String aux = lines.get(4);
-            for (int i = 5; i < lines.size(); ++i) {
-                aux = lines.get(i) + aux;
-            }
-            JSONArray a = new JSONArray();
-            String foo = "";
-            for (int i = 0; i < aux.length(); i = ++i) {
-                 if (aux.charAt(i) != ' ') {
-                     foo += aux.charAt(i);
-                 }
-                 else {
-                     a.put(foo);
-                     foo = "";
-                 }
-            }
-            a.put(foo);
-            try {
-                s.put("characters",a);
-            } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error loadAlphabet: reading characters");
-            }
-            return s.toString();
+            //return s.toString();
+            return ret;
         } catch (Exception e) {
             throw new PROPKeyboardException("Error loadAlphabet: Error Intern");
         }
@@ -102,6 +76,7 @@ public class PersistanceController {
             FileWriter write = null;
             String pth = null;
             JSONObject s = null;
+            
             try {
                 s = new JSONObject(str);
             } catch (JSONException ex) {
@@ -118,32 +93,8 @@ public class PersistanceController {
                 throw new PROPKeyboardException("Error saveAlphabet: path");
             }
             PrintWriter print_line = new PrintWriter(write);
-
-            /* PRINT NAME */
-            try {
-                print_line.println(s.get("name").toString());
-            } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error saveAlphabet: writing name");
-            }
-            print_line.println("");
             
-            /* PRINT NUMBER */
-            try {
-                print_line.println(s.get("number").toString());
-            } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error saveAlphabet: writing number");
-            }
-            print_line.println("");
-            
-            /* PRINT CHARACTERS */
-            try {
-                for (int i = 0; i < (s.getDouble("number")); ++i) {
-                    print_line.print(s.getJSONArray("characters").getString(i));
-                    print_line.print(" ");
-                }
-            } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error saveAlphabet: writing characters");
-            }
+            print_line.print(str);
             print_line.close();
         }catch (Exception e) {
             throw new PROPKeyboardException("Error loadAlphabet: Error Intern");

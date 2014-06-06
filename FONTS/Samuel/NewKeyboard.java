@@ -26,8 +26,6 @@ public class NewKeyboard {
     private JButton cancel_button = new JButton("Cancel·la");
     private JLabel nom = new JLabel("Nom:");
     private JLabel forcexp = new JLabel("Forçar B&B:");
-    private JLabel widthl = new JLabel("Amplada desitjada");
-    private JLabel heigthl = new JLabel("Alçada desitjada");
     private JTextField name = new JTextField();
     private JFormattedTextField width = new JFormattedTextField(NumberFormat.getIntegerInstance());
     private JFormattedTextField heigth = new JFormattedTextField(NumberFormat.getIntegerInstance());
@@ -48,7 +46,7 @@ public class NewKeyboard {
     }
     private void initializeFrame() {
         // Tamanyo
-        frame.setMinimumSize(new Dimension(500, 250));
+        frame.setMinimumSize(new Dimension(700, 250));
         frame.setPreferredSize(frame.getMinimumSize());
         frame.setResizable(true);
         // Posicion y operaciones por defecto
@@ -63,11 +61,7 @@ public class NewKeyboard {
     public void setVisible(boolean visible){
         force.setVisible(visible);
         forcexp.setVisible(visible);
-        heigth.setColumns(5);
-        width.setColumns(5);
         name.setColumns(10);
-        heigth.setVisible(visible);
-        width.setVisible(visible);
         nom.setVisible(visible);
         name.setVisible(visible);
         alpha_button.setVisible(visible);
@@ -79,8 +73,6 @@ public class NewKeyboard {
     }
     
     public void setEnabled(boolean enabled){
-        heigth.setEnabled(enabled);
-        width.setEnabled(enabled);
         frame.setEnabled(enabled);
         forcexp.setEnabled(enabled);
         force.setEnabled(enabled);
@@ -114,9 +106,7 @@ public class NewKeyboard {
                 Loader.getInstance();
                 setEnabled(false);
                 //InterfaceController.setSettings(name.getText(),topology.getSelectedItem().toString(),width.getText(),heigth.getText(),force.isSelected());
-                int w = Integer.parseInt(width.getText());
-                int h = Integer.parseInt(heigth.getText());
-                InterfaceController.getInstance().calculateKeyboard(h,w,topology.getSelectedItem().toString(),name.getText()); 
+                InterfaceController.getInstance().calculateKeyboard(topology.getSelectedItem().toString(),name.getText()); 
                 setVisible(false);
             }
         });
@@ -156,17 +146,7 @@ public class NewKeyboard {
         c.gridx=1;
         buttons_panel.add(create_button,c);
         c.gridx=3;
-        buttons_panel.add(cancel_button,c);
-        c.gridy=3;
-        c.gridx=0;
-        buttons_panel.add(widthl,c);
-        c.gridx=1;
-        buttons_panel.add(width,c);
-        c.gridx=2;
-        buttons_panel.add(heigthl,c);
-        ++c.gridx;
-        buttons_panel.add(heigth,c);
-        
+        buttons_panel.add(cancel_button,c);        
     }
     
     private void initializeTopology(){

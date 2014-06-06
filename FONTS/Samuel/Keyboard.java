@@ -13,8 +13,6 @@ public class Keyboard extends C <classes.Character, Position>
 {
 	private TopologyType topology;
 	private boolean specialChars;
-	private int width;
-	private int height;
 	private Vector<String> references = new Vector<String>();
 
 	/* Constructora */
@@ -22,12 +20,10 @@ public class Keyboard extends C <classes.Character, Position>
 	Pre: -
 	Post: New Instance with name=name,topology=topology, width=width, height=height
 	*/
-    public Keyboard(String name, TopologyType topology, int width, int height)
+    public Keyboard(String name, TopologyType topology)
     {
     	super(name);
         this.topology = topology;
-        this.width = width;
-        this.height = height;
     }
 
         /* Constructora */
@@ -35,12 +31,10 @@ public class Keyboard extends C <classes.Character, Position>
 	Pre: -
 	Post: New Instance with the parameters set as passed
 	*/
-    public Keyboard(String name, TopologyType topology, int width, int height, classes.Character[ ] characters, Position[ ] positions, int[ ] assignments)
+    public Keyboard(String name, TopologyType topology, classes.Character[ ] characters, Position[ ] positions, int[ ] assignments)
     {
     	super(name, characters, positions, assignments);
         this.topology = topology;
-        this.width = width;
-        this.height = height;
     }
 
         
@@ -55,22 +49,6 @@ public class Keyboard extends C <classes.Character, Position>
 	*/
 	public TopologyType getTopology() {
 		return topology;
-	}
-
-    /*
-	Pre: -
-	Post: Returns the width of the keyboard
-	*/
-	public int getWidth() {
-		return width;
-	}
-
-    /*
-	Pre: -
-	Post: Returns the height of the keyboard
-	*/
-	public int getHeight() {
-		return height;
 	}
 
 	public void addReference(String r) {

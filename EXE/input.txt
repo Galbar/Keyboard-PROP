@@ -11,9 +11,6 @@ c
 d
 # Topologia: Squared o Circular
 Squared
-# Mida del teclat, amplada i alçada
-10
-5
 # Nombre de texts
 1
 # Text

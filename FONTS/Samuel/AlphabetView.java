@@ -132,8 +132,8 @@ public class AlphabetView {
         buttons_panel.add(cancel,c);
     }
 
-    public void setText(String new_text) {
-        //name.setText(new_name);
+    public void setText(String new_text, String new_name) {
+        name.setText(new_name);
         character.setText(new_text);
     }
     

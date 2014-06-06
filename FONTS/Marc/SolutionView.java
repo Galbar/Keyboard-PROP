@@ -31,21 +31,24 @@ public class SolutionView extends JFrame {
     private JButton swap_button = new JButton("Swap");
     private JButton export_image_button = new JButton("Exportar Imatge");
 
+    JLabel scoreLabel = new JLabel("Puntuació: 0.0");
+
     private Vector<String> chars;
     private Vector<Integer> rels;
     private Vector<Position> coords; // temp
+    private float score;
     private HashMap<JLabel, Integer> keys;
     private HashMap<JLabel, Integer> selected_keys; // Potser no sera vector
 
     private static SolutionView instance;
 
-    public static SolutionView getInstance(Vector<String> new_chars, Vector<Integer> new_rels, Vector<Position> new_coords) {
+    public static SolutionView getInstance(Vector<String> new_chars, Vector<Integer> new_rels, Vector<Position> new_coords, float scre) {
         NewKeyboard.getInstance().setEnabled(false);
         NewKeyboard.getInstance().setVisible(false);
         Loader.getInstance().setVisible(false);
-        if(instance == null) instance = new SolutionView(new_chars, new_rels, new_coords);
+        if(instance == null) instance = new SolutionView(new_chars, new_rels, new_coords, scre);
         else {
-            instance.reinitiate(new_chars, new_rels, new_coords);
+            instance.reinitiate(new_chars, new_rels, new_coords, scre);
         }
         return instance;
     }
@@ -58,10 +61,11 @@ public class SolutionView extends JFrame {
         return instance;
     }
 
-    private SolutionView(Vector<String> new_chars, Vector<Integer> new_rels, Vector<Position> new_coords) {
+    private SolutionView(Vector<String> new_chars, Vector<Integer> new_rels, Vector<Position> new_coords, float scre) {
     	chars = new_chars;
     	rels = new_rels;
     	coords = new_coords;
+        score = scre;
         keys = new HashMap<JLabel, Integer>();
         selected_keys = new HashMap<JLabel, Integer>();
         initialize();
@@ -125,10 +129,7 @@ public class SolutionView extends JFrame {
                 JOptionPane.YES_NO_OPTION);
 
                 if (result == JOptionPane.YES_OPTION) {
-                    setVisible(false);
-                    dispose();
-                    MainWindow.getInstance().setEnabled(true);
-                    MainWindow.getInstance().setVisible(true);
+                    System.exit(0); 
                 }
             }
         });
@@ -149,7 +150,8 @@ public class SolutionView extends JFrame {
                         ids[i] = selected_keys.get(labels[i]);
                         ++i;
                     }
-                    InterfaceController.swap(ids[0], ids[1]); // NOT DONE YET!
+                    score = InterfaceController.swap(ids[0], ids[1]); // NOT DONE YET!
+                    info();
                     int aux = rels.get(ids[0]);
                     rels.set(ids[0], rels.get(ids[1]));
                     rels.set(ids[1], aux);
@@ -229,10 +231,11 @@ public class SolutionView extends JFrame {
         this.setEnabled(true);
     }
 
-    public void reinitiate(Vector<String> new_chars, Vector<Integer> new_rels, Vector<Position> new_coords) {
+    public void reinitiate(Vector<String> new_chars, Vector<Integer> new_rels, Vector<Position> new_coords, float scre) {
         chars = new_chars;
         rels = new_rels;
         coords = new_coords;
+        score = scre;
         keys.clear();
         selected_keys.clear();
         draw_panel.removeAll();
@@ -258,19 +261,12 @@ public class SolutionView extends JFrame {
     private void initializeInfoPanel() {
         info_panel.setPreferredSize(new Dimension(450,100));
         info_panel.setOpaque(true);
+        info_panel.add(scoreLabel);
         info();
     }
 
     private void info() {
-        Object rowData[][] = { { "Row1-Column1", "Row1-Column2", "Row1-Column3" },
-        { "Row2-Column1", "Row2-Column2", "Row2-Column3" } };
-        
-        Object columnNames[] = { "Column One", "Column Two", "Column Three" };
-        JTable table = new JTable(rowData, columnNames);
-
-        JScrollPane scrollpane = new JScrollPane(table);
-        this.add(scrollpane, BorderLayout.CENTER);
-        //info_panel.add(scrollpane);
+        scoreLabel.setText("Puntuació: "+score);
     }
 
     private void initializeDrawPanel() {
@@ -318,40 +314,5 @@ public class SolutionView extends JFrame {
 
     public void setEnabledPublic(Boolean enabled) {
         this.setEnabled(enabled);
-    }
-
-	public static void main(String args[]) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-            	Vector<String> new_chars = new Vector<String>(0);
-            	Vector<Integer> new_rels = new Vector<Integer>(0);
-            	Vector<Position> new_coords = new Vector<Position>(0);
-
-                new_chars.addElement("a");
-                new_chars.addElement("b");
-                new_chars.addElement("c");
-
-                new_rels.addElement(0);
-                new_rels.addElement(1);
-                new_rels.addElement(2);
-
-                Position p1 = new Position(10.0f, 10.0f);
-                Position p2 = new Position(80.0f, 10.0f);
-                Position p3 = new Position(70.0f, 50.0f);
-                new_coords.addElement(p1);
-                new_coords.addElement(p2);
-                new_coords.addElement(p3);
-
-                for (int i = 0; i < new_coords.size(); ++i) {
-                    System.out.println(new_coords.get(i).x);
-                    System.out.println(new_coords.get(i).y);
-                    System.out.println("---");
-                }
-                System.out.println("Start");
-
-                //SolutionView sI = new SolutionView.getInstance(new_chars, new_rels, new_coords);
-                SolutionView sI = new SolutionView(new_chars, new_rels, new_coords);
-            }
-        });
     }
 }

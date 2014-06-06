@@ -99,12 +99,6 @@ public class Main {
 
 				positionsSet = new PositionsSet(t, num_keys);
 
-				// Introdueix amplada del teclat
-				int width = Integer.parseInt(readNextLine());
-				// Introdueix alçada del teclat
-				int height = Integer.parseInt(readNextLine());
-
-
 				// Introdueix Textos
 				int num_texts = Integer.parseInt(readNextLine());
 				for (int i = 0; i < num_texts; ++i) {
@@ -121,7 +115,7 @@ public class Main {
 
 				int qapSolution[] = qap.solve();
 
-				Keyboard k = new Keyboard(alphabetName, t, width, height, charactersSet.getAllCharacters(), positionsSet.getAllPositions(), qapSolution);
+				Keyboard k = new Keyboard(alphabetName, t, charactersSet.getAllCharacters(), positionsSet.getAllPositions(), qapSolution);
 
 				k.setScore(Bound.bound(k.getAllocations(), charactersSet.getAllAffinities(), positionsSet.getAllDistances()));
 

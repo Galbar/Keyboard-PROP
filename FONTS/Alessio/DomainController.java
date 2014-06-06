@@ -43,12 +43,16 @@ public class DomainController {
 	}
 
 	public void saveKeyboard(String path) throws PROPKeyboardException {
-		JSONObject jret = new JSONObject();
-		jret.put("keyboard", fromKeyboardToJSONObject(currentKeyboard));
-		jret.put("affinities", fromFloatMatrixToJSONArray(charactersSet.getAllAffinities()));
-		jret.put("distances", fromFloatMatrixToJSONArray(positionsSet.getAllDistances()));
-		jret.put("path", path);
-		PersistanceController.getInstance().saveKeyboard(jret.toString);
+		try {	
+			JSONObject jret = new JSONObject();
+			jret.put("keyboard", fromKeyboardToJSONObject(currentKeyboard));
+			jret.put("affinities", fromFloatMatrixToJSONArray(charactersSet.getAllAffinities()));
+			jret.put("distances", fromFloatMatrixToJSONArray(positionsSet.getAllDistances()));
+			jret.put("path", path);
+			PersistanceController.getInstance().saveKeyboard(jret.toString());
+		} catch (JSONException ex) {
+            throw new PROPKeyboardException("Error: JSON string bad format");
+        }
 	}
 
 	public void saveKeyboardImage(String json) throws PROPKeyboardException {
@@ -70,39 +74,30 @@ public class DomainController {
 
 	public String calculateKeyboard(String json) throws PROPKeyboardException {
 		try {
-			System.out.println("in1");
 			JSONObject j = new JSONObject(json);
-			System.out.println("in2");
 			Alphabet alph = fromJSONObjectToAlphabet(new JSONObject(loadAlphabet(j.getString("alphabet_path"))));
 			TopologyType t;
 			if (j.getString("topology").equals("Rectangular")) {
-				System.out.println("Rectangular");
 				t = TopologyType.Squared;
 			}
 			else if (j.getString("topology").equals("Circular")) {
-				System.out.println("Circular");
 				t = TopologyType.Circular;
 			}
 			else {
-				System.out.println("Else");
 				throw new PROPKeyboardException("Error: JSON string bad format");
 			}
 
 			charactersSet = new CharactersSet(alph.getCharacters());
 			JSONArray txtArr = j.getJSONArray("texts");
-			System.out.println("in3");
 			for (int i = 0; i < txtArr.length(); ++i) {
-				System.out.println(i);
 				charactersSet.calculateText(loadText(txtArr.getString(i)));
-				System.out.println(i);
 			}
-			System.out.println("in4");
 			positionsSet = new PositionsSet(t, alph.getCharacters().length);
 
 			QAP qap = new QAP(charactersSet.getAllAffinities() ,positionsSet.getAllDistances());
 			int[] qapSolution = qap.solve();
 
-			currentKeyboard = new Keyboard(j.getString("name"), t, j.getInt("width"), j.getInt("height"), charactersSet.getAllCharacters(), positionsSet.getAllPositions(), qapSolution);
+			currentKeyboard = new Keyboard(j.getString("name"), t, charactersSet.getAllCharacters(), positionsSet.getAllPositions(), qapSolution);
 			currentKeyboard.setScore(Bound.bound(currentKeyboard.getAllocations(), charactersSet.getAllAffinities(), positionsSet.getAllDistances()));
 			JSONObject jret = new JSONObject();
 			jret.put("keyboard", fromKeyboardToJSONObject(currentKeyboard));
@@ -120,7 +115,7 @@ public class DomainController {
 			QAP qap = new QAP(charactersSet.getAllAffinities() ,positionsSet.getAllDistances());
 			int[] qapSolution = qap.solve();
 
-			currentKeyboard = new Keyboard(currentKeyboard.getName(), currentKeyboard.getTopology(), currentKeyboard.getWidth(), currentKeyboard.getHeight(), charactersSet.getAllCharacters(), positionsSet.getAllPositions(), qapSolution);
+			currentKeyboard = new Keyboard(currentKeyboard.getName(), currentKeyboard.getTopology(), charactersSet.getAllCharacters(), positionsSet.getAllPositions(), qapSolution);
 			currentKeyboard.setScore(Bound.bound(currentKeyboard.getAllocations(), charactersSet.getAllAffinities(), positionsSet.getAllDistances()));
 			JSONObject jret = new JSONObject();
 			jret.put("keyboard", fromKeyboardToJSONObject(currentKeyboard));
@@ -182,11 +177,11 @@ public class DomainController {
 				assig[i] = jassig.getInt(i);
 			}
 			System.out.println("hais");
-			Keyboard k = new Keyboard(j.getString("name"), t, j.getInt("width"), j.getInt("height"), chars, pos, assig);
+			Keyboard k = new Keyboard(j.getString("name"), t, chars, pos, assig);
 			k.setScore((float)j.getDouble("score"));
 
 			JSONArray jrefs = j.getJSONArray("references");
-			for (int i = 0;i < refs.length; ++i) {
+			for (int i = 0;i < jrefs.length(); ++i) {
 				k.addReference(jrefs.getString(i));
 			}
 			return k;
@@ -216,8 +211,6 @@ public class DomainController {
 			j.put("positions", jpos);
 			j.put("assignments", jassig);
 			j.put("name", k.getName());
-			j.put("height", k.getHeight());
-			j.put("width", k.getWidth());
 			j.put("score", k.getScore());
 			JSONArray jrefs = new JSONArray();
 			String[] refs = k.getReferences();
