@@ -99,7 +99,12 @@ public class DomainController {
 
 			currentKeyboard = new Keyboard(j.getString("name"), t, j.getInt("width"), j.getInt("height"), charactersSet.getAllCharacters(), positionsSet.getAllPositions(), qapSolution);
 			currentKeyboard.setScore(Bound.bound(currentKeyboard.getAllocations(), charactersSet.getAllAffinities(), positionsSet.getAllDistances()));
-			return fromKeyboardToJSONObject(currentKeyboard).toString();
+			//JSONObject jret = new JSONObject();
+			//jret.put("keyboard", fromKeyboardToJSONObject(currentKeyboard));
+			//jret.put("affinities", fromFloatMatrixToJSONArray(charactersSet.getAllAffinities()));
+			//jret.put("distances", fromFloatMatrixToJSONArray(positionsSet.getAllDistances()));
+			//return jret;
+			return fromKeyboardToJSONObject()
 
 		} catch (JSONException ex) {
 			System.out.println("json string bad format");
@@ -157,7 +162,9 @@ public class DomainController {
 				assig[i] = jassig.getInt(i);
 			}
 			System.out.println("hais");
-			return new Keyboard(j.getString("name"), t, j.getInt("width"), j.getInt("height"), chars, pos, assig);
+			Keyboard k = new Keyboard(j.getString("name"), t, j.getInt("width"), j.getInt("height"), chars, pos, assig);
+			k.setScore((float)j.getDouble("score"));
+			return k;
 		} catch (JSONException ex) {
 			throw new PROPKeyboardException("Error: JSON string bad format");
 		}
@@ -186,7 +193,40 @@ public class DomainController {
 			j.put("name", k.getName());
 			j.put("height", k.getHeight());
 			j.put("width", k.getWidth());
+			j.put("score", k.getScore());
 			return j;
+		} catch (JSONException ex) {
+			throw new PROPKeyboardException("Error: JSON string bad format");
+		}
+	}
+
+	private JSONArray fromFloatMatrixToJSONArray(float[][] mat) throws PROPKeyboardException {
+		try {
+			int n = mat.length;
+			JSONArray jmat = new JSONArray();
+			for (int i = 0; i < n; ++i) {
+				jmat.put(new JSONArray());
+				int l = jmat.length()-1;
+				for (int j = 0; j < n; ++j) {
+					jmat.getJSONArray(l).put(mat[i][j]);
+				}
+			}
+			return jmat;
+		} catch (JSONException ex) {
+			throw new PROPKeyboardException("Error: JSON string bad format");
+		}
+	}
+
+	private float[][] fromJSONArrayToFloatMatrix(JSONArray jmat) throws PROPKeyboardException {
+		try {
+			int n = jmat.length();
+			float[][] mat = new float[n][n];
+			for (int i = 0; i < n; ++i) {
+				for (int j = 0; j < n; ++j) {
+					mat[i][j] = (float)jmat.getJSONArray(i).getDouble(j);
+				}
+			}
+			return mat;
 		} catch (JSONException ex) {
 			throw new PROPKeyboardException("Error: JSON string bad format");
 		}
