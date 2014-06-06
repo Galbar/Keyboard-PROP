@@ -156,14 +156,14 @@ public class Explorer {
                     }
                     else if (callback.equals("gt")) {
                         InterfaceController.getInstance().saveText(e_path.getAbsolutePath());
-                        InterfaceController.getInstance().loadText(e_path.getAbsolutePath());
+                        //InterfaceController.getInstance().loadText(e_path.getAbsolutePath());
                     }
                     else if (callback.equals("gtq")) {
                         InterfaceController.saveFrequencies(e_path.getAbsolutePath());
                     }
                     else if (callback.equals("ga")) {
                         InterfaceController.getInstance().saveAlphabet(e_path.getAbsolutePath());
-                        InterfaceController.getInstance().loadAlphabet(e_path.getAbsolutePath());
+                        //InterfaceController.getInstance().loadAlphabet(e_path.getAbsolutePath());
                     }
                     else if (callback.equals("s")) {
                         InterfaceController.saveKeyboard(e_path.getAbsolutePath());
