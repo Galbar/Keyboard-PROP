@@ -471,9 +471,12 @@ public class PersistanceController {
     }
     */
 
-    public void saveKeyboardImage(String path, String image_string) throws PROPKeyboardException {
+    public void saveKeyboardImage(String json) throws PROPKeyboardException {
         try {
             BufferedImage image;
+            JSONObject j = new JSONObject(json);
+            String path = j.getString("path");
+            String image_string = j.getString("image_string");
             byte[] imageByte;
             BASE64Decoder decoder = new BASE64Decoder();
             imageByte = decoder.decodeBuffer(image_string);
@@ -483,6 +486,8 @@ public class PersistanceController {
             ImageIO.write(image, "jpg", new File(path));
         } catch (IOException e){
                 e.printStackTrace();
+        } catch (JSONException ex) {
+            throw new PROPKeyboardException("Error: JSON string bad format ");
         }
     }
 

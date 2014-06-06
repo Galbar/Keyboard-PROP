@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import org.json.JSONObject;
+import org.json.*;
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -43,11 +43,16 @@ public class InterfaceController {
     
     public static void saveImage(String path, String image_string) {
         // Save Image
-        //JSONObject i = new JSONObject();
-        //i.put("path", path);
-        //i.put("image_string", image_string);
-        DomainController.i().saveKeyboardImage(path, image_string);
-        //Test.getInstance().saveImage(i.toString());
+        try {
+            JSONObject i = new JSONObject();
+            i.put("path", path);
+            i.put("image_string", image_string);
+            DomainController.getInstance().saveKeyboardImage(i.toString());
+        } catch (JSONException ex) {
+            
+        } catch (PROPKeyboardException) {
+            
+        }
     }
         
     public static void saveText(String path){}

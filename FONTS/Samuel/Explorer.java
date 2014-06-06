@@ -112,7 +112,7 @@ public class Explorer {
         explore.setEnabled(enabled);
     }
     
-    private void setListeners(){ 
+    private void setListeners() { 
         explore.addActionListener(new ActionListener(){
 
             @Override
