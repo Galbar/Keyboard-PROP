@@ -34,10 +34,11 @@ import java.awt.image.BufferedImage;
  */
 public class InterfaceController {
     private String text = "";
-    private String text_path = "";
     private String alphabet_chars = "";
     private String alphabet_name = "";
     private String alphabet_path = "";
+    private Vector<String> references = new Vector<String>();
+    private String frequencyFilepPath = new String();
     private static InterfaceController instance;
     private InterfaceController(){
     }
@@ -67,10 +68,12 @@ public class InterfaceController {
             j.put("alphabet_path", alphabet_path);
             j.put("name", keyboard_name);
             JSONArray txtArr = new JSONArray();
-            txtArr.put(text_path);
+            for (int i = 0; i < references.size(); ++i) {
+                txtArr.put(references.get(i));
+            }
             j.put("texts", txtArr);
             j.put("force_BB", force);
-
+            j.put("frequency_file", frequencyFilepPath);
             String res = DomainController.getInstance().calculateKeyboard(j.toString()); // retorna Json
             JSONObject jinfo = new JSONObject(res);
             JSONObject k = jinfo.getJSONObject("keyboard");
@@ -129,7 +132,6 @@ public class InterfaceController {
     }
     
     public String loadText(String path) {
-        text_path = path;
         String result = "error";
         try {
             result = DomainController.getInstance().loadText(path);
@@ -286,5 +288,13 @@ public class InterfaceController {
             JOptionPane.showMessageDialog(frame,"Error al fer el swap.", "Error", JOptionPane.ERROR_MESSAGE);
         }
         return 0f;
+    }
+
+    public addText(String new_text) {
+        references.add(new_text); 
+    }
+
+    public setFrequencyFile(String path) {
+        frequencyFilepPath = path;
     }
 }

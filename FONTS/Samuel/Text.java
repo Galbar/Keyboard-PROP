@@ -10,6 +10,7 @@ import javax.swing.event.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.utils.*;
 /**
  *
  * @author samuel.bryan.pierno
@@ -19,9 +20,9 @@ public class Text {
     private JPanel buttons_panel = new JPanel();
     @SuppressWarnings("FieldMayBeFinal")
     private JTextArea text = new JTextArea(15,35);
-    private JButton freq = new JButton("Carregar freqüències");
-    private JButton load = new JButton("Carregar text");
-    private JButton save = new JButton("Guardar text");
+    private JButton afegir_text = new JButton("Afegir text");
+    private JButton load = new JButton("Carregar arxiu");
+    private JButton save = new JButton("Guardar arxiu");
     private JButton cancel = new JButton("Cancel·la");
     private JLabel text_label = new JLabel();
     private JScrollPane scroll = new JScrollPane(text);
@@ -57,7 +58,7 @@ public class Text {
     }
     
     public void setVisible(boolean visible){
-        freq.setVisible(visible);
+        afegir_text.setVisible(visible);
         load.setVisible(visible);
         save.setVisible(visible);
         cancel.setVisible(visible);
@@ -67,7 +68,7 @@ public class Text {
     
     public void setEnabled(boolean enabled){
         frame.setEnabled(enabled);
-        freq.setEnabled(enabled);
+        afegir_text.setEnabled(enabled);
         load.setEnabled(enabled);
         save.setEnabled(enabled);
         cancel.setEnabled(enabled);
@@ -75,11 +76,12 @@ public class Text {
     }
     
     private void setListeners(){ 
-        freq.addActionListener(new ActionListener(){
+        afegir_text.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
-               Explorer.getInstance("tq");
-               setEnabled(false);
+               //Explorer.getInstance("tq");
+               //setEnabled(false);
+               InterfaceController.getInstance().addText(text);
             }
         });
         load.addActionListener(new ActionListener(){
@@ -145,7 +147,7 @@ public class Text {
         buttons_panel.add(texts,c);
         buttons_panel.add(freqs,c);
         c.gridy=7;
-        buttons_panel.add(freq,c);
+        buttons_panel.add(afegir_text,c);
         c.gridx=1;
         buttons_panel.add(load,c);
         c.gridy=8;

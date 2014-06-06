@@ -88,9 +88,15 @@ public class DomainController {
 			}
 
 			charactersSet = new CharactersSet(alph.getCharacters());
+			String freqPath = j.getString("frequency_file");
+			if (!freqPath.equals("")) {
+				currentKeyboard.addReference(freqPath);
+				charactersSet.calculateFrequency(loadText(freqPath));
+			}
 			JSONArray txtArr = j.getJSONArray("texts");
 			for (int i = 0; i < txtArr.length(); ++i) {
 				charactersSet.calculateText(loadText(txtArr.getString(i)));
+				currentKeyboard.addReference(txtArr.getString(i));
 			}
 			positionsSet = new PositionsSet(t, alph.getCharacters().length);
 
