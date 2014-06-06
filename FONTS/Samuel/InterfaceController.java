@@ -42,17 +42,7 @@ public class InterfaceController {
     }
     
     public static void saveImage(String path, String image_string) {
-        // Save Image
-        try {
-            JSONObject i = new JSONObject();
-            i.put("path", path);
-            i.put("image_string", image_string);
-            DomainController.getInstance().saveKeyboardImage(i.toString());
-        } catch (JSONException ex) {
-            
-        } catch (PROPKeyboardException) {
-            
-        }
+        DomainController.getInstance().saveKeyboardImage(path, image_string);
     }
         
     public static void saveText(String path){}
