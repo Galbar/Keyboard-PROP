@@ -2,7 +2,6 @@ package classes;
 
 import org.json.*;
 import classes.enumerations.*;
-import sharedClasses.*;
 
 public class DomainController {
 	static private DomainController instance;
@@ -46,8 +45,8 @@ public class DomainController {
 		PersistanceController.getInstance().saveKeyboard(json);
 	}
 
-	public void saveKeyboardImage(String json) throws PROPKeyboardException {
-		PersistanceController.getInstance().saveKeyboardImage(json);
+	public void saveKeyboardImage(String path, String image_string) throws PROPKeyboardException {
+		PersistanceController.getInstance().saveKeyboardImage(path, image_string);
 	}
 
 
@@ -80,7 +79,7 @@ public class DomainController {
 			positionsSet = new PositionsSet(t, alph.getCharacters().length);
 
 			QAP qap = new QAP(charactersSet.getAllAffinities() ,positionsSet.getAllDistances());
-			int qapSolution[] = qap.solve();
+			int[] qapSolution = qap.solve();
 
 			currentKeyboard = new Keyboard(j.getString("name"), t, j.getInt("width"), j.getInt("height"), charactersSet.getAllCharacters(), positionsSet.getAllPositions(), qapSolution);
 			currentKeyboard.setScore(Bound.bound(currentKeyboard.getAllocations(), charactersSet.getAllAffinities(), positionsSet.getAllDistances()));
