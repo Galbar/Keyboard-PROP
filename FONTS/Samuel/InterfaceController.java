@@ -237,6 +237,9 @@ public class InterfaceController {
             }
             a.put(foo);
             ++num_chars;
+            foo = " ";
+            a.put(foo);
+            ++num_chars;
 
             try {
                 s.put("characters",a);
