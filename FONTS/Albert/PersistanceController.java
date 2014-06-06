@@ -109,16 +109,19 @@ public class PersistanceController {
             try {
                 s = new JSONObject(str);
             } catch (JSONException ex) {
+                System.out.println("error: json bad format");
                 throw new PROPKeyboardException("Error saveAlphabet: JSON string bad format");
             }
             try {
                 pth = s.get("path").toString();
             } catch (JSONException ex) {
+                System.out.println("error: json path to string");
                 throw new PROPKeyboardException("Error saveAlphabet: path to string");
             }
             try {
                 write = new FileWriter(pth,false);
             } catch (IOException ex) {
+                System.out.println("error: path");
                 throw new PROPKeyboardException("Error saveAlphabet: path");
             }
             PrintWriter print_line = new PrintWriter(write);
@@ -127,6 +130,7 @@ public class PersistanceController {
             try {
                 print_line.println(s.get("name").toString());
             } catch (JSONException ex) {
+                System.out.println("error: name");
                 throw new PROPKeyboardException("Error saveAlphabet: writing name");
             }
             print_line.println("");
@@ -135,6 +139,7 @@ public class PersistanceController {
             try {
                 print_line.println(s.get("number").toString());
             } catch (JSONException ex) {
+                System.out.println("error: number");
                 throw new PROPKeyboardException("Error saveAlphabet: writing number");
             }
             print_line.println("");
@@ -146,208 +151,80 @@ public class PersistanceController {
                     print_line.print(" ");
                 }
             } catch (JSONException ex) {
+                System.out.println("error: characters");
                 throw new PROPKeyboardException("Error saveAlphabet: writing characters");
             }
             print_line.close();
         }catch (Exception e) {
+            System.out.println("Error loadAlphabet: Error Intern");
             throw new PROPKeyboardException("Error loadAlphabet: Error Intern");
         }
     }
 
+    public void saveKeyboardImage(String str) throws PROPKeyboardException {
+        try {
+            String pth = null;
+            String image_string = null;
+            JSONObject s = null;
+            try {
+                s = new JSONObject(str);
+            } catch (JSONException ex) {
+                throw new PROPKeyboardException("Error saveKeyboardImage: JSON string bad format");
+            }
+            try {
+                pth = s.get("path").toString();
+            } catch (JSONException ex) {
+                throw new PROPKeyboardException("Error saveKeyboardImage: path to string");
+            }
+            try {
+                image_string = s.get("image_string").toString();
+            } catch (JSONException ex) {
+                throw new PROPKeyboardException("Error saveKeyboardImage: image_string to string");
+            }
+
+            BufferedImage image;
+            byte[] imageByte;
+            BASE64Decoder decoder = new BASE64Decoder();
+            imageByte = decoder.decodeBuffer(image_string);
+            ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+            image = ImageIO.read(bis);
+            bis.close();
+            ImageIO.write(image, "jpg", new File(pth));
+        } catch (IOException e){
+                e.printStackTrace();
+        }
+    }
 
     /**
-        * Carrega Teclat
-        * @param pth És el path on hi ha el fitxer a carregar.
-        * @return String amb totes les dades del fitxer.
-        */	        
-    public String loadKeyboard(String pth) throws PROPKeyboardException {
+    * Carrega Text.
+    * @param pth És el path on hi ha le fitxer a carregar.
+    * @return String amb totes les dades del fitxer.
+    */
+    public String loadText(String pth) throws PROPKeyboardException {
         Path path = Paths.get(pth);
         List<String> lines = null;
+        
         try {
             lines = Files.readAllLines(path, StandardCharsets.UTF_8);
         } catch (IOException ex) {
-                throw new PROPKeyboardException("Error loadKeyboard: Path");
+                throw new PROPKeyboardException("Error loadText: Path");
         }
         JSONObject s = new JSONObject();
-
-        //LOAD NAME //
+        
+        //LOAD TEXT //
         try {
-            s.put("name", lines.get(0));
+            s.put("text", lines.get(0));
         } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error loadKeyboard: reading name");
+                throw new PROPKeyboardException("Error loadText: reading text");
         }
-
-        //LOAD TOPOLOGY //
-        try {
-            s.put("topology", lines.get(2));
-        } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error loadKeyboard: reading topology");
-        }
-
-        //LOAD SPECIAL CHARS //
-        String aux = new String();
-        String next = new String();
-        int cont = 4;        
-        next = lines.get(cont);
-        while (!next.equals("")) {
-            aux += lines.get(cont);
-            ++cont;
-            next = lines.get(cont);
-        }
-        ++cont;
-        JSONArray a = new JSONArray();
-        String solution = new String();
-        for (int i = 0; i < aux.length(); ++i) {
-            if (aux.charAt(i) != ' ') {
-                solution += aux.charAt(i);
-            }
-            else {
-                a.put(solution);
-                solution = new String();
-            }
-        }
-        a.put(solution);
-        try {
-            s.put("specialChars", a);
-        } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error loadKeyboard: reading special characters");
-        }
-
-        //LOAD heigth //
-        try {
-            s.put("heigth", lines.get(cont));
-        } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error loadKeyboard: reading heigth");
-        }
-        cont += 2;
-
-        //LOAD WIDTH //
-        try {
-            s.put("width", lines.get(cont));
-        } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error loadKeyboard: reading width");
-        }
-        cont += 2;
-
-        //LOAD REFERENCES //
-        aux = new String();
-        next =new String();
-        next = lines.get(cont);
-        a = new JSONArray();
-        while (!next.equals("")) {
-            a.put(lines.get(cont));
-            ++cont;
-            next = lines.get(cont);
-        }
-        ++cont;
-        try {
-            s.put("references", a);
-        } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error loadKeyboard: reading references");
-        }
-
-
-        //LOAD RELATIONS //
-        aux = new String();
-        next =new String();
-        solution = new String();
-        next = lines.get(cont);
-        while (!next.equals("")) {
-            aux += lines.get(cont);
-            ++cont;
-            next = lines.get(cont);
-        }
-        ++cont;
-        a = new JSONArray();
-        for (int i = 0; i < aux.length(); ++i) {
-            if (aux.charAt(i) != ' ') {
-                solution += aux.charAt(i);
-            }
-            else {
-                a.put(solution);
-                solution = new String();
-            }
-        }
-        a.put(solution);
-        try {
-            s.put("relations", a);
-        } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error loadKeyboard: reading relations");
-        }
-
-        //LOAD CHARACTERS //
-        aux = new String();
-        next =new String();
-        solution = new String();
-        next = lines.get(cont);
-        while (!next.equals("")) {
-            aux += lines.get(cont);
-            ++cont;
-            next = lines.get(cont);
-        }
-        ++cont;
-        a = new JSONArray();
-        for (int i = 0; i < aux.length(); ++i) {
-            if (aux.charAt(i) != ' ') {
-                solution += aux.charAt(i);
-            }
-            else {
-                a.put(solution);
-                solution = new String();
-            }
-        }
-        a.put(solution);
-        try {
-            s.put("characters", a);
-        } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error loadKeyboard: reading characters");
-        }
-
-        //LOAD ASSIGMENTS //
-        aux = new String();
-        next =new String();
-        solution = new String();
-        next = lines.get(cont);
-        boolean end = false;
-        while (!next.equals("") && !end) {
-            aux += lines.get(cont);
-            ++cont;
-            if (cont < lines.size()) {
-                next = lines.get(cont);
-            }
-            else 
-                end = true;
-        }
-        ++cont;
-        a = new JSONArray();
-        for (int i = 0; i < aux.length(); ++i) {
-            if (aux.charAt(i) != ' ') {
-                solution += aux.charAt(i);
-            }
-            else {
-                a.put(solution);
-                solution = new String();
-            }
-        }
-        a.put(solution);
-        try {
-            s.put("assigments", a);
-        } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error loadKeyboard: reading assigments");
-        }
-
         return s.toString();
-    } 
-    
-    
-    
-    
+    }
+
     /**
-	* Guarda Alfabet
-	* @param str Estructura on hi ha tots els paràmetres a guardar.
-	*/
-    
-    public void saveKeyboard(String str) throws PROPKeyboardException {
+    * Guarda Text
+    * @param str Estructura on hi ha tots els paràmetres a guardar.
+    */
+    public void saveText(String str) throws PROPKeyboardException {
         try {
             FileWriter write = null;
             String pth = null;
@@ -355,135 +232,33 @@ public class PersistanceController {
             try {
                 s = new JSONObject(str);
             } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error saveKeyboard: JSON string bad format");
+                throw new PROPKeyboardException("Error saveText: JSON string bad format");
             }
             try {
                 pth = s.get("path").toString();
             } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error saveKeyboard: path to string");
+                throw new PROPKeyboardException("Error saveText: path to string");
             }
             try {
                 write = new FileWriter(pth,false);
             } catch (IOException ex) {
-                throw new PROPKeyboardException("Error saveKeyboard: path");
+                throw new PROPKeyboardException("Error saveText: path");
             }
             PrintWriter print_line = new PrintWriter(write);   
             
-            //PRINT NAME //
+            //PRINT TEXT //
             try {
-                print_line.println(s.get("name").toString());
+                print_line.println(s.get("text").toString());
             } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error saveKeyboard: writing name");
+                throw new PROPKeyboardException("Error saveKeyboard: writing text");
             }
             print_line.println();
-
-            //PRINT TOPOLOGY //
-            try {
-                print_line.println(s.get("topology").toString());
-            } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error saveKeyboard: writing topology");
-            }
-            print_line.println("");
-
-            //PRINT SPECIAL CHARACTERS //
-            try {
-                for (int i = 0; i < (s.getJSONArray("characters").length()); ++i) {
-                    print_line.print(s.getJSONArray("characters").getString(i));
-                    print_line.print(" ");
-                }
-            } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error saveKeyboard: writing special characters");
-            }
-            print_line.println("");
-            print_line.println("");
-            
-            //PRINT HEIGHT //
-            try {
-                print_line.println(s.get("heigth").toString());
-            } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error saveKeyboard: writing height");
-            }
-            print_line.println("");
-
-            //PRINT WIDTH //
-            try {
-                print_line.println(s.get("width").toString());
-            } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error saveKeyboard: writing width");
-            }
-            print_line.println("");
-
-            //PRINT REFERENCES //
-            try {
-                for (int i = 0; i < (s.getJSONArray("references").length()); ++i) {
-                    print_line.println(s.getJSONArray("references").getString(i));
-                }
-            } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error saveKeyboard: writing references");
-            }
-           print_line.println("");
-
-            //PRINT RELATIONS //
-            //Estan ordenades de tal manera que el primer valor de la relació serà
-            //el [0,0], el segon el [0,1]...
-            //
-            try {
-                for (int i = 0; i < (s.getJSONArray("relations").length()); ++i) {
-                    print_line.print(s.getJSONArray("relations").getString(i));
-                    print_line.print(" ");
-                }
-            } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error saveKeyboard: writing relations");
-            }
-            print_line.println("");
-            print_line.println("");
-
-            //PRINT CHARACTERS //
-            try {
-                for (int i = 0; i < (s.getJSONArray("characters").length()); ++i) {
-                    print_line.print(s.getJSONArray("characters").getString(i));
-                    print_line.print(" ");
-                }
-            } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error saveKeyboard: writing characters");
-            }
-            print_line.println("");
-            print_line.println("");
-
-            //PRINT ASSIGMENTS //
-            try {
-                for (int i = 0; i < (s.getJSONArray("assigments").length()); ++i) {
-                    print_line.print(s.getJSONArray("assigments").getString(i));
-                    print_line.print(" ");
-                }
-            } catch (JSONException ex) {
-                throw new PROPKeyboardException("Error saveKeyboard: writing assigments");
-            }
             print_line.close();  
         } catch (Exception e) {
-            throw new PROPKeyboardException("Error loadAlphabet: Error Intern");
-        }    
-    }
-
-    public void saveKeyboardImage(String json) throws PROPKeyboardException {
-        try {
-            BufferedImage image;
-            JSONObject j = new JSONObject(json);
-            String path = j.getString("path");
-            String image_string = j.getString("image_string");
-            byte[] imageByte;
-            BASE64Decoder decoder = new BASE64Decoder();
-            imageByte = decoder.decodeBuffer(image_string);
-            ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
-            image = ImageIO.read(bis);
-            bis.close();
-            ImageIO.write(image, "jpg", new File(path));
-        } catch (IOException e){
-                e.printStackTrace();
-        } catch (JSONException ex) {
-            throw new PROPKeyboardException("Error: JSON string bad format ");
+            throw new PROPKeyboardException("Error saveKeyboard: Error Intern");
         }
     }
+
 
     
     /**
@@ -819,7 +594,7 @@ public class PersistanceController {
             }
             print_line.close();  
         } catch (Exception e) {
-            throw new PROPKeyboardException("Error loadAlphabet: Error Intern");
+            throw new PROPKeyboardException("Error saveKeyboard: Error Intern");
         }    
     }
     

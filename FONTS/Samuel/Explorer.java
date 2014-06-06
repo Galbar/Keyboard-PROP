@@ -70,7 +70,7 @@ public class Explorer {
         }
         else if (b.equals("ga")) {
             instance.frame.setTitle("Guardar alfabet");
-            b = "a";
+            //b = "a";
         }
         else if (b.equals("gt")) {
             instance.frame.setTitle("Guardar text");
@@ -140,25 +140,27 @@ public class Explorer {
                     explore.accept(e_path);
                     log.append("\n"+e_path.getAbsolutePath());
                     if (callback.equals("a")) {
-                        InterfaceController.loadAlphabet(e_path.getAbsolutePath());
+                        InterfaceController.getInstance().loadAlphabet(e_path.getAbsolutePath());
                     }
                     else if (callback.equals("m")) {
                         InterfaceController.loadKeyboard(e_path.getAbsolutePath());
                     }
                     else if (callback.equals("t")) {
-                        InterfaceController.loadText(e_path.getAbsolutePath());
+                        InterfaceController.getInstance().loadText(e_path.getAbsolutePath());
                     }
                     else if (callback.equals("tq")) {
                         InterfaceController.loadFrequencies(e_path.getAbsolutePath());
                     }
                     else if (callback.equals("gt")) {
-                        InterfaceController.saveText(e_path.getAbsolutePath());
+                        InterfaceController.getInstance().saveText(e_path.getAbsolutePath());
+                        InterfaceController.getInstance().loadText(e_path.getAbsolutePath());
                     }
                     else if (callback.equals("gtq")) {
                         InterfaceController.saveFrequencies(e_path.getAbsolutePath());
                     }
                     else if (callback.equals("ga")) {
-                        InterfaceController.saveAlphabet(e_path.getAbsolutePath());
+                        InterfaceController.getInstance().saveAlphabet(e_path.getAbsolutePath());
+                        InterfaceController.getInstance().loadAlphabet(e_path.getAbsolutePath());
                     }
                     else if (callback.equals("s")) {
                         InterfaceController.saveKeyboard(e_path.getAbsolutePath());

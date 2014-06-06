@@ -78,6 +78,8 @@ public class AlphabetView {
         save.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
+                // FOR TESTING - REMOVE AFTER TESTING - IMPORTANT!
+                InterfaceController.getInstance().setAlphabet(character.getText(), "alfabet_nom");
                 Explorer.getInstance("ga");
                 setEnabled(false);
             }

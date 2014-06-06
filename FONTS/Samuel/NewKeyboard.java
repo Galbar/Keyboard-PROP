@@ -87,7 +87,8 @@ public class NewKeyboard {
                 Loader.getInstance();
                 setVisible(false);
                 setEnabled(false);
-                InterfaceController.setSettings(topology.getSelectedItem().toString());
+                //InterfaceController.getInstance().setSettings(topology.getSelectedItem().toString());
+                InterfaceController.getInstance().calculateKeyboard(10, 10, topology.getSelectedItem().toString(), "nom_teclat");
                 //Loader.done();
                 //InterfaceController.createKeyboard(); // Falten els parametres.
             }

@@ -65,18 +65,33 @@ public class DomainController {
 
 	public String calculateKeyboard(String json) throws PROPKeyboardException {
 		try {
+			System.out.println("in1");
 			JSONObject j = new JSONObject(json);
+			System.out.println("in2");
 			Alphabet alph = fromJSONObjectToAlphabet(new JSONObject(loadAlphabet(j.getString("alphabet_path"))));
 			TopologyType t;
-			if (j.getString("topology").equals("Squared")) t = TopologyType.Squared;
-			else if (j.getString("topology").equals("Circular")) t = TopologyType.Circular;
-			else throw new PROPKeyboardException("Error: JSON string bad format");
+			if (j.getString("topology").equals("Rectangular")) {
+				System.out.println("Rectangular");
+				t = TopologyType.Squared;
+			}
+			else if (j.getString("topology").equals("Circular")) {
+				System.out.println("Circular");
+				t = TopologyType.Circular;
+			}
+			else {
+				System.out.println("Else");
+				throw new PROPKeyboardException("Error: JSON string bad format");
+			}
 
 			charactersSet = new CharactersSet(alph.getCharacters());
 			JSONArray txtArr = j.getJSONArray("texts");
+			System.out.println("in3");
 			for (int i = 0; i < txtArr.length(); ++i) {
+				System.out.println(i);
 				charactersSet.calculateText(loadText(txtArr.getString(i)));
+				System.out.println(i);
 			}
+			System.out.println("in4");
 			positionsSet = new PositionsSet(t, alph.getCharacters().length);
 
 			QAP qap = new QAP(charactersSet.getAllAffinities() ,positionsSet.getAllDistances());
@@ -87,6 +102,7 @@ public class DomainController {
 			return fromKeyboardToJSONObject(currentKeyboard).toString();
 
 		} catch (JSONException ex) {
+			System.out.println("json string bad format");
 			throw new PROPKeyboardException("Error: JSON string bad format");
 		}
 	}

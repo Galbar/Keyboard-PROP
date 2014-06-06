@@ -33,7 +33,9 @@ public class SolutionView extends JFrame {
     //private DrawPanel draw_panel = new DrawPanel();
     private JPanel draw_panel = new JPanel();
     private JPanel button_panel = new JPanel();
+    private JPanel info_panel = new JPanel();
     private JButton save_button = new JButton("Guardar");
+
     private JButton close_button = new JButton("Tancar");
     private JButton swap_button = new JButton("Swap");
     private JButton export_image_button = new JButton("Exportar Imatge");
@@ -47,6 +49,9 @@ public class SolutionView extends JFrame {
     private static SolutionView instance;
 
     public static SolutionView getInstance(Vector<String> new_chars, Vector<Integer> new_rels, Vector<Position> new_coords) {
+        NewKeyboard.getInstance().setEnabled(false);
+        NewKeyboard.getInstance().setVisible(false);
+        Loader.getInstance().setVisible(false);
         if(instance == null) instance = new SolutionView(new_chars, new_rels, new_coords);
         else {
             instance.reinitiate(new_chars, new_rels, new_coords);
@@ -55,6 +60,9 @@ public class SolutionView extends JFrame {
     }
 
     public static SolutionView getInstance() {
+        NewKeyboard.getInstance().setEnabled(false);
+        NewKeyboard.getInstance().setVisible(false);
+        Loader.getInstance().setVisible(false);
         if(instance == null) System.out.println("ERROOR... Esper-ho i Desitjo que mai vegis aquesta linia...");
         return instance;
     }
@@ -79,6 +87,7 @@ public class SolutionView extends JFrame {
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         
         contentPane.add(draw_panel);
+        contentPane.add(info_panel);
         contentPane.add(button_panel);
     }
     
@@ -127,6 +136,8 @@ public class SolutionView extends JFrame {
                 if (result == JOptionPane.YES_OPTION) {
                     setVisible(false);
                     dispose();
+                    MainWindow.getInstance().setEnabled(true);
+                    MainWindow.getInstance().setVisible(true);
                 }
             }
         });
@@ -218,8 +229,9 @@ public class SolutionView extends JFrame {
     
     private void initialize(){
         initializeFrame();
-        initializeButtonPanel();
         initializeDrawPanel();
+        initializeInfoPanel();
+        initializeButtonPanel();
         setListeners();
         this.pack();
         this.setVisible(true);
@@ -252,6 +264,24 @@ public class SolutionView extends JFrame {
         button_panel.add(close_button, c);
     }
 
+    private void initializeInfoPanel() {
+        info_panel.setPreferredSize(new Dimension(450,100));
+        info_panel.setOpaque(true);
+        info();
+    }
+
+    private void info() {
+        Object rowData[][] = { { "Row1-Column1", "Row1-Column2", "Row1-Column3" },
+        { "Row2-Column1", "Row2-Column2", "Row2-Column3" } };
+        
+        Object columnNames[] = { "Column One", "Column Two", "Column Three" };
+        JTable table = new JTable(rowData, columnNames);
+
+        JScrollPane scrollpane = new JScrollPane(table);
+        this.add(scrollpane, BorderLayout.CENTER);
+        //info_panel.add(scrollpane);
+    }
+
     private void initializeDrawPanel() {
         draw_panel.setPreferredSize(new Dimension(450,200));
         draw_panel.setLayout(null);
@@ -281,8 +311,9 @@ public class SolutionView extends JFrame {
             label.setBorder(border);
 
             // Set Location
-            int x = Math.round(coords.get(rels.get(keys.get(label))).x);
-            int y = Math.round(coords.get(rels.get(keys.get(label))).y);
+            int x = Math.round(coords.get(rels.get(keys.get(label))).x + 50);
+            int y = Math.round(coords.get(rels.get(keys.get(label))).y + 20);
+            System.out.println(x + " - " + y);
             label.setLocation(x, y);
             
             // Set Size
@@ -297,94 +328,6 @@ public class SolutionView extends JFrame {
     public void setEnabledPublic(Boolean enabled) {
         this.setEnabled(enabled);
     }
-
-
-	//-----------------
-        /*
-	    class DrawPanel extends JPanel {
-            private BufferedImage image = new BufferedImage(450, 200, BufferedImage.TYPE_3BYTE_BGR);
-            Vector<JLabel> keys = new Vector<JLabel>();
-
-	        DrawPanel() {
-	            setPreferredSize(new Dimension(450,200));
-                setLayout(null);
-                setOpaque(true);
-                setBackground(Color.WHITE);
-                
-	        }
-
-	        @Override
-	        public void paintComponent(Graphics g) {
-	            super.paintComponent(g);
-	            drawKeys(g);
-	        }
-
-	        private void drawKeys(Graphics g) {
-	        	for (int i = 0; i < rels.size(); ++i) {
-                    System.out.println(i);
-	        		int x = Math.round(coords.get(rels.get(i)).x);
-	        		int y = Math.round(coords.get(rels.get(i)).y);
-                    //g.setColor(Color.BLACK);
-	        		//g.fillRect(x, y, 50,20); // 100 key size, may change
-                    //g.setColor(Color.RED);
-	        		//g.drawString(chars.get(rels.get(i)), x+10, y+10);
-                    
-                    JLabel label = new JLabel(chars.get(rels.get(i)), JLabel.CENTER);
-                    label.setOpaque(true);
-                    label.setForeground(Color.black);
-                    label.setBackground(Color.darkGray);
-                    keys.add(label);
-                    this.add(label);
-                    label.setLocation(x, y);
-                    label.setSize(50, 20);
-	        	}
-                setListeners();
-	        }
-
-            public BufferedImage getImage() {
-                return image;
-            }
-
-            private void setListeners() {
-                System.out.println("Mouse ininin");
-                for (int i = 0; i < keys.size(); ++i) {
-                     System.out.println("Mforforforforlick");
-
-                    keys.get(i).addMouseListener(new MouseAdapter() {
-                        public void mouseReleased(MouseEvent event){
-                            //if (event.isPopupTrigger()) {
-                                // code
-                                //if (swapping) {
-                                    //keys.get(i).setBackground(Color.red);
-
-                                //}
-                            //}
-                            //setBackground(Color.red);
-                            System.out.println("Mouse Click");
-                        }
-
-                        // @Override
-                        //public void mouseEntered(MouseEvent event) {
-                            //Font font_original = keys.get(i).getFont();
-                            //Map attributes = font_original.getAttributes();
-                            //attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-                            //keys.get(i).setFont(font_original.deriveFont(attributes));;
-                        //}
-
-                        //@Override
-                        //public void mouseExited(MouseEvent event) {
-                            //Font font_original = keys.get(i).getFont();
-                            //Map attributes = font_original.getAttributes();
-                            //attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_OFF);
-                            //keys.get(i).setFont(font_original.deriveFont(attributes));;
-                        //}
-                    });
-                }
-            }
-
-
-	    }
-        */
 
 	public static void main(String args[]) {
         EventQueue.invokeLater(new Runnable() {

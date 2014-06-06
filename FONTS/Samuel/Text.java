@@ -90,7 +90,7 @@ public class Text {
             @Override
             public void actionPerformed(ActionEvent event){
                 Explorer.getInstance("gt");
-                InterfaceController.setText(text.getText());
+                InterfaceController.getInstance().setText(text.getText());
                 setEnabled(false);
             }
         });
