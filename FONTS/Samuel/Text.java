@@ -154,6 +154,9 @@ public class Text {
         c.gridx=1;
         buttons_panel.add(cancel,c);
     }
-    
+
+    public void setText(String new_text) {
+        text.setText(new_text);
+    }
    
 }

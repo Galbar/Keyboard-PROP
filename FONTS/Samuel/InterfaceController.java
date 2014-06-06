@@ -92,13 +92,9 @@ public class InterfaceController {
             // UN COP TINC LA RESPOSTA:
 
             //String topology_type = j.getString("topology");
-            System.out.println("a1");
             JSONArray jchars = k.getJSONArray("characters");
-            System.out.println("a2");
             JSONArray jpos = k.getJSONArray("positions");
-            System.out.println("a3");
             JSONArray jassig = k.getJSONArray("assignments");
-            System.out.println("a4");
 
             Vector<String> chars = new Vector<String>();//jchars.length());
             Vector<Integer> rels = new Vector<Integer>();//jassig.length());
@@ -116,12 +112,10 @@ public class InterfaceController {
             SolutionView.getInstance(chars, rels, coords);
 
         } catch (JSONException ex) {
-            System.out.println("ou");
             Frame frame = new JFrame("Error");
             JOptionPane.showMessageDialog(frame,"Error al calcular el teclat.", "Error", JOptionPane.ERROR_MESSAGE);            
         }
         catch (PROPKeyboardException ex) {
-            System.out.println("ou2");
             Frame frame = new JFrame("Error");
             JOptionPane.showMessageDialog(frame,"Error al calcular el teclat.", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -154,6 +148,7 @@ public class InterfaceController {
         String result = "error";
         try {
             result = DomainController.getInstance().loadText(path);
+            Text.getInstance("e").setText(result);
         } catch (PROPKeyboardException ex) {
             Frame frame = new JFrame("Error");
             JOptionPane.showMessageDialog(frame,"Error al carregar el text.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -166,6 +161,9 @@ public class InterfaceController {
         String result = "error";
         try {
             result = DomainController.getInstance().loadAlphabet(path);
+            JSONObject j = new JSONObject(result);
+            j.get("name").toString();
+            AlphabetView.getInstance("e").setText(alphabet_chars);
         } catch (PROPKeyboardException ex) {
             System.out.println("save");
             Frame frame = new JFrame("Error");

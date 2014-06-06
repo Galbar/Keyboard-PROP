@@ -17,16 +17,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.awt.image.BufferedImage;
 
-/* TO DO
-    Al utilitzar singleton no puc fer el dibuix quan es construeix la classe. Haig de fer un metode apart
-    i cridar-lo quan creo la classe i quan em torno a fer visible. -> setVisible(true);
-    Aquest metode ha d'elminiar (buidar) els atributs keys i selected_keys, i tambe chars, rels i coords,
-    i tornar a crear-los tots i cridar la funció draw.
-*/
 
-/*
-
-*/	
 
 public class SolutionView extends JFrame {
 
@@ -77,7 +68,7 @@ public class SolutionView extends JFrame {
     }
 
     private void initializeFrame() {
-        this.setMinimumSize(new Dimension(500, 300));
+        this.setMinimumSize(new Dimension(500, 400));
         this.setPreferredSize(this.getMinimumSize());
         this.setResizable(true);
         this.setLocationRelativeTo(null);
@@ -311,8 +302,8 @@ public class SolutionView extends JFrame {
             label.setBorder(border);
 
             // Set Location
-            int x = Math.round(coords.get(rels.get(keys.get(label))).x + 50);
-            int y = Math.round(coords.get(rels.get(keys.get(label))).y + 20);
+            int x = Math.round(coords.get(rels.get(keys.get(label))).y * 50);
+            int y = Math.round(coords.get(rels.get(keys.get(label))).x * 20);
             System.out.println(x + " - " + y);
             label.setLocation(x, y);
             
