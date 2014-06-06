@@ -58,7 +58,6 @@ public class DomainController {
 			jret.put("affinities", fromFloatMatrixToJSONArray(charactersSetValues));
 			jret.put("distances", fromFloatMatrixToJSONArray(positionsSetValues));
 			jret.put("path", path);
-			System.out.println(jret.toString());
 			PersistanceController.getInstance().saveKeyboard(jret.toString());
 		} catch (JSONException ex) {
             throw new PROPKeyboardException("Error: JSON string bad format");

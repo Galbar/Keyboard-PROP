@@ -32,25 +32,27 @@ public class SolutionView extends JFrame {
     private JButton export_image_button = new JButton("Exportar Imatge");
 
     JLabel scoreLabel = new JLabel("Puntuació: 0.0");
-    JTextArea refsArea = new JTextArea(80, 60);
+    JLabel alphLabel = new JLabel("Nom de l'alfabet: 0.0");
+    JTextArea refsArea = new JTextArea();
 
     private Vector<String> chars;
     private Vector<Integer> rels;
     private Vector<Position> coords; // temp
     private float score;
+    private String alphName;
     private String[] references;
     private HashMap<JLabel, Integer> keys;
     private HashMap<JLabel, Integer> selected_keys; // Potser no sera vector
 
     private static SolutionView instance;
 
-    public static SolutionView getInstance(Vector<String> new_chars, Vector<Integer> new_rels, Vector<Position> new_coords, float scre, String[] references) {
+    public static SolutionView getInstance(Vector<String> new_chars, Vector<Integer> new_rels, Vector<Position> new_coords, float scre, String[] references, String alph_name) {
         NewKeyboard.getInstance().setEnabled(false);
         NewKeyboard.getInstance().setVisible(false);
         Loader.getInstance().setVisible(false);
-        if(instance == null) instance = new SolutionView(new_chars, new_rels, new_coords, scre, references);
+        if(instance == null) instance = new SolutionView(new_chars, new_rels, new_coords, scre, references, alph_name);
         else {
-            instance.reinitiate(new_chars, new_rels, new_coords, scre, references);
+            instance.reinitiate(new_chars, new_rels, new_coords, scre, references, alph_name);
         }
         return instance;
     }
@@ -59,15 +61,15 @@ public class SolutionView extends JFrame {
         NewKeyboard.getInstance().setEnabled(false);
         NewKeyboard.getInstance().setVisible(false);
         Loader.getInstance().setVisible(false);
-        if(instance == null) System.out.println("ERROOR... Esper-ho i Desitjo que mai vegis aquesta linia...");
         return instance;
     }
 
-    private SolutionView(Vector<String> new_chars, Vector<Integer> new_rels, Vector<Position> new_coords, float scre, String[] references) {
+    private SolutionView(Vector<String> new_chars, Vector<Integer> new_rels, Vector<Position> new_coords, float scre, String[] references, String alph_name) {
     	chars = new_chars;
     	rels = new_rels;
     	coords = new_coords;
         score = scre;
+        alphName = alph_name;
         this.references = references;
         keys = new HashMap<JLabel, Integer>();
         selected_keys = new HashMap<JLabel, Integer>();
@@ -111,10 +113,8 @@ public class SolutionView extends JFrame {
         export_image_button.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
-                System.out.println("Guardar Imatge");
                 BufferedImage image = ScreenImage.createImage(draw_panel);
                 String image_string = encodeToString(image, "jpeg");
-                System.out.println(image_string);
                 Explorer e = Explorer.getInstance("i", image_string);
                 setEnabled(false);
             }
@@ -123,7 +123,6 @@ public class SolutionView extends JFrame {
         close_button.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
-                System.out.println("Tancar Solucio");
                 Frame frame = new JFrame("Tancar Solucio");
                  int result = JOptionPane.showConfirmDialog(
                 frame,
@@ -143,7 +142,6 @@ public class SolutionView extends JFrame {
                     JOptionPane.showMessageDialog(null, "Selecciona dos tecles per fer el swap!");
                 }
                 else {
-                    System.out.println("Swap Tecles");
                     int[] ids = new int[2];
                     JLabel[] labels = new JLabel[2];
                     int i = 0; 
@@ -172,7 +170,6 @@ public class SolutionView extends JFrame {
         save_button.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
-                System.out.println("Guardar Solució");
                 setEnabled(false);
                 Explorer e = Explorer.getInstance("s");
                 //String path = "aaa"; //e.getPath();
@@ -188,7 +185,6 @@ public class SolutionView extends JFrame {
                 public void mouseReleased(MouseEvent event){
 
                     JLabel label = (JLabel)event.getSource();
-                    System.out.println("Select Key");
 
                     if (selected_keys.containsKey(label)) {
                         selected_keys.remove(label);
@@ -234,11 +230,12 @@ public class SolutionView extends JFrame {
         this.setEnabled(true);
     }
 
-    public void reinitiate(Vector<String> new_chars, Vector<Integer> new_rels, Vector<Position> new_coords, float scre, String[] references) {
+    public void reinitiate(Vector<String> new_chars, Vector<Integer> new_rels, Vector<Position> new_coords, float scre, String[] references, String alph_name) {
         chars = new_chars;
         rels = new_rels;
         coords = new_coords;
         score = scre;
+        alphName = alph_name;
         this.references = references;
         keys.clear();
         selected_keys.clear();
@@ -266,17 +263,19 @@ public class SolutionView extends JFrame {
         info_panel.setPreferredSize(new Dimension(450,100));
         info_panel.setOpaque(true);
         info_panel.add(scoreLabel);
+        info_panel.add(alphLabel);
         info_panel.add(refsArea);
         info();
     }
 
     private void info() {
         scoreLabel.setText("Puntuació: "+score);
-        String s = "Referencies: ";
+        alphLabel.setText(" | Nom de l'alfabet: "+alphName);
+        refsArea.setText("Referencies:\n");
         for (int i = 0; i < references.length; ++i) {
-            s += references[i];
+            refsArea.append(references[i]+"\n");
         }
-        refsArea.setText(s);
+        refsArea.setEditable(false);
     }
 
     private void initializeDrawPanel() {
@@ -287,7 +286,6 @@ public class SolutionView extends JFrame {
 
 
         for (int i = 0; i < rels.size(); ++i) {
-            System.out.println(i);
             JLabel label = new JLabel(chars.get(rels.get(i)), JLabel.CENTER);
             keys.put(label, i);
             draw_panel.add(label);
@@ -310,7 +308,6 @@ public class SolutionView extends JFrame {
             // Set Location
             int x = Math.round(coords.get(rels.get(keys.get(label))).y * 50);
             int y = Math.round(coords.get(rels.get(keys.get(label))).x * 20);
-            System.out.println(x + " - " + y);
             label.setLocation(x, y);
             
             // Set Size

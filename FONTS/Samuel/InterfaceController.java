@@ -61,7 +61,6 @@ public class InterfaceController {
     public void setSettings(String settings) {}// Jo no la faria servir, cridaria directament calculateKeyborad(params);
 
     public void calculateKeyboard(String settings, String keyboard_name, boolean force) {
-        System.out.println("calculate");
         try {
             JSONObject j = new JSONObject();
             j.put("topology", settings);
@@ -87,12 +86,10 @@ public class InterfaceController {
             Vector<String> chars = new Vector<String>();//jchars.length());
             Vector<Integer> rels = new Vector<Integer>();//jassig.length());
             Vector<Position> coords = new Vector<Position>();//jpos.length());
-            System.out.println(jchars.length());
             for (int i = 0; i < jchars.length(); ++i) {
                 
                 chars.add(jchars.getString(i));
                 Position pos = new Position(new Float(jpos.getJSONObject(i).getDouble("x")), new Float(jpos.getJSONObject(i).getDouble("y")));
-                System.out.println(i);
                 coords.add(pos);
                 rels.add(jassig.getInt(i));
             }
@@ -102,7 +99,7 @@ public class InterfaceController {
             for (int i = 0; i < references.length; ++i) {
                 references[i] = jrefs.getString(i);
             }
-            SolutionView.getInstance(chars, rels, coords, score, references);
+            SolutionView.getInstance(chars, rels, coords, score, references, k.getString("alphabet_name"));
 
         } catch (JSONException ex) {
             Frame frame = new JFrame("Error");
@@ -141,12 +138,10 @@ public class InterfaceController {
             Vector<String> chars = new Vector<String>();//jchars.length());
             Vector<Integer> rels = new Vector<Integer>();//jassig.length());
             Vector<Position> coords = new Vector<Position>();//jpos.length());
-            System.out.println(jchars.length());
             for (int i = 0; i < jchars.length(); ++i) {
                 
                 chars.add(jchars.getString(i));
                 Position pos = new Position(new Float(jpos.getJSONObject(i).getDouble("x")), new Float(jpos.getJSONObject(i).getDouble("y")));
-                System.out.println(i);
                 coords.add(pos);
                 rels.add(jassig.getInt(i));
             }
@@ -156,7 +151,7 @@ public class InterfaceController {
             for (int i = 0; i < references.length; ++i) {
                 references[i] = jrefs.getString(i);
             }
-            SolutionView.getInstance(chars, rels, coords, score, references);
+            SolutionView.getInstance(chars, rels, coords, score, references, k.getString("alphabet_name"));
         } catch (PROPKeyboardException ex) {
             Frame frame = new JFrame("Error");
             JOptionPane.showMessageDialog(frame,"Error al carregar el teclat.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -187,7 +182,6 @@ public class InterfaceController {
             JSONObject j = new JSONObject(result);
             String name = j.getString("name");
             JSONArray jchars  = j.getJSONArray("characters");
-            System.out.println(jchars.toString());
             
             alphabet_chars = "";
             for (int i = 0; i < jchars.length(); ++i) {
@@ -198,11 +192,9 @@ public class InterfaceController {
             }
             AlphabetView.getInstance("e").setText(alphabet_chars, name);
         } catch (PROPKeyboardException ex) {
-            System.out.println("save");
             Frame frame = new JFrame("Error");
             JOptionPane.showMessageDialog(frame,"Error al tractar l'alfabet.", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (JSONException ex) {
-            System.out.println("save");
             Frame frame = new JFrame("Error");
             JOptionPane.showMessageDialog(frame,"Error al tractar l'alfabet.", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -329,7 +321,6 @@ public class InterfaceController {
 
     public void addText(String new_text) {
         references.add(new_text); 
-        System.out.println("Added: "+new_text);
     }
 
     public void setFrequencyFile(String path) {
