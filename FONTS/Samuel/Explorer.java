@@ -36,7 +36,7 @@ public class Explorer {
     public static Explorer getInstance(String b, String image_string) {
         if(instance == null)instance = new Explorer();
         if (b.equals("i")) {
-            instance.frame.setTitle("Carregar alfabet");
+            instance.frame.setTitle("Guardar imatge");
             instance.setImage(image_string);
         }
         instance.explore.setCurrentDirectory(instance.l_path);
@@ -68,9 +68,12 @@ public class Explorer {
         else if (b.equals("tq")) {
             instance.frame.setTitle("Carregar frequències");
         }
+        else if (b.equals("gtq")) {
+            instance.frame.setTitle("Guardar frequències");
+        }
         else if (b.equals("ga")) {
             instance.frame.setTitle("Guardar alfabet");
-            //b = "a";
+           // b = "a";
         }
         else if (b.equals("gt")) {
             instance.frame.setTitle("Guardar text");

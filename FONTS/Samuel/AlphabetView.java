@@ -20,7 +20,9 @@ public class AlphabetView {
     private JButton load = new JButton("Carregar alfabet");
     private JButton save = new JButton("Guardar alfabet");
     private JButton cancel = new JButton("Cancel·la");
-    private JLabel alphabet = new JLabel();
+    private JLabel alphabet = new JLabel("Alfabet:");
+    private JTextField name = new JTextField();
+    private JLabel nom = new JLabel("Nom:");
     private String callback;
     private static AlphabetView instance;
     
@@ -50,7 +52,8 @@ public class AlphabetView {
     }
     
     public void setVisible(boolean visible){
-        alphabet.setText("Alfabet: ");
+        name.setVisible(visible);
+        nom.setVisible(visible);
         character.setColumns(45);
         load.setVisible(visible);
         save.setVisible(visible);
@@ -60,6 +63,8 @@ public class AlphabetView {
     }
     
     public void setEnabled(boolean enabled){
+        name.setEnabled(enabled);
+        nom.setEnabled(enabled);
         frame.setEnabled(enabled);
         load.setEnabled(enabled);
         save.setEnabled(enabled);
@@ -78,9 +83,8 @@ public class AlphabetView {
         save.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
-                // FOR TESTING - REMOVE AFTER TESTING - IMPORTANT!
-                InterfaceController.getInstance().setAlphabet(character.getText(), "alfabet_nom");
                 Explorer.getInstance("ga");
+                InterfaceController.getInstance().setAlphabet(character.getText(),name.getText());
                 setEnabled(false);
             }
         });
@@ -111,14 +115,18 @@ public class AlphabetView {
         GridBagConstraints c = new GridBagConstraints();
         c.weighty=1;
         c.weightx=1;
+        name.setToolTipText("nom del alfabet");
+        name.setColumns(8);
+        buttons_panel.add(nom,c);
+        buttons_panel.add(name,c);
+        c.gridy=1;
         c.gridwidth=3;
         buttons_panel.add(alphabet,c);
-        c.gridy=1;
+        c.gridy=2;
         buttons_panel.add(character,c);
         c.gridwidth=1;
-        c.gridy=2;
+        c.gridy=3;
         buttons_panel.add(load,c);
-        c.gridx=1;
         buttons_panel.add(save,c);
         c.gridx=2;
         buttons_panel.add(cancel,c);

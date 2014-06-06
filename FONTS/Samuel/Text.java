@@ -28,6 +28,9 @@ public class Text {
     private static Text instance;
     private String callback;
     
+    private JCheckBox freqs = new JCheckBox();
+    private JLabel texts = new JLabel("Freqüències:");
+    
     private Text(){
         initialize();
     }
@@ -89,7 +92,10 @@ public class Text {
         save.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent event){
-                Explorer.getInstance("gt");
+                if(freqs.isSelected())
+                    Explorer.getInstance("gtq");
+                else
+                    Explorer.getInstance("gt");
                 InterfaceController.getInstance().setText(text.getText());
                 setEnabled(false);
             }
@@ -136,10 +142,13 @@ public class Text {
         c.gridwidth=1;
         c.gridheight=1;
         c.gridy=6;
+        buttons_panel.add(texts,c);
+        buttons_panel.add(freqs,c);
+        c.gridy=7;
         buttons_panel.add(freq,c);
         c.gridx=1;
         buttons_panel.add(load,c);
-        c.gridy=7;
+        c.gridy=8;
         c.gridx=0;
         buttons_panel.add(save,c);
         c.gridx=1;
