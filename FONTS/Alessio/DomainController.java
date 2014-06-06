@@ -2,6 +2,7 @@ package classes;
 
 import org.json.*;
 import classes.enumerations.*;
+import sharedClasses.*;
 
 public class DomainController {
 	static private DomainController instance;
@@ -45,8 +46,8 @@ public class DomainController {
 		PersistanceController.getInstance().saveKeyboard(json);
 	}
 
-	public void saveKeyboardImage(String path, String image_string) throws PROPKeyboardException {
-		PersistanceController.getInstance().saveKeyboardImage(path, image_string);
+	public void saveKeyboardImage(String json) throws PROPKeyboardException {
+		PersistanceController.getInstance().saveKeyboardImage(json);
 	}
 
 
@@ -65,7 +66,7 @@ public class DomainController {
 	public String calculateKeyboard(String json) throws PROPKeyboardException {
 		try {
 			JSONObject j = new JSONObject(json);
-			Alphabet alph = fromJSONObjectToAlphabet(JSONObject(loadAlphabet(j.getString("alphabet_path"))));
+			Alphabet alph = fromJSONObjectToAlphabet(new JSONObject(loadAlphabet(j.getString("alphabet_path"))));
 			TopologyType t;
 			if (j.getString("topology").equals("Squared")) t = TopologyType.Squared;
 			else if (j.getString("topology").equals("Circular")) t = TopologyType.Circular;
