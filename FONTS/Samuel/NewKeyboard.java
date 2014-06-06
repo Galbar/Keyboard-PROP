@@ -114,7 +114,9 @@ public class NewKeyboard {
                 Loader.getInstance();
                 setEnabled(false);
                 //InterfaceController.setSettings(name.getText(),topology.getSelectedItem().toString(),width.getText(),heigth.getText(),force.isSelected());
-                InterfaceController.getInstance().calculateKeyboard(new int = parseInt(heigth.getText()),new int = parseInt(width.getText()),topology.getSelectedItem(),name.getText()); 
+                int w = Integer.parseInt(width.getText());
+                int h = Integer.parseInt(heigth.getText());
+                InterfaceController.getInstance().calculateKeyboard(h,w,topology.getSelectedItem().toString(),name.getText()); 
                 setVisible(false);
             }
         });
