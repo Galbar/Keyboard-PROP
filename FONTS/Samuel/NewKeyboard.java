@@ -10,6 +10,9 @@ import javax.swing.event.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.text.NumberFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author samuel.bryan.pierno
@@ -21,7 +24,15 @@ public class NewKeyboard {
     private JButton text_button = new JButton("Gestionar text");//("Manage text");
     private JButton create_button = new JButton("Crear teclat");//("Create keyboard");
     private JButton cancel_button = new JButton("Cancel·la");
+    private JLabel nom = new JLabel("Nom:");
+    private JLabel forcexp = new JLabel("Forçar B&B:");
+    private JLabel widthl = new JLabel("Amplada desitjada");
+    private JLabel heigthl = new JLabel("Alçada desitjada");
+    private JTextField name = new JTextField();
+    private JFormattedTextField width = new JFormattedTextField(NumberFormat.getIntegerInstance());
+    private JFormattedTextField heigth = new JFormattedTextField(NumberFormat.getIntegerInstance());
     private JComboBox topology = new JComboBox();
+    private JCheckBox force = new JCheckBox();
     private static NewKeyboard instance;
     
     private NewKeyboard(){
@@ -32,11 +43,12 @@ public class NewKeyboard {
         instance.frame.setLocationRelativeTo(null);
         instance.setEnabled(true);
         instance.setVisible(true);
+        
         return instance;
     }
     private void initializeFrame() {
         // Tamanyo
-        frame.setMinimumSize(new Dimension(450, 200));
+        frame.setMinimumSize(new Dimension(500, 250));
         frame.setPreferredSize(frame.getMinimumSize());
         frame.setResizable(true);
         // Posicion y operaciones por defecto
@@ -49,6 +61,15 @@ public class NewKeyboard {
     }
     
     public void setVisible(boolean visible){
+        force.setVisible(visible);
+        forcexp.setVisible(visible);
+        heigth.setColumns(5);
+        width.setColumns(5);
+        name.setColumns(10);
+        heigth.setVisible(visible);
+        width.setVisible(visible);
+        nom.setVisible(visible);
+        name.setVisible(visible);
         alpha_button.setVisible(visible);
         text_button.setVisible(visible);
         create_button.setVisible(visible);
@@ -58,7 +79,13 @@ public class NewKeyboard {
     }
     
     public void setEnabled(boolean enabled){
+        heigth.setEnabled(enabled);
+        width.setEnabled(enabled);
         frame.setEnabled(enabled);
+        forcexp.setEnabled(enabled);
+        force.setEnabled(enabled);
+        nom.setEnabled(enabled);
+        name.setEnabled(enabled);
         alpha_button.setEnabled(enabled);
         text_button.setEnabled(enabled);
         create_button.setEnabled(enabled);
@@ -85,12 +112,12 @@ public class NewKeyboard {
             @Override
             public void actionPerformed(ActionEvent event){
                 Loader.getInstance();
-                setVisible(false);
                 setEnabled(false);
-                //InterfaceController.getInstance().setSettings(topology.getSelectedItem().toString());
-                InterfaceController.getInstance().calculateKeyboard(10, 10, topology.getSelectedItem().toString(), "nom_teclat");
-                //Loader.done();
-                //InterfaceController.createKeyboard(); // Falten els parametres.
+                //InterfaceController.setSettings(name.getText(),topology.getSelectedItem().toString(),width.getText(),heigth.getText(),force.isSelected());
+                int w = Integer.parseInt(width.getText());
+                int h = Integer.parseInt(heigth.getText());
+                InterfaceController.getInstance().calculateKeyboard(h,w,topology.getSelectedItem().toString(),name.getText()); 
+                setVisible(false);
             }
         });
         cancel_button.addActionListener(new ActionListener(){
@@ -119,13 +146,27 @@ public class NewKeyboard {
         c.weightx=1;
         buttons_panel.add(alpha_button,c);
         buttons_panel.add(text_button,c);
-        c.gridy=1;
+        buttons_panel.add(forcexp,c);
+        buttons_panel.add(force,c);
+        c.gridy=1;        
         buttons_panel.add(topology,c);
+        buttons_panel.add(nom,c);
+        buttons_panel.add(name,c);
         c.gridy=2;
         c.gridx=1;
         buttons_panel.add(create_button,c);
-        c.gridx=2;
+        c.gridx=3;
         buttons_panel.add(cancel_button,c);
+        c.gridy=3;
+        c.gridx=0;
+        buttons_panel.add(widthl,c);
+        c.gridx=1;
+        buttons_panel.add(width,c);
+        c.gridx=2;
+        buttons_panel.add(heigthl,c);
+        ++c.gridx;
+        buttons_panel.add(heigth,c);
+        
     }
     
     private void initializeTopology(){

@@ -36,7 +36,7 @@ public class Explorer {
     public static Explorer getInstance(String b, String image_string) {
         if(instance == null)instance = new Explorer();
         if (b.equals("i")) {
-            instance.frame.setTitle("Carregar alfabet");
+            instance.frame.setTitle("Guardar imatge");
             instance.setImage(image_string);
         }
         instance.explore.setCurrentDirectory(instance.l_path);
@@ -68,9 +68,12 @@ public class Explorer {
         else if (b.equals("tq")) {
             instance.frame.setTitle("Carregar frequències");
         }
+        else if (b.equals("gtq")) {
+            instance.frame.setTitle("Guardar frequències");
+        }
         else if (b.equals("ga")) {
             instance.frame.setTitle("Guardar alfabet");
-            //b = "a";
+           // b = "a";
         }
         else if (b.equals("gt")) {
             instance.frame.setTitle("Guardar text");
@@ -153,14 +156,14 @@ public class Explorer {
                     }
                     else if (callback.equals("gt")) {
                         InterfaceController.getInstance().saveText(e_path.getAbsolutePath());
-                        InterfaceController.getInstance().loadText(e_path.getAbsolutePath());
+                        //InterfaceController.getInstance().loadText(e_path.getAbsolutePath());
                     }
                     else if (callback.equals("gtq")) {
                         InterfaceController.saveFrequencies(e_path.getAbsolutePath());
                     }
                     else if (callback.equals("ga")) {
                         InterfaceController.getInstance().saveAlphabet(e_path.getAbsolutePath());
-                        InterfaceController.getInstance().loadAlphabet(e_path.getAbsolutePath());
+                        //InterfaceController.getInstance().loadAlphabet(e_path.getAbsolutePath());
                     }
                     else if (callback.equals("s")) {
                         InterfaceController.saveKeyboard(e_path.getAbsolutePath());
