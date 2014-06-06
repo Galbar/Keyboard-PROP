@@ -157,7 +157,7 @@ public class PersistanceController {
 
     /**
         * Carrega Teclat
-        * @param pth És el path on hi ha le fitxer a carregar.
+        * @param pth És el path on hi ha el fitxer a carregar.
         * @return String amb totes les dades del fitxer.
         */	        
     public String loadKeyboard(String pth) throws PROPKeyboardException {

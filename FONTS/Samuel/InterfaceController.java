@@ -46,7 +46,7 @@ public class InterfaceController {
         //JSONObject i = new JSONObject();
         //i.put("path", path);
         //i.put("image_string", image_string);
-        DomainController.i().saveKeyboardImage(path, image_string);
+        DomainController.getInstance().saveKeyboardImage(path, image_string);
         //Test.getInstance().saveImage(i.toString());
     }
         
