@@ -97,7 +97,12 @@ public class InterfaceController {
                 rels.add(jassig.getInt(i));
             }
             float score = (float)k.getDouble("score");
-            SolutionView.getInstance(chars, rels, coords, score);
+            JSONArray jrefs = k.getJSONArray("references");
+            String[] references = new String[jrefs.length()];
+            for (int i = 0; i < references.length; ++i) {
+                references[i] = jrefs.getString(i);
+            }
+            SolutionView.getInstance(chars, rels, coords, score, references);
 
         } catch (JSONException ex) {
             Frame frame = new JFrame("Error");
@@ -146,7 +151,12 @@ public class InterfaceController {
                 rels.add(jassig.getInt(i));
             }
             float score = (float)k.getDouble("score");
-            SolutionView.getInstance(chars, rels, coords, score);
+            JSONArray jrefs = k.getJSONArray("references");
+            String[] references = new String[jrefs.length()];
+            for (int i = 0; i < references.length; ++i) {
+                references[i] = jrefs.getString(i);
+            }
+            SolutionView.getInstance(chars, rels, coords, score, references);
         } catch (PROPKeyboardException ex) {
             Frame frame = new JFrame("Error");
             JOptionPane.showMessageDialog(frame,"Error al carregar el teclat.", "Error", JOptionPane.ERROR_MESSAGE);

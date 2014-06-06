@@ -32,23 +32,25 @@ public class SolutionView extends JFrame {
     private JButton export_image_button = new JButton("Exportar Imatge");
 
     JLabel scoreLabel = new JLabel("Puntuació: 0.0");
+    JTextArea refsArea = new JTextArea(80, 60);
 
     private Vector<String> chars;
     private Vector<Integer> rels;
     private Vector<Position> coords; // temp
     private float score;
+    private String[] references;
     private HashMap<JLabel, Integer> keys;
     private HashMap<JLabel, Integer> selected_keys; // Potser no sera vector
 
     private static SolutionView instance;
 
-    public static SolutionView getInstance(Vector<String> new_chars, Vector<Integer> new_rels, Vector<Position> new_coords, float scre) {
+    public static SolutionView getInstance(Vector<String> new_chars, Vector<Integer> new_rels, Vector<Position> new_coords, float scre, String[] references) {
         NewKeyboard.getInstance().setEnabled(false);
         NewKeyboard.getInstance().setVisible(false);
         Loader.getInstance().setVisible(false);
-        if(instance == null) instance = new SolutionView(new_chars, new_rels, new_coords, scre);
+        if(instance == null) instance = new SolutionView(new_chars, new_rels, new_coords, scre, references);
         else {
-            instance.reinitiate(new_chars, new_rels, new_coords, scre);
+            instance.reinitiate(new_chars, new_rels, new_coords, scre, references);
         }
         return instance;
     }
@@ -61,11 +63,12 @@ public class SolutionView extends JFrame {
         return instance;
     }
 
-    private SolutionView(Vector<String> new_chars, Vector<Integer> new_rels, Vector<Position> new_coords, float scre) {
+    private SolutionView(Vector<String> new_chars, Vector<Integer> new_rels, Vector<Position> new_coords, float scre, String[] references) {
     	chars = new_chars;
     	rels = new_rels;
     	coords = new_coords;
         score = scre;
+        this.references = references;
         keys = new HashMap<JLabel, Integer>();
         selected_keys = new HashMap<JLabel, Integer>();
         initialize();
@@ -231,11 +234,12 @@ public class SolutionView extends JFrame {
         this.setEnabled(true);
     }
 
-    public void reinitiate(Vector<String> new_chars, Vector<Integer> new_rels, Vector<Position> new_coords, float scre) {
+    public void reinitiate(Vector<String> new_chars, Vector<Integer> new_rels, Vector<Position> new_coords, float scre, String[] references) {
         chars = new_chars;
         rels = new_rels;
         coords = new_coords;
         score = scre;
+        this.references = references;
         keys.clear();
         selected_keys.clear();
         draw_panel.removeAll();
@@ -262,11 +266,17 @@ public class SolutionView extends JFrame {
         info_panel.setPreferredSize(new Dimension(450,100));
         info_panel.setOpaque(true);
         info_panel.add(scoreLabel);
+        info_panel.add(refsArea);
         info();
     }
 
     private void info() {
         scoreLabel.setText("Puntuació: "+score);
+        String s = "Referencies: ";
+        for (int i = 0; i < references.length; ++i) {
+            s += references[i];
+        }
+        refsArea.setText(s);
     }
 
     private void initializeDrawPanel() {
