@@ -105,8 +105,7 @@ public class NewKeyboard {
             public void actionPerformed(ActionEvent event){
                 Loader.getInstance();
                 setEnabled(false);
-                //InterfaceController.setSettings(name.getText(),topology.getSelectedItem().toString(),width.getText(),heigth.getText(),force.isSelected());
-                InterfaceController.getInstance().calculateKeyboard(topology.getSelectedItem().toString(),name.getText()); 
+                InterfaceController.getInstance().calculateKeyboard(topology.getSelectedItem().toString(),name.getText(), force.isSelected()); 
                 setVisible(false);
             }
         });
@@ -146,7 +145,7 @@ public class NewKeyboard {
         c.gridx=1;
         buttons_panel.add(create_button,c);
         c.gridx=3;
-        buttons_panel.add(cancel_button,c);        
+        buttons_panel.add(cancel_button,c);         
     }
     
     private void initializeTopology(){

@@ -95,7 +95,7 @@ public class DomainController {
 			positionsSet = new PositionsSet(t, alph.getCharacters().length);
 
 			QAP qap = new QAP(charactersSet.getAllAffinities() ,positionsSet.getAllDistances());
-			int[] qapSolution = qap.solve();
+			int[] qapSolution = qap.solve(j.getBoolean("force_BB"));
 
 			currentKeyboard = new Keyboard(j.getString("name"), t, charactersSet.getAllCharacters(), positionsSet.getAllPositions(), qapSolution);
 			currentKeyboard.setScore(Bound.bound(currentKeyboard.getAllocations(), charactersSet.getAllAffinities(), positionsSet.getAllDistances()));

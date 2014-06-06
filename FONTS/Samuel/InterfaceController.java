@@ -59,7 +59,7 @@ public class InterfaceController {
     
     public void setSettings(String settings) {}// Jo no la faria servir, cridaria directament calculateKeyborad(params);
 
-    public void calculateKeyboard(String settings, String keyboard_name) {
+    public void calculateKeyboard(String settings, String keyboard_name, boolean force) {
         System.out.println("calculate");
         try {
             JSONObject j = new JSONObject();
@@ -69,6 +69,7 @@ public class InterfaceController {
             JSONArray txtArr = new JSONArray();
             txtArr.put(text_path);
             j.put("texts", txtArr);
+            j.put("force_BB", force);
 
             String res = DomainController.getInstance().calculateKeyboard(j.toString()); // retorna Json
             JSONObject jinfo = new JSONObject(res);
