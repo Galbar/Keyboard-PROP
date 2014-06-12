@@ -74,6 +74,31 @@ public class SolutionView extends JFrame {
         keys = new HashMap<JLabel, Integer>();
         selected_keys = new HashMap<JLabel, Integer>();
         initialize();
+
+        // <DEBUG>
+        /*
+        System.out.println("CHARS: ");
+        for (int i  = 0; i < chars.size(); ++i) {
+            System.out.println(chars.get(i));
+        }
+
+        System.out.println("RELS: ");
+        for (int i = 0; i <  rels.size(); ++i) {
+            System.out.println(rels.get(i));
+        }
+
+        System.out.println("COORDS: ");        
+        for (int i = 0; i < coords.size(); ++i) {
+            System.out.println(coords.get(i).y + " - " + coords.get(i).x);
+        }
+        */
+
+        System.out.println("BLABLA: ");        
+        for (int i = 0; i < coords.size(); ++i) {
+            System.out.println(chars.get(i) + " - " + coords.get(rels.get(i)).y + " - " + coords.get(rels.get(i)).x);
+        }
+
+        // </DEBUG>
     }
 
     private void initializeFrame() {
@@ -151,7 +176,7 @@ public class SolutionView extends JFrame {
                         ids[i] = selected_keys.get(labels[i]);
                         ++i;
                     }
-                    score = InterfaceController.swap(ids[0], ids[1]); // NOT DONE YET!
+                    score = InterfaceController.swap(ids[0], ids[1]);
                     info();
                     int aux = rels.get(ids[0]);
                     rels.set(ids[0], rels.get(ids[1]));
@@ -286,7 +311,7 @@ public class SolutionView extends JFrame {
 
 
         for (int i = 0; i < rels.size(); ++i) {
-            JLabel label = new JLabel(chars.get(rels.get(i)), JLabel.CENTER);
+            JLabel label = new JLabel(chars.get(i), JLabel.CENTER);
             keys.put(label, i);
             draw_panel.add(label);
         }
@@ -308,6 +333,7 @@ public class SolutionView extends JFrame {
             // Set Location
             int x = Math.round(coords.get(rels.get(keys.get(label))).y * 50);
             int y = Math.round(coords.get(rels.get(keys.get(label))).x * 20);
+            System.out.println(label.getText() + ": " + x + " - " + y);
             label.setLocation(x, y);
             
             // Set Size
